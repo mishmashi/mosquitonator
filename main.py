@@ -88,7 +88,7 @@ if st.session_state.index < len(questions):
 else:
     if len(st.session_state.candidates) == 1:
         st.success(f"The specimen is **{st.session_state.candidates[0]['name']}**")
-        st.image(c["image"], caption="Mosquito morphology")
+        st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
     elif len(st.session_state.candidates) > 1:
         st.warning("Possible genera:")
         for c in st.session_state.candidates:
