@@ -26,21 +26,21 @@ questions = [
 ]
 
 database = [
-    {"name": "Aedes",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 12: 1, 18: 0, 19: 0},
-    {"name": "Anopheles",         0: 1, 1: 1, 2: 1, 3: 0, 5: 0},
-    {"name": "Coquillettidia",    0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 1},
-    {"name": "Culex",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 11: 0, 12: 0, 13: 1, 16: 0, 17: 0},
-    {"name": "Culiseta",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 11: 1},
-    {"name": "Deinocerites",      0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 0, 13: 1, 15: 1, 16: 1},
-    {"name": "Haemagogus",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 1, 16: 1, 17: 1},
-    {"name": "Mansonia",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 1, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 0},
-    {"name": "Orthopodomyia",     0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 15: 1},
-    {"name": "Psorophora",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 10: 1, 12: 1},
-    {"name": "Toxorhynchites",    0: 1, 1: 0, 2: 0, 4: 1},
-    {"name": "Uranotaenia",       0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 1, 8: 1},
-    {"name": "Wyeomyia",          0: 1, 1: 0, 2: 0, 5: 1},
-    {"name": "Not a mosquito",    0: 0},
-    {"name": "Male mosquito",     0: 1, 1: 1, 2: 1, 3: 1}
+    {"name": "an Aedes",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 12: 1, 18: 0, 19: 0},
+    {"name": "an Anopheles",         0: 1, 1: 1, 2: 1, 3: 0, 5: 0},
+    {"name": "a Coquillettidia",    0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 1},
+    {"name": "a Culex",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 11: 0, 12: 0, 13: 1, 16: 0, 17: 0},
+    {"name": "a Culiseta",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 11: 1},
+    {"name": "a Deinocerites",      0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 0, 13: 1, 15: 1, 16: 1},
+    {"name": "a Haemagogus",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 1, 16: 1, 17: 1},
+    {"name": "a Mansonia",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 1, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 0},
+    {"name": "an Orthopodomyia",     0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 15: 1},
+    {"name": "a Psorophora",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 10: 1, 12: 1},
+    {"name": "a Toxorhynchites",    0: 1, 1: 0, 2: 0, 4: 1},
+    {"name": "an Uranotaenia",       0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 1, 8: 1},
+    {"name": "a Wyeomyia",          0: 1, 1: 0, 2: 0, 5: 1},
+    {"name": "not a mosquito",    0: 0},
+    {"name": "a male mosquito",     0: 1, 1: 1, 2: 1, 3: 1}
 ]
 
 # Initialize session state
@@ -87,7 +87,7 @@ if st.session_state.index < len(questions):
         st.rerun()
 else:
     if len(st.session_state.candidates) == 1:
-        st.success(f"The specimen is a(n)**{st.session_state.candidates[0]['name']}**")
+        st.success(f"The specimen is **{st.session_state.candidates[0]['name']}**")
     elif len(st.session_state.candidates) > 1:
         st.warning("Possible genera:")
         for c in st.session_state.candidates:
