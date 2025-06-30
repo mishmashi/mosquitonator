@@ -102,7 +102,7 @@ elif st.session_state.index < len(questions):
         st.rerun()
 else:
     if len(st.session_state.candidates) == 1:
-        st.success(f"The specimen is an ANopheles **{st.session_state.candidates[0]['name']}**")
+        st.success(f"The specimen is an Anopheles **{st.session_state.candidates[0]['name']}**")
         #st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
     elif len(st.session_state.candidates) > 1:
         st.warning("Possible species:")
