@@ -23,12 +23,18 @@ def load_data():
 # ---- Load questions and database ----
 questions, database = load_data()
 others = []
-others_by_group = [[“Brumpti”, “Argenteolobatus”, “Murphyi”, “Cinctus”, “Cristipalpis”, “Okuensis”, “Implexus”, “Swahilicus”, “Squamosus”, “Cyddipis”],[“Maculipalpis”, “Maliensis”, “Deemingi”, “Pretoriensis”, “Machardyi”, “Natalensis”, “Buxtoni”, “Caliginosus”, “Paludis”, “Tenebrosus”, “Crypticus”, “Ziemanni”, “Namibiensis”, “Rufipes”, “Hancocki”, “Brohieri”, “Theileri”]
-,  [“Kingi”, “Symesi”, “Rufipes”], [“Hervyi”, “Salbaii”, “Dancalicus”, “Vernus”, “Multicinctus”, “Ardensis”, “Vinckei”, “Dureni”, “Millecampsi”], [“Concolor”, “Ruarinus”, “Rhodesiensis”, “Caroni”, “Dthali”, “Rodhaini”, “Lounibosi”, “Smithii”, “Hamoni”, “Vanhoofi”, “Azaniae”], [“Obscurus”, “Tenebrosus”, “Tchekedii”, “Smithii”, “Daudi”, “Wellcomei”, “Erepens”, “Keniensis”, “Fuscivenosus”, “Disctinctus”, “Schwetzi”, “Walravensi”]
-, [“Azaniae”, “Obscurus”, “Jebudensis”, “Faini”, “Turkhudi”, “Wilsoni”, “Rufipes”, “Rageaui”, “Smithii”, “Fontinalis”, “Lovettae”, “Cinereus”, “Multicolor”, “Listeri”, “Azevedoi”, “Seretsei”]
-, [“Christyi”, “Schwetzi”, “Wilsoni”, “Cinereus”, “Vernus”, “Garnhami”, “Demeilloni”, “Carteri”], [“Wellcomei”, “Seydeli”, “Mortiauxi”, “Berghei”, “Brunnipes”, “Walravensi”, “Harperi”, “Njombiensis”, “Austensii”, “Gibbinsi”, “Hargreavesi”, “Mousinhoi”, “Marshallii”, “Letabensis”, “Kosiensis”, “Hughi”]
-, [“Gabonensis”, “Rufipes”, “Domicolus”, “Lloreti”, “Barberellus”, “Brucei”, “Rivulorum”, “Carteri”, “Brucei”, “Freetownensis”, “Demeilloni”, “Flavicosta”, “Keniensis”, “Moucheti”, “Bervoetsi”, “Garnhami”]
-, [“Ovengensis”, “Longipalpis”, “Fuscivenosus”, “Culicifacies”, “Aruni”, “Demeilloni”, “Parensis”, “Sergentii”, “Cameroni”]]
+others_by_group = [["Brumpti", "Argenteolobatus", "Murphyi", "Cinctus", "Cristipalpis", "Okuensis", "Implexus", "Swahilicus", "Squamosus", "Cyddipis"],
+ ["Maculipalpis", "Maliensis", "Deemingi", "Pretoriensis", "Machardyi", "Natalensis", "Buxtoni", "Caliginosus", "Paludis", "Tenebrosus", "Crypticus", "Ziemanni", "Namibiensis", "Rufipes", "Hancocki", "Brohieri", "Theileri"],
+ ["Kingi", "Symesi", "Rufipes"],
+ ["Hervyi", "Salbaii", "Dancalicus", "Vernus", "Multicinctus", "Ardensis", "Vinckei", "Dureni", "Millecampsi"],
+ ["Concolor", "Ruarinus", "Rhodesiensis", "Caroni", "Dthali", "Rodhaini", "Lounibosi", "Smithii", "Hamoni", "Vanhoofi", "Azaniae"],
+ ["Obscurus", "Tenebrosus", "Tchekedii", "Smithii", "Daudi", "Wellcomei", "Erepens", "Keniensis", "Fuscivenosus", "Disctinctus", "Schwetzi", "Walravensi"],
+ ["Azaniae", "Obscurus", "Jebudensis", "Faini", "Turkhudi", "Wilsoni", "Rufipes", "Rageaui", "Smithii", "Fontinalis", "Lovettae", "Cinereus", "Multicolor", "Listeri", "Azevedoi", "Seretsei"],
+ ["Christyi", "Schwetzi", "Wilsoni", "Cinereus", "Vernus", "Garnhami", "Demeilloni", "Carteri"],
+ ["Wellcomei", "Seydeli", "Mortiauxi", "Berghei", "Brunnipes", "Walravensi", "Harperi", "Njombiensis", "Austensii", "Gibbinsi", "Hargreavesi", "Mousinhoi", "Marshallii", "Letabensis", "Kosiensis", "Hughi"],
+ ["Gabonensis", "Rufipes", "Domicolus", "Lloreti", "Barberellus", "Brucei", "Rivulorum", "Carteri", "Brucei", "Freetownensis", "Demeilloni", "Flavicosta", "Keniensis", "Moucheti", "Bervoetsi", "Garnhami"],
+ ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
+
 
 
 # ---- Session Initialization ----
