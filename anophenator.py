@@ -122,7 +122,7 @@ if st.button("🔄 Restart"):
     st.session_state.others = []
     st.session_state.answers = {}
     st.rerun()
-
+st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
 #if len(st.session_state.others) >0:
 #  if st.button("See rare species"):
 #    for name in others:
