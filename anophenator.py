@@ -103,12 +103,12 @@ elif st.session_state.index < len(questions):
 else:
     if len(st.session_state.candidates) == 1:
         st.success(f"The specimen is **{st.session_state.candidates[0]['name']}**")
-        st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
+        #st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
     elif len(st.session_state.candidates) > 1:
         st.warning("Possible species:")
         for c in st.session_state.candidates:
             st.write("- " + c["name"])
-            st.image(c["image"], caption="Example of species")
+           # st.image(c["image"], caption="Example of species")
     elif len(st.session_state.candidates) == 0 and len(st.session_state.others) >0:
         for name in st.session_state.others:
           st.write("- " + name)
