@@ -60,6 +60,8 @@ while st.session_state.index < len(questions):
     values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
     if len(values) <= 1:
         st.session_state.index += 1
+    elif sum(1 for c in st.session_state.candidates if st.session_state.index in c) <=0:
+        st.session_state.index += 1
     else:
         break
 if st.session_state.index <= 9:
