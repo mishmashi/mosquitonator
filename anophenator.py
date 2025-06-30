@@ -62,7 +62,7 @@ while st.session_state.index < len(questions):
         st.session_state.index += 1
     else:
         break
-if st.session_state.index =< 9:
+if st.session_state.index <= 9:
     q = questions[st.session_state.index]
     st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
