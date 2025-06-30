@@ -62,18 +62,23 @@ while st.session_state.index < len(questions):
         st.session_state.index += 1
     else:
         break
-if st.session_state.index < 9:
+if st.session_state.index =< 9:
     q = questions[st.session_state.index]
     st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
     col1, col2, col3 = st.columns(3)
     if col1.button("Yes"):
         st.session_state.others = others_by_group[st.session_state.index] #get group of other species 
-        st.session_state.index += 1
+        st.session_state.index = 9
         st.rerun()
     if col2.button("No"):
-        st.session_state.index += 1
-        st.rerun()
+        if st.session_state.index == 9:
+                st.session_state.index += 1
+                st.session_state.others = others_by_group[10]
+                st.rerun()
+        else:
+                st.session_state.index += 1
+                st.rerun()
     if col3.button("I don't know"):
         st.session_state.index += 1
         st.rerun()
