@@ -6,6 +6,7 @@ import pandas as pd
 @st.cache_data #for optimization
 def load_data():
         df = pd.read_csv("Mosquito traits by genus.csv")
+        df = df.iloc[2:]
         questions = [col for col in df.columns if col not in ("Species", "Image")]
 
         database = []
