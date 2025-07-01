@@ -74,15 +74,15 @@ if st.session_state.index < len(questions):
     st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
     col1, col2, col3 = st.columns(3)
-    if col1.button("Yes"):
+    if col1.button("Yes",key="y_genus"):
         st.session_state.candidates = filter_candidates(st.session_state.index, 1)
         st.session_state.index += 1
         st.rerun()
-    if col2.button("No"):
+    if col2.button("No",key="n_genus"):
         st.session_state.candidates = filter_candidates(st.session_state.index, 0)
         st.session_state.index += 1
         st.rerun()
-    if col3.button("I don't know"):
+    if col3.button("I don't know",key="idk_genus"):
         st.session_state.candidates = filter_candidates(st.session_state.index, None)
         st.session_state.index += 1
         st.rerun()
@@ -99,14 +99,14 @@ else:
     else:
         st.error("No matching genus found.")
 
-if st.button("🔄 Restart"):
+if st.button("🔄 Restart", key="restart_genus"):
     st.session_state.index = 0
     st.session_state.candidates = database
     st.session_state.answers = {}
     st.rerun()
 
 if st.session_state.candidates[0]['name'] == "an Anopheles":
-    if st.button("Determine species"):
+    if st.button("Determine species",key="determine_sp"):
         st.session_state.others = []
         @st.cache_data #for optimization
         def load_data():
@@ -186,12 +186,12 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
         
             col1, col2, col3 = st.columns(3)
-            if col1.button("Yes"):
+            if col1.button("Yes",key="y_sp"):
                 st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species 
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1)
                 st.session_state.index = 10
                 st.rerun()
-            if col2.button("No"):
+            if col2.button("No",key="n_sp"):
                 if st.session_state.index == 9:
                         st.session_state.index += 1
                         st.session_state.others = others_by_group[10]
@@ -201,7 +201,7 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
                         st.session_state.candidates = filter_candidates(st.session_state.index, 0)
                         st.session_state.index += 1
                         st.rerun()
-            if col3.button("I don't know"):
+            if col3.button("I don't know",key="idk_sp"):
                 st.session_state.index += 1
                 st.rerun()
         
@@ -210,15 +210,15 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
         
             col1, col2, col3 = st.columns(3)
-            if col1.button("Yes"):
+            if col1.button("Yes",key="y_sp2"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1)
                 st.session_state.index += 1
                 st.rerun()
-            if col2.button("No"):
+            if col2.button("No",key="n_sp2"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0)
                 st.session_state.index += 1
                 st.rerun()
-            if col3.button("I don't know"):
+            if col3.button("I don't know",key="idk_sp2"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, None)
                 st.session_state.index += 1
                 st.rerun()
@@ -243,7 +243,7 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
                 for name in st.session_state.others:
                         st.write(f"- **Anopheles {name}**")
         
-        if st.button("🔄 Restart"):
+        if st.button("🔄 Restart",key="restart_sp"):
             st.session_state.index = 0
             st.session_state.candidates = database
             st.session_state.others = []
