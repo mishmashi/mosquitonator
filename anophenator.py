@@ -82,9 +82,9 @@ if st.session_state.index <= 9:
 
     col1, col2, col3 = st.columns(3)
     if col1.button("Yes"):
-        st.session_state.others = others_by_group[st.session_state.index] #get group of other species 
-        st.session_state.index = 9
+        st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species 
         st.session_state.candidates = filter_candidates(st.session_state.index, 1)
+        st.session_state.index = 10
         st.rerun()
     if col2.button("No"):
         if st.session_state.index == 9:
@@ -93,6 +93,7 @@ if st.session_state.index <= 9:
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0)
                 st.rerun()
         else:
+                st.session_state.candidates = filter_candidates(st.session_state.index, 0)
                 st.session_state.index += 1
                 st.rerun()
     if col3.button("I don't know"):
