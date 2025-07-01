@@ -120,12 +120,12 @@ elif st.session_state.index < len(questions):
         st.rerun()
 else:
     if len(st.session_state.candidates) == 1:
-        st.success(f"The specimen is an Anopheles **{st.session_state.candidates[0]['name']}**")
+        st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
         #st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
     elif len(st.session_state.candidates) > 1:
         st.warning("Possible species:")
         for c in st.session_state.candidates:
-            st.write("- Anopheles " + c["name"])
+            st.write(f"- **Anopheles {c["name"]}")
            # st.image(c["image"], caption="Example of species")
 
    # elif len(st.session_state.candidates) == 0 and len(st.session_state.others) >0:
@@ -137,7 +137,7 @@ else:
     if st.session_state.others:
         st.warning("Less likely species:")
         for name in st.session_state.others:
-                st.write("- Anopheles " + name)
+                st.write(f"- **Anopheles {name}**")
 
 if st.button("🔄 Restart"):
     st.session_state.index = 0
