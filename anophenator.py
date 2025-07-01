@@ -73,7 +73,9 @@ while st.session_state.index < len(questions):
             if len(values) <= 1 or num_with_values <= 1:
                 st.session_state.index += 1
             else:
-                break  
+                    break
+    else:
+        break  
             
 if st.session_state.index <= 9:
     q = questions[st.session_state.index]
