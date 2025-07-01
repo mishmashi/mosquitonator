@@ -72,7 +72,6 @@ while st.session_state.index < len(questions):
     # Skip if all answers are the same or only one candidate has data
     if len(values) <= 1 or num_with_values <= 1:
         st.session_state.index += 1
-        continue
     else:
         break  
             
