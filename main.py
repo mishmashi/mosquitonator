@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 # Feature list and questions
 questions = [
@@ -109,6 +108,7 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
     if st.button("Determine species"):
         @st.cache_data #for optimization
         def load_data():
+                import pandas as pd
                 df = pd.read_csv("Mosquito traits by genus.csv", header=2)
         #        st.write("Available columns:", df.columns.tolist())
                 questions = [col for col in df.columns if col not in ("Species", "Image")]
