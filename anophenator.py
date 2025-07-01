@@ -70,10 +70,11 @@ while st.session_state.index < len(questions):
     num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
 
     # Skip if all answers are the same or only one candidate has data
-    if len(values) <= 1 or num_with_values <= 1:
-        st.session_state.index += 1
-    else:
-        break  
+    if st.session_state.index >10:
+            if len(values) <= 1 or num_with_values <= 1:
+                st.session_state.index += 1
+            else:
+                break  
             
 if st.session_state.index <= 9:
     q = questions[st.session_state.index]
