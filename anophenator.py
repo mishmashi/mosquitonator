@@ -59,13 +59,20 @@ def filter_candidates(index, ans):
 while st.session_state.index < len(questions):
     if len(st.session_state.candidates) <= 1:
         st.session_state.index += 1 #skip question if candidate has been picked, or all have been eliminated
-
+        continue
     # Get all values for this question
     #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
 
     # Skip q if all candidates have the same value, so no impurity gain
-    if sum(1 for c in st.session_state.candidates if st.session_state.index in c) <=1:
+    #if sum(1 for c in st.session_state.candidates if st.session_state.index in c) <=1:
+     #   st.session_state.index += 1
+    values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+    num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
+
+    # Skip if all answers are the same or only one candidate has data
+    if len(values) <= 1 or num_with_values <= 1:
         st.session_state.index += 1
+        continue
     else:
         break  
             
@@ -77,11 +84,13 @@ if st.session_state.index <= 9:
     if col1.button("Yes"):
         st.session_state.others = others_by_group[st.session_state.index] #get group of other species 
         st.session_state.index = 9
+        st.session_state.candidates = filter_candidates(st.session_state.index, 1)
         st.rerun()
     if col2.button("No"):
         if st.session_state.index == 9:
                 st.session_state.index += 1
                 st.session_state.others = others_by_group[10]
+                st.session_state.candidates = filter_candidates(st.session_state.index, 0)
                 st.rerun()
         else:
                 st.session_state.index += 1
