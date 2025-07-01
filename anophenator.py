@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# ---- Load Data from Google Sheets or CSV ----
+# ---- Load Data from CSV ----
 
 @st.cache_data #for optimization
 def load_data():
@@ -58,7 +58,7 @@ def filter_candidates(index, ans):
 # ---- Main Loop ----
 while st.session_state.index < len(questions):
     if len(st.session_state.candidates) <= 1:
-        break #skip question if candidate has been picked
+        st.session_state.index = -1 #skip question if candidate has been picked
 
     # Get all values for this question
     values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
