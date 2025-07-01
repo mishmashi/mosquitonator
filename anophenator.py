@@ -125,6 +125,10 @@ else:
         for c in st.session_state.candidates:
             st.write("- Anopheles " + c["name"])
            # st.image(c["image"], caption="Example of species")
+        st.warning("Less likely species:")
+        for name in st.session_state.others:
+                st.write("- Anopheles " + name]
+
     elif len(st.session_state.candidates) == 0 and len(st.session_state.others) >0:
         st.warning("Possible species:")
         for name in st.session_state.others:
