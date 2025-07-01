@@ -109,7 +109,7 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
     if st.button("Determine species",key="determine_sp"):
         st.session_state.others = []
         st.session_state.index = 0
-        st.session_state.answers = {}
+        
         @st.cache_data #for optimization
         def load_data():
                 import pandas as pd
@@ -129,7 +129,6 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
         
         # ---- Load questions and database ----
         questions, database = load_data()
-        others = []
         others_by_group = [["Brumpti", "Argenteolobatus", "Murphyi", "Cinctus", "Cristipalpis", "Okuensis", "Implexus", "Swahilicus", "Squamosus", "Cyddipis"],
          ["Maculipalpis", "Maliensis", "Deemingi", "Pretoriensis", "Machardyi", "Natalensis", "Buxtoni", "Caliginosus", "Paludis", "Tenebrosus", "Crypticus", "Ziemanni", "Namibiensis", "Rufipes", "Hancocki", "Brohieri", "Theileri"],
          ["Kingi", "Symesi", "Rufipes"],
@@ -143,11 +142,10 @@ if st.session_state.candidates[0]['name'] == "an Anopheles":
          ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
         
         # ---- Session Initialization ----
-        if "index" not in st.session_state:
-            st.session_state.index = 0
-            st.session_state.candidates = database
-            st.session_state.answers = {}
-            st.session_state.others = others
+        st.session_state.index = 0
+        st.session_state.candidates = database
+        st.session_state.answers = {}
+        st.session_state.others = []
         
         st.title("Anopheles Species Identifier")
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
