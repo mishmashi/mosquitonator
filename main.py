@@ -150,15 +150,6 @@ if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["nam
         st.title("Anopheles Species Identifier")
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
         
-        # ---- Filtering Logic ----
-        def filter_candidates(index, ans):
-            if ans == 1:
-                return [c for c in st.session_state.candidates if c.get(index, -1) == 1]
-            elif ans == 0:
-                return [c for c in st.session_state.candidates if c.get(index, -1) != 1]
-            else:
-                return st.session_state.candidates
-        
         # ---- Main Loop ----
         while st.session_state.index < len(questions):
             if len(st.session_state.candidates) <= 1:
@@ -229,7 +220,7 @@ if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["nam
             elif len(st.session_state.candidates) > 1:
                 st.warning("Possible species:")
                 for c in st.session_state.candidates:
-                    st.write(f"- **Anopheles {c["name"]}")
+                    st.write(f"- **Anopheles {c['name']}")
                    # st.image(c["image"], caption="Example of species")
         
            # elif len(st.session_state.candidates) == 0 and len(st.session_state.others) >0:
