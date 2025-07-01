@@ -50,6 +50,7 @@ if "index" not in st.session_state:
     st.session_state.candidates = database
     st.session_state.answers = {}
     st.session_state.phase = "start"
+    st.session_state.species_initialized = False
     
 def filter_candidates(index, ans, candidates):
         if ans == 1:
@@ -155,7 +156,7 @@ elif st.session_state.phase == "species":
          ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
         
         # ---- Session Initialization ----
-        if "species_initialized" not in st.session_state:
+        if st.session_state.species_initialized = False:
             st.session_state.index = 0
             st.session_state.candidates = database
             st.session_state.answers = {}
@@ -260,6 +261,7 @@ elif st.session_state.phase == "species":
 
         if st.button("Back to Species",key="restart_sp"):
             st.session_state.index = 0
+            st.session_state.phase = "species"
             st.session_state.candidates = database
             st.session_state.others = []
             st.session_state.answers = {}
