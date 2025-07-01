@@ -156,7 +156,7 @@ elif st.session_state.phase == "species":
          ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
         
         # ---- Session Initialization ----
-        if st.session_state.species_initialized = False:
+        if st.session_state.species_initialized == False:
             st.session_state.index = 0
             st.session_state.candidates = database
             st.session_state.answers = {}
