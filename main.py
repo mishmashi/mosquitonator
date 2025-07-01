@@ -108,6 +108,8 @@ if st.button("🔄 Restart", key="restart_genus"):
 if st.session_state.candidates[0]['name'] == "an Anopheles":
     if st.button("Determine species",key="determine_sp"):
         st.session_state.others = []
+        st.session_state.index = 0
+        st.session_state.answers = {}
         @st.cache_data #for optimization
         def load_data():
                 import pandas as pd
