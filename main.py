@@ -105,7 +105,7 @@ if st.button("🔄 Restart", key="restart_genus"):
     st.session_state.answers = {}
     st.rerun()
 
-if st.session_state.candidates[0]['name'] == "an Anopheles":
+if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
     if st.button("Determine species",key="determine_sp"):
         st.session_state.others = []
         st.session_state.index = 0
