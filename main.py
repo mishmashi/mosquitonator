@@ -249,7 +249,7 @@ elif st.session_state.phase == "species":
                 for name in st.session_state.others:
                         st.write(f"- **Anopheles {name}**")
         
-        if st.button("🔄 Restart from Genus",key="restart_sp"):
+        if st.button("🔄 Restart from Genus",key="restart_all"):
             st.session_state.index = 0
             st.session_state.candidates = []
             st.session_state.others = []
