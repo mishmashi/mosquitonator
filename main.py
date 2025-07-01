@@ -1,49 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Feature list and questions
-questions = [
-    "Is it a fly with needle-like mouthparts, scales on the body and wings?",
-    "Are the antennae bushy or feather-like?",
-    "Are the palpi as long as the proboscis?",
-    "Are the palpi bushy or paddle-shaped?",
-    "Is the apical half of the proboscis strongly recurved?",
-    "Are abdominal scales dark dorsally and pale ventrally, and does the mesopostnotum have setae?",
-    "Are abdominal scales banded or spotted, and is the mesopostnotum without setae?",
-    "Does vein 1A end before or at the level with the mcu intersection?",
-    "Is the thorax marked with lines of iridescent blue scales?",
-    "Are prespiracular setae present?",
-    "Are postspiracular setae present?",
-    "Is there a row of bristles at the base of the subcostal vein under the wing?",
-    "Is the abdomen pointed in dorsal view?",
-    "Are the wing scales narrow on dorsal surface?",
-    "Are there mixed brown and white wing scales dorsally?",
-    "Are the antennae longer than the proboscis?",
-    "Is flagellomere 1 twice as long as flagellomere 2?",
-    "Are there fine longitudinal lines of white scales on mesonotum?",
-    "Does tarsomere 1 have a pale ring in the middle?",
-    "Does the abdomen have metallic violet/silver scales?",
-    "Is there a silvery scale band from scutum to coxae?"
-]
-
-database = [
-    {"name": "an Aedes",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 12: 1, 18: 0, 19: 0, "image": "images/aedes.png"},
-    {"name": "an Anopheles",         0: 1, 1: 1, 2: 1, 3: 0, 5: 0, "image": "images/anopheles.png"},
-    {"name": "a Coquillettidia",    0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 1, "image": "images/coquillettidia.png"},
-    {"name": "a Culex",    0: 1, 1: 0, 2:0, 4: 0, 5: 0, 6: 1, 7: 0, 9: 0, 10: 0, 11:0, 12:0, 13: 1, 15:0, 16:0, "image": "images/culex.png"},
-    {"name": "a Culiseta",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 11: 1, "image": "images/culiseta.png"},
-    {"name": "a Deinocerites",      0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 0, 13: 1, 15: 1, 16: 1, "image": "images/deinocerites.png"},
-    {"name": "a Haemagogus",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 1, 16: 1, 17: 1, "image": "images/haemagogus.png"},
-    {"name": "a Mansonia",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 1, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 0, "image": "images/mansonia.png"},
-    {"name": "an Orthopodomyia",     0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 15: 1, "image": "images/orthopodomyia.png"},
-    {"name": "a Psorophora",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 10: 1, 12: 1, "image": "images/psorophora.png"},
-    {"name": "a Toxorhynchites",    0: 1, 1: 0, 2: 0, 4: 1, "image": "images/toxorhynchites.png"},
-    {"name": "an Uranotaenia",       0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 1, 8: 1, "image": "images/uranotaenia.png"},
-    {"name": "a Wyeomyia",          0: 1, 1: 0, 2: 0, 5: 1, "image": "images/wyeomyia.png"},
-    {"name": "not a mosquito",    0: 0, "image": "images/other.png"},
-    {"name": "a male mosquito",     0: 1, 1: 1, 2: 1, 3: 1, "image": "images/male.png"}
-]
-
+database = []
 # Initialize session state
 if "index" not in st.session_state:
     st.session_state.index = 0
@@ -71,7 +29,49 @@ if st.session_state.phase == "start":
 elif st.session_state.phase == "genus":
     st.header("Determine the Genus")
     st.markdown("Answer the following morphological questions to identify the genus:")
+    # Feature list and questions
+    questions = [
+        "Is it a fly with needle-like mouthparts, scales on the body and wings?",
+        "Are the antennae bushy or feather-like?",
+        "Are the palpi as long as the proboscis?",
+        "Are the palpi bushy or paddle-shaped?",
+        "Is the apical half of the proboscis strongly recurved?",
+        "Are abdominal scales dark dorsally and pale ventrally, and does the mesopostnotum have setae?",
+        "Are abdominal scales banded or spotted, and is the mesopostnotum without setae?",
+        "Does vein 1A end before or at the level with the mcu intersection?",
+        "Is the thorax marked with lines of iridescent blue scales?",
+        "Are prespiracular setae present?",
+        "Are postspiracular setae present?",
+        "Is there a row of bristles at the base of the subcostal vein under the wing?",
+        "Is the abdomen pointed in dorsal view?",
+        "Are the wing scales narrow on dorsal surface?",
+        "Are there mixed brown and white wing scales dorsally?",
+        "Are the antennae longer than the proboscis?",
+        "Is flagellomere 1 twice as long as flagellomere 2?",
+        "Are there fine longitudinal lines of white scales on mesonotum?",
+        "Does tarsomere 1 have a pale ring in the middle?",
+        "Does the abdomen have metallic violet/silver scales?",
+        "Is there a silvery scale band from scutum to coxae?"
+    ]
     
+    database = [
+        {"name": "an Aedes",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 12: 1, 18: 0, 19: 0, "image": "images/aedes.png"},
+        {"name": "an Anopheles",         0: 1, 1: 1, 2: 1, 3: 0, 5: 0, "image": "images/anopheles.png"},
+        {"name": "a Coquillettidia",    0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 1, "image": "images/coquillettidia.png"},
+        {"name": "a Culex",    0: 1, 1: 0, 2:0, 4: 0, 5: 0, 6: 1, 7: 0, 9: 0, 10: 0, 11:0, 12:0, 13: 1, 15:0, 16:0, "image": "images/culex.png"},
+        {"name": "a Culiseta",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 11: 1, "image": "images/culiseta.png"},
+        {"name": "a Deinocerites",      0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 0, 13: 1, 15: 1, 16: 1, "image": "images/deinocerites.png"},
+        {"name": "a Haemagogus",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 12: 1, 16: 1, 17: 1, "image": "images/haemagogus.png"},
+        {"name": "a Mansonia",          0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 1, 11: 0, 12: 0, 13: 0, 14: 1, 18: 0, 19: 0, "image": "images/mansonia.png"},
+        {"name": "an Orthopodomyia",     0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 15: 1, "image": "images/orthopodomyia.png"},
+        {"name": "a Psorophora",        0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 9: 1, 10: 1, 12: 1, "image": "images/psorophora.png"},
+        {"name": "a Toxorhynchites",    0: 1, 1: 0, 2: 0, 4: 1, "image": "images/toxorhynchites.png"},
+        {"name": "an Uranotaenia",       0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 1, 8: 1, "image": "images/uranotaenia.png"},
+        {"name": "a Wyeomyia",          0: 1, 1: 0, 2: 0, 5: 1, "image": "images/wyeomyia.png"},
+        {"name": "not a mosquito",    0: 0, "image": "images/other.png"},
+        {"name": "a male mosquito",     0: 1, 1: 1, 2: 1, 3: 1, "image": "images/male.png"}
+    ]
+
     # Skip uninformative questions
     while st.session_state.index < len(questions):
         values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
