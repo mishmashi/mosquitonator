@@ -50,27 +50,26 @@ if "index" not in st.session_state:
     st.session_state.candidates = database
     st.session_state.answers = {}
     st.session_state.phase = "start"
-
-if st.session_state.phase == "start":
-    st.header("Mosquito Identification")
-    choice = st.radio("Is the specimen an *Anopheles*?", ["Yes", "I don't know"])
-    if st.button("Continue"):
-        if choice == "Yes":
-            st.session_state.genus = "Anopheles"
-            st.session_state.phase = "species"
-        else:
-            st.session_state.phase = "genus"
-elif st.session_state.phase == "genus":
-    st.header("Determine the Genus")
-    st.markdown("Answer the following morphological questions to identify the genus:")
     
-    def filter_candidates(index, ans, candidates):
+def filter_candidates(index, ans, candidates):
         if ans == 1:
             return [c for c in candidates if c.get(index, -1) == 1]
         elif ans == 0:
             return [c for c in candidates if c.get(index, -1) != 1]
         else:
             return candidates
+
+if st.session_state.phase == "start":
+    st.header("Mosquito Identification")
+    choice = st.radio("Is the specimen an *Anopheles*?", ["Yes", "I don't know"])
+    if st.button("Continue"):
+        if choice == "Yes":
+            st.session_state.phase = "species"
+        else:
+            st.session_state.phase = "genus"
+elif st.session_state.phase == "genus":
+    st.header("Determine the Genus")
+    st.markdown("Answer the following morphological questions to identify the genus:")
     
     # Skip uninformative questions
     while st.session_state.index < len(questions):
