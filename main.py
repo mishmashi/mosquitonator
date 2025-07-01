@@ -155,10 +155,12 @@ elif st.session_state.phase == "species":
          ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
         
         # ---- Session Initialization ----
-        st.session_state.index = 0
-        st.session_state.candidates = database
-        st.session_state.answers = {}
-        st.session_state.others = []
+        if "species_initialized" not in st.session_state:
+            st.session_state.index = 0
+            st.session_state.candidates = database
+            st.session_state.answers = {}
+            st.session_state.others = []
+            st.session_state.species_initialized = True
         
         st.title("Anopheles Species Identifier")
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
@@ -252,6 +254,7 @@ elif st.session_state.phase == "species":
             st.session_state.candidates = database
             st.session_state.others = []
             st.session_state.answers = {}
+            st.session_state.species_initialized = False
             st.rerun()
         st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
         #if len(st.session_state.others) >0:
