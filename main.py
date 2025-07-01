@@ -49,67 +49,82 @@ if "index" not in st.session_state:
     st.session_state.index = 0
     st.session_state.candidates = database
     st.session_state.answers = {}
+    st.session_state.phase = "start"
 
-st.title("Mosquito Genus Identifier")
-st.markdown("Answer the following morphological questions to identify the genus:")
-
-def filter_candidates(index, ans, candidates):
-    if ans == 1:
-        return [c for c in candidates if c.get(index, -1) == 1]
-    elif ans == 0:
-        return [c for c in candidates if c.get(index, -1) != 1]
+if st.session_state.phase == "start":
+    st.header("Mosquito Identification")
+    choice = st.radio("Is the specimen an *Anopheles*?", ["Yes", "I don't know"])
+    if st.button("Continue"):
+        if choice == "Yes":
+            st.session_state.genus = "Anopheles"
+            st.session_state.phase = "species"
+        else:
+            st.session_state.phase = "genus"
+elif st.session_state.phase == "genus":
+    st.header("Determine the Genus")
+    st.markdown("Answer the following morphological questions to identify the genus:")
+    
+    def filter_candidates(index, ans, candidates):
+        if ans == 1:
+            return [c for c in candidates if c.get(index, -1) == 1]
+        elif ans == 0:
+            return [c for c in candidates if c.get(index, -1) != 1]
+        else:
+            return candidates
+    
+    # Skip uninformative questions
+    while st.session_state.index < len(questions):
+        values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+        if len(values) <= 1:
+            st.session_state.index += 1
+        else:
+            break
+    
+    if st.session_state.index < len(questions):
+        q = questions[st.session_state.index]
+        st.write(f"**Q{st.session_state.index + 1}: {q}**")
+    
+        col1, col2, col3 = st.columns(3)
+        if col1.button("Yes",key="y_genus"):
+            st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+            st.session_state.index += 1
+            st.rerun()
+        if col2.button("No",key="n_genus"):
+            st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+            st.session_state.index += 1
+            st.rerun()
+        if col3.button("I don't know",key="idk_genus"):
+            st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
+            st.session_state.index += 1
+            st.rerun()
     else:
-        return candidates
-
-# Skip uninformative questions
-while st.session_state.index < len(questions):
-    values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
-    if len(values) <= 1:
-        st.session_state.index += 1
-    else:
-        break
-
-if st.session_state.index < len(questions):
-    q = questions[st.session_state.index]
-    st.write(f"**Q{st.session_state.index + 1}: {q}**")
-
-    col1, col2, col3 = st.columns(3)
-    if col1.button("Yes",key="y_genus"):
-        st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
-        st.session_state.index += 1
-        st.rerun()
-    if col2.button("No",key="n_genus"):
-        st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
-        st.session_state.index += 1
-        st.rerun()
-    if col3.button("I don't know",key="idk_genus"):
-        st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
-        st.session_state.index += 1
-        st.rerun()
-else:
-    if len(st.session_state.candidates) == 1:
-        st.success(f"The specimen is **{st.session_state.candidates[0]['name']}**")
-        st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
-    elif len(st.session_state.candidates) > 1:
-        st.warning("Possible genera:")
-        for c in st.session_state.candidates:
-            st.write("- " + c["name"])
-            st.image(c["image"], caption="Mosquito morphology")
-
-    else:
-        st.error("No matching genus found.")
-
-if st.button("🔄 Restart", key="restart_genus"):
-    st.session_state.index = 0
-    st.session_state.candidates = database
-    st.session_state.answers = {}
-    st.rerun()
-
-if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
-    if st.button("Determine species",key="determine_sp"):
-        st.session_state.others = []
+        if len(st.session_state.candidates) == 1:
+            st.success(f"The specimen is **{st.session_state.candidates[0]['name']}**")
+            st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
+        elif len(st.session_state.candidates) > 1:
+            st.warning("Possible genera:")
+            for c in st.session_state.candidates:
+                st.write("- " + c["name"])
+                st.image(c["image"], caption="Mosquito morphology")
+    
+        else:
+            st.error("No matching genus found.")
+    
+    if st.button("🔄 Restart", key="restart_genus"):
         st.session_state.index = 0
-        
+        st.session_state.candidates = database
+        st.session_state.answers = {}
+        st.session_state.phase = "start"
+        st.rerun()
+
+    if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
+        if st.button("Determine species",key="determine_sp"):
+            st.session_state.others = []
+            st.session_state.index = 0
+            st.session_state.phase = "species"
+elif st.session_state.phase == "species":
+    st.header("Species Identification")
+            
         @st.cache_data #for optimization
         def load_data():
                 import pandas as pd
