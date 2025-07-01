@@ -61,10 +61,10 @@ while st.session_state.index < len(questions):
         st.session_state.index += 1 #skip question if candidate has been picked
 
     # Get all values for this question
-    values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+    #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
 
     # Skip q if all candidates have the same value, so no impurity gain
-    if values in [{-1}, {0}, {1}]:
+    if sum(1 for c in st.session_state.candidates if st.session_state.index in c) <=0:
         st.session_state.index += 1
     else:
         break  
