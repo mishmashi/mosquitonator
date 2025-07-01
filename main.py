@@ -123,8 +123,7 @@ elif st.session_state.phase == "genus":
             st.session_state.index = 0
             st.session_state.phase = "species"
 elif st.session_state.phase == "species":
-    st.header("Species Identification")
-            
+        st.header("Species Identification")    
         @st.cache_data #for optimization
         def load_data():
                 import pandas as pd
