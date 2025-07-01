@@ -57,13 +57,18 @@ def filter_candidates(index, ans):
 
 # ---- Main Loop ----
 while st.session_state.index < len(questions):
+    if len(st.session_state.candidates) <= 1:
+        break #skip question if candidate has been picked
+
+    # Get all values for this question
     values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
-    if len(values) <= 1:
-        st.session_state.index += 1
-    elif sum(1 for c in st.session_state.candidates if st.session_state.index in c) <=0:
+
+    # Skip q if all candidates have the same value, so no impurity gain
+    if values in [{-1}, {0}, {1}]:
         st.session_state.index += 1
     else:
-        break
+        break  
+            
 if st.session_state.index <= 9:
     q = questions[st.session_state.index]
     st.write(f"**Q{st.session_state.index + 1}: {q}**")
