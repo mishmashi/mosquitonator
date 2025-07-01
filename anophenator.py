@@ -58,7 +58,7 @@ def filter_candidates(index, ans):
 # ---- Main Loop ----
 while st.session_state.index < len(questions):
     if len(st.session_state.candidates) <= 1:
-        st.session_state.index = -1 #skip question if candidate has been picked
+        st.session_state.index += 1 #skip question if candidate has been picked
 
     # Get all values for this question
     values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
