@@ -53,13 +53,13 @@ if "index" not in st.session_state:
 st.title("Mosquito Genus Identifier")
 st.markdown("Answer the following morphological questions to identify the genus:")
 
-def filter_candidates(index, ans):
+def filter_candidates(index, ans, candidates):
     if ans == 1:
-        return [c for c in st.session_state.candidates if c.get(index, -1) == 1]
+        return [c for c in candidates if c.get(index, -1) == 1]
     elif ans == 0:
-        return [c for c in st.session_state.candidates if c.get(index, -1) != 1]
-    else:  # I don't know
-        return st.session_state.candidates
+        return [c for c in candidates if c.get(index, -1) != 1]
+    else:
+        return candidates
 
 # Skip uninformative questions
 while st.session_state.index < len(questions):
@@ -75,15 +75,15 @@ if st.session_state.index < len(questions):
 
     col1, col2, col3 = st.columns(3)
     if col1.button("Yes",key="y_genus"):
-        st.session_state.candidates = filter_candidates(st.session_state.index, 1)
+        st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
         st.session_state.index += 1
         st.rerun()
     if col2.button("No",key="n_genus"):
-        st.session_state.candidates = filter_candidates(st.session_state.index, 0)
+        st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
         st.session_state.index += 1
         st.rerun()
     if col3.button("I don't know",key="idk_genus"):
-        st.session_state.candidates = filter_candidates(st.session_state.index, None)
+        st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
         st.session_state.index += 1
         st.rerun()
 else:
@@ -179,17 +179,17 @@ if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["nam
             col1, col2, col3 = st.columns(3)
             if col1.button("Yes",key="y_sp"):
                 st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species 
-                st.session_state.candidates = filter_candidates(st.session_state.index, 1)
+                st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.index = 10
                 st.rerun()
             if col2.button("No",key="n_sp"):
                 if st.session_state.index == 9:
                         st.session_state.index += 1
                         st.session_state.others = others_by_group[10]
-                        st.session_state.candidates = filter_candidates(st.session_state.index, 0)
+                        st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                         st.rerun()
                 else:
-                        st.session_state.candidates = filter_candidates(st.session_state.index, 0)
+                        st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                         st.session_state.index += 1
                         st.rerun()
             if col3.button("I don't know",key="idk_sp"):
@@ -202,15 +202,15 @@ if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["nam
         
             col1, col2, col3 = st.columns(3)
             if col1.button("Yes",key="y_sp2"):
-                st.session_state.candidates = filter_candidates(st.session_state.index, 1)
+                st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
             if col2.button("No",key="n_sp2"):
-                st.session_state.candidates = filter_candidates(st.session_state.index, 0)
+                st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
             if col3.button("I don't know",key="idk_sp2"):
-                st.session_state.candidates = filter_candidates(st.session_state.index, None)
+                st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
         else:
