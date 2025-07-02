@@ -175,6 +175,9 @@ elif st.session_state.phase == "species":
             )
             prior = prior.split(",")
             st.markdown(f"Type: {type(prior)}")
+            if st.session_state.index == 0:
+                for idx, el in enumerate(prior):
+                    st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
