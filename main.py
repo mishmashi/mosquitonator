@@ -173,7 +173,7 @@ elif st.session_state.phase == "species":
             prior = st.text_input("Prior",
             placeholder="Enter prior vector",
             )
-            prior = priot.split(",")
+            prior = prior.split(",")
             st.markdown(f"Type: {type(prior)}")
 
             
