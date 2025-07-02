@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+prior = []
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -187,7 +188,7 @@ elif st.session_state.phase == "species":
         
         # ---- Main Loop ----
         while st.session_state.index < len(questions):
-            if len(st.session_state.candidates) <= 1 or prior:
+            if len(st.session_state.candidates) <= 1 or prior[0]:
                 st.session_state.index += 1 #skip question if candidate has been picked, or all have been eliminated
             # Get all values for this question
             #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
