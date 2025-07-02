@@ -10,6 +10,7 @@ if "index" not in st.session_state:
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
     st.session_state.prior = []
+    prior = []
     
 def filter_candidates(index, ans, candidates):
         if ans == 1:
