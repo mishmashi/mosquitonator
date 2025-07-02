@@ -180,7 +180,7 @@ elif st.session_state.phase == "species":
                     for idx, el in enumerate(st.session_state.prior):
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                         st.write(f"Looped through Q{idx}")
-                    st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
+        st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
