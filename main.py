@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 
 database = []
+prior = []
 # Initialize session state
 if "index" not in st.session_state:
     st.session_state.index = 0
@@ -10,7 +11,6 @@ if "index" not in st.session_state:
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
     st.session_state.prior = []
-    prior = []
     
 def filter_candidates(index, ans, candidates):
         if ans == 1:
