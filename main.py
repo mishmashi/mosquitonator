@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-prior = []
-
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -182,6 +180,7 @@ elif st.session_state.phase == "species":
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                         st.write(f"Looped through Q{idx}")
                     st.rerun()
+                    st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
