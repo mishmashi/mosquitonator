@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
 
-database = []
-prior = []
+
 # Initialize session state
 if "index" not in st.session_state:
+    database = []
+    prior = []
     st.session_state.index = 0
     st.session_state.candidates = database
     st.session_state.answers = {}
@@ -170,15 +171,19 @@ elif st.session_state.phase == "species":
             st.session_state.species_initialized = True
         
         st.title("Anopheles Species Identifier")
-        if st.button("Start with prior",key="prior"):
-            prior = st.text_input("Prior",
-            placeholder="Enter prior vector",
-            )
-            prior = prior.split(",")
-            st.markdown(f"Type: {type(prior)}")
-            if st.session_state.index == 0:
+
+        if st.session_state.index == 0:
+            if st.button("Start with prior",key="prior"):
+                st.write(f"Why is {item} your favorite?")
+                reason = st.text_input("Because...")
+                if st.button("Submit"):
+                    st.session_state.vote = {"item": item, "reason": reason}
+                prior = prior.split(",")
+                st.session_state.prior = prior
+                st.markdown(f"Type: {type(prior)}")
                 for idx, el in enumerate(prior):
                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+                st.rerun()
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
