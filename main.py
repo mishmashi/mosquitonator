@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
 
+prior = []
 
 # Initialize session state
 if "index" not in st.session_state:
     database = []
-    prior = []
     st.session_state.index = 0
     st.session_state.candidates = database
     st.session_state.answers = {}
@@ -174,15 +174,15 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index == 0:
             if st.button("Start with prior",key="prior"):
-                st.write(f"Why is {item} your favorite?")
-                reason = st.text_input("Because...")
+                prior = st.text_input("Enter prior in format '0,1,0,,,...'")
                 if st.button("Submit"):
-                    st.session_state.vote = {"item": item, "reason": reason}
-                prior = prior.split(",")
+                    st.session_state.prior = prior
+                prior = st.session_state.prior.split(",")
                 st.session_state.prior = prior
-                st.markdown(f"Type: {type(prior)}")
-                for idx, el in enumerate(prior):
+                #st.markdown(f"Type: {type(prior)}")
+                for idx, el in enumerate(st.session_state.prior):
                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+                    st.write(f"Looped through Q{idx}")
                 st.rerun()
 
             
