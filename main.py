@@ -9,6 +9,7 @@ if "index" not in st.session_state:
     st.session_state.answers = {}
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
+    st.session_state.prior = []
     
 def filter_candidates(index, ans, candidates):
         if ans == 1:
@@ -72,6 +73,9 @@ elif st.session_state.phase == "genus":
         {"name": "a male mosquito",     0: 1, 1: 1, 2: 1, 3: 1, "image": "images/male.png"}
     ]
 
+    if st.session_state.index == 0:
+        st.session_state.candidates = database
+
     # Skip uninformative questions
     while st.session_state.index < len(questions):
         values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
@@ -123,6 +127,7 @@ elif st.session_state.phase == "genus":
             st.session_state.index = 0
             st.session_state.phase = "species"
 elif st.session_state.phase == "species":
+            
         st.header("Species Identification")    
         @st.cache_data #for optimization
         def load_data():
@@ -164,6 +169,13 @@ elif st.session_state.phase == "species":
             st.session_state.species_initialized = True
         
         st.title("Anopheles Species Identifier")
+        if st.button("Start with prior",key="prior"):
+            st.session_state.prior = st.text_input("Prior",
+            placeholder="Enter prior vector",
+            )
+            st.markdown("Type: " + type(st.session_state.prior))
+
+            
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
         
         # ---- Main Loop ----
