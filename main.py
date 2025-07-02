@@ -170,10 +170,10 @@ elif st.session_state.phase == "species":
         
         st.title("Anopheles Species Identifier")
         if st.button("Start with prior",key="prior"):
-            st.session_state.prior = st.text_input("Prior",
+            prior = st.text_input("Prior",
             placeholder="Enter prior vector",
             )
-            st.markdown("Type: " + type(st.session_state.prior))
+            st.markdown("Type: " + type(prior))
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
