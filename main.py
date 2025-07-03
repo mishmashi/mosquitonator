@@ -173,8 +173,9 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index == 0:
             if st.button("Start with prior",key="prior"):
-                prior = st.text_input("Enter prior in format '0,1,0,None,None,...'")
+                prior = st.text_input("Enter prior in format '0,1,0,None,...'")
                 prior = [p for p in prior.split(",")]
+                st.warning(f"prior: {prior}")
                 
                 if st.button("Submit"):
                     st.session_state.prior = prior
@@ -182,7 +183,7 @@ elif st.session_state.phase == "species":
                     for idx, el in enumerate(st.session_state.prior):
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                         st.write(f"Looped through Q{idx}")
-        st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
+                        st.warning(f"st.Prior: {st.session_state.prior}")
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
@@ -257,7 +258,7 @@ elif st.session_state.phase == "species":
             elif len(st.session_state.candidates) > 1:
                 st.warning("Possible species:")
                 for c in st.session_state.candidates:
-                    st.write(f"- **Anopheles {c['name']}")
+                    st.write(f"- **Anopheles {c['name']}**")
                    # st.image(c["image"], caption="Example of species")
         
            # elif len(st.session_state.candidates) == 0 and len(st.session_state.others) >0:
