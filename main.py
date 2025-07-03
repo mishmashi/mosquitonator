@@ -175,15 +175,15 @@ elif st.session_state.phase == "species":
             if st.button("Start with prior",key="prior"):
                 prior = st.text_input("Enter prior in format '0,1,0,None,...'")
                 prior = [p for p in prior.split(",")]
+                st.session_state.prior = prior
+                st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
                 
                 if st.button("Submit"):
-                    st.session_state.prior = prior
                     st.markdown(f"prior: {st.session_state.prior}")
                     for idx, el in enumerate(st.session_state.prior):
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                         st.write(f"Looped through Q{idx}")
                         
-        st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
 
             
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
