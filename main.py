@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-prior_var = []
 # Initialize session state
 if "index" not in st.session_state:
     database = []
