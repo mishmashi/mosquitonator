@@ -172,17 +172,23 @@ elif st.session_state.phase == "species":
         st.title("Anopheles Species Identifier")
 
         if st.session_state.index == 0:
-            st.button('Start with prior', key='prior_st')
-            if st.session_state.get('prior_st'):
-                st.write("(Optional) Start with prior: ")
-                st.session_state.prior = st.text_input("Enter prior in format '0,1,0,None,...'")
-                prior_var = st.session_state.prior
+            st.text_input("Enter prior in format '0,1,0,None,...'", key= "prior_var")
+
+            def set_prior:
                 prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
-                if prior_var and st.session_state.candidates == database:
-                    st.session_state.prior = prior_var
-                    for idx, el in enumerate(prior_var):
+                st.session_state.prior = prior_var
+                for idx, el in enumerate(prior_var):
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                    st.rerun()
+                st.rerun()
+                
+            st.button('(Optional) Set prior', on_click=set_prior, args=['prior_var'], key='prior_st')
+
+                #prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
+                #if prior_var and st.session_state.candidates == database:
+                 #   st.session_state.prior = prior_var
+                  #  for idx, el in enumerate(prior_var):
+                   #     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+                    #st.rerun()
                 
             #if st.button("Submit", key="submit_bn") and len(st.session_state.prior)>0:
         #if len(st.session_state.prior) > 0:
