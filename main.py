@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-prior = []
+prior_var = []
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -172,11 +172,11 @@ elif st.session_state.phase == "species":
         st.title("Anopheles Species Identifier")
 
         if st.session_state.index == 0:
-            if st.button("Start with prior",key="prior"):
-                prior = st.text_input("Enter prior in format '0,1,0,None,...'")
-                prior = [p for p in prior.split(",")]
-                st.session_state.prior = prior
-                st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior}")
+            if st.button("Start with prior",key="prior_bn"):
+                prior_var = st.text_input("Enter prior in format '0,1,0,None,...'")
+                prior_var = [p for p in prior_var.split(",")]
+                st.session_state.prior = prior_var
+                st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior_var}")
                 
                 if st.button("Submit"):
                     st.markdown(f"prior: {st.session_state.prior}")
