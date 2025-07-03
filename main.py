@@ -11,7 +11,7 @@ if "index" not in st.session_state:
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
     st.session_state.prior = []
-    
+
 def filter_candidates(index, ans, candidates):
         if ans == 1:
             return [c for c in candidates if c.get(index, -1) == 1]
@@ -55,7 +55,7 @@ elif st.session_state.phase == "genus":
         "Does the abdomen have metallic violet/silver scales?",
         "Is there a silvery scale band from scutum to coxae?"
     ]
-    
+
     database = [
         {"name": "an Aedes",             0: 1, 1: 0, 2: 0, 5: 0, 6: 1, 7: 0, 10: 0, 12: 1, 18: 0, 19: 0, "image": "images/aedes.png"},
         {"name": "an Anopheles",         0: 1, 1: 1, 2: 1, 3: 0, 5: 0, "image": "images/anopheles.png"},
@@ -84,11 +84,11 @@ elif st.session_state.phase == "genus":
             st.session_state.index += 1
         else:
             break
-    
+
     if st.session_state.index < len(questions):
         q = questions[st.session_state.index]
         st.write(f"**Q{st.session_state.index + 1}: {q}**")
-    
+
         col1, col2, col3 = st.columns(3)
         if col1.button("Yes",key="y_genus"):
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
@@ -111,10 +111,10 @@ elif st.session_state.phase == "genus":
             for c in st.session_state.candidates:
                 st.write("- " + c["name"])
                 st.image(c["image"], caption="Mosquito morphology")
-    
+
         else:
             st.error("No matching genus found.")
-    
+
     if st.button("🔄 Restart", key="restart_genus"):
         st.session_state.index = 0
         st.session_state.candidates = database
@@ -128,15 +128,15 @@ elif st.session_state.phase == "genus":
             st.session_state.index = 0
             st.session_state.phase = "species"
 elif st.session_state.phase == "species":
-            
-        st.header("Species Identification")    
+
+        st.header("Species Identification")
         @st.cache_data #for optimization
         def load_data():
                 import pandas as pd
                 df = pd.read_csv("Mosquito traits by genus.csv", header=2)
         #        st.write("Available columns:", df.columns.tolist())
                 questions = [col for col in df.columns if col not in ("Species", "Image")]
-        
+
                 database = []
                 for _, row in df.iterrows():
                     entry = {"name": row["Species"], "image": row["Image"]}
@@ -144,9 +144,9 @@ elif st.session_state.phase == "species":
                         if pd.notna(row[q]) and row[q] != "":
                             entry[i] = int(row[q])
                     database.append(entry)
-        
+
                 return questions, database
-        
+
         # ---- Load questions and database ----
         questions, database = load_data()
         others_by_group = [["Brumpti", "Argenteolobatus", "Murphyi", "Cinctus", "Cristipalpis", "Okuensis", "Implexus", "Swahilicus", "Squamosus", "Cyddipis"],
@@ -160,7 +160,7 @@ elif st.session_state.phase == "species":
          ["Wellcomei", "Seydeli", "Mortiauxi", "Berghei", "Brunnipes", "Walravensi", "Harperi", "Njombiensis", "Austensii", "Gibbinsi", "Hargreavesi", "Mousinhoi", "Marshallii", "Letabensis", "Kosiensis", "Hughi"],
          ["Gabonensis", "Rufipes", "Domicolus", "Lloreti", "Barberellus", "Brucei", "Rivulorum", "Carteri", "Brucei", "Freetownensis", "Demeilloni", "Flavicosta", "Keniensis", "Moucheti", "Bervoetsi", "Garnhami"],
          ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
-        
+
         # ---- Session Initialization ----
         if st.session_state.species_initialized == False:
             st.session_state.index = 0
@@ -168,105 +168,78 @@ elif st.session_state.phase == "species":
             st.session_state.answers = {}
             st.session_state.others = []
             st.session_state.species_initialized = True
-        
+
         st.title("Anopheles Species Identifier")
 
         if st.session_state.index == 0:
-            st.text_input("Enter prior in format '0,1,0,None,...'", key= "prior_var")
-            
-        # ---- Start with Prior ----
-            def set_prior(prior_fn):
-                prior_fn = [int(p) if p.isdigit() else None for p in prior_fn.split(",")]
-                st.session_state.prior = prior_fn
-                for idx, el in enumerate(prior_fn):
-                        st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                
-            st.button('(Optional) Set prior', on_click=set_prior, args=['prior_var'], key='prior_st')
+            st.write("(Optional) Start with prior: ")
+            prior_input = st.text_input("Enter prior in format '0,1,0,None,...'", key="prior_text_input")
 
-                #prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
-                #if prior_var and st.session_state.candidates == database:
-                 #   st.session_state.prior = prior_var
-                  #  for idx, el in enumerate(prior_var):
-                   #     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                    #st.rerun()
-                
-            #if st.button("Submit", key="submit_bn") and len(st.session_state.prior)>0:
-        #if len(st.session_state.prior) > 0:
-         #   for idx, el in enumerate(st.session_state.prior):
-          #      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-           #     st.write(f"Looped through Q{idx}")
-           # st.rerun()
-                        
-        st.markdown(f"st.Prior: {st.session_state.prior}")
-        st.write(
-            st.session_state.candidates
-        )
+            if st.button("Submit Prior"):
+                prior_list = [int(p) if p.isdigit() else None for p in prior_input.split(",")]
+                st.session_state.prior = prior_list
+                st.session_state.candidates = database # Reset candidates before applying prior
+                for idx, el in enumerate(st.session_state.prior):
+                    if el is not None: # Only filter if the prior element is not None
+                        st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+                st.warning(f"Applied prior: {st.session_state.prior}")
+                st.rerun()
+
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
-        
+
         # ---- Main Loop ----
+        # Apply prior filters immediately after loading data if prior exists
+        if st.session_state.index == 0 and st.session_state.prior:
+             st.session_state.candidates = database # Reset candidates before applying prior
+             for idx, el in enumerate(st.session_state.prior):
+                 if el is not None: # Only filter if the prior element is not None
+                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+             st.warning(f"Initial candidates after applying prior: {len(st.session_state.candidates)}")
+
+
         while st.session_state.index < len(questions):
-            if len(st.session_state.candidates) <= 1:
-                st.session_state.index += 1 #skip question if candidate has been picked, or all have been eliminated
-            # Get all values for this question
-            #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
-        
-            # Skip q if all candidates have the same value, so no impurity gain
-            #if sum(1 for c in st.session_state.candidates if st.session_state.index in c) <=1:
-             #   st.session_state.index += 1
+            # Skip uninformative questions
             values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
             num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
-        
+
             # Skip if all answers are the same or only one candidate has data
-            #if st.session_state.index >10:
-            if st.session_state.index:
-                    if len(values) <= 1 or num_with_values <= 1:
-                        st.session_state.index += 1
-                    else:
-                            break
+            # Check if the current index has a corresponding value in the prior and skip if it does
+            if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] is not None:
+                 st.session_state.index += 1
+                 continue # Skip to the next iteration of the while loop
+
+            if st.session_state.index >= 10: # This condition seems arbitrary, let's adjust or remove
+                 if len(values) <= 1 or num_with_values <= 1:
+                     st.session_state.index += 1
+                 else:
+                         break
             else:
-                break  
-                    
-        if st.session_state.index <= 9:
+                 if len(values) <= 1 or num_with_values <= 1:
+                     st.session_state.index += 1
+                 else:
+                    break
+
+
+        if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
-        
+
             col1, col2, col3 = st.columns(3)
-            if col1.button("Yes",key="y_sp"):
-                st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species 
-                st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
-                st.session_state.index = 10
-                st.rerun()
-            if col2.button("No",key="n_sp"):
-                if st.session_state.index == 9:
-                        st.session_state.index += 1
-                        st.session_state.others = others_by_group[10]
-                        st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
-                        st.rerun()
-                else:
-                        st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
-                        st.session_state.index += 1
-                        st.rerun()
-            if col3.button("I don't know",key="idk_sp"):
-                st.session_state.index += 1
-                st.rerun()
-        
-        elif st.session_state.index < len(questions):
-            q = questions[st.session_state.index]
-            st.write(f"**Q{st.session_state.index + 1}: {q}**")
-        
-            col1, col2, col3 = st.columns(3)
-            if col1.button("Yes",key="y_sp2"):
+            if col1.button("Yes",key=f"y_sp_{st.session_state.index}"):
+                if st.session_state.index < len(others_by_group):
+                     st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
-            if col2.button("No",key="n_sp2"):
+            if col2.button("No",key=f"n_sp_{st.session_state.index}"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
-            if col3.button("I don't know",key="idk_sp2"):
+            if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
+
         else:
             if len(st.session_state.candidates) == 1:
                 st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
@@ -276,12 +249,8 @@ elif st.session_state.phase == "species":
                 for c in st.session_state.candidates:
                     st.write(f"- **Anopheles {c['name']}**")
                    # st.image(c["image"], caption="Example of species")
-        
-           # elif len(st.session_state.candidates) == 0 and len(st.session_state.others) >0:
-            #    st.warning("Possible species:")
-             #   for name in st.session_state.others:
-              #    st.write("- Anopheles " + name)
-            else: 
+
+            else:
               st.error("No matching relevant species.")
             if st.session_state.others:
                 st.warning("Less likely species:")
