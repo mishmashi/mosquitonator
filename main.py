@@ -173,16 +173,21 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index == 0:
             st.write("(Optional) Start with prior: ")
-            prior_var = st.text_input("Enter prior in format '0,1,0,None,...'")
+            st.session_state.prior = st.text_input("Enter prior in format '0,1,0,None,...'")
+            prior_var = session_state.prior
             prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
-            st.session_state.prior = prior_var
-            
-            if st.button("Submit", key="submit_bn") and len(st.session_state.prior)>0:
-                st.markdown(f"st.Prior: {st.session_state.prior}, prior: {prior_var}")
-                for idx, el in enumerate(st.session_state.prior):
+            if prior_var != st.session_state.prior:
+                st.session_state.prior = prior_var
+                for idx, el in enumerate(prior_var):
                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                    st.write(f"Looped through Q{idx}")
                 st.rerun()
+                
+            #if st.button("Submit", key="submit_bn") and len(st.session_state.prior)>0:
+        #if len(st.session_state.prior) > 0:
+         #   for idx, el in enumerate(st.session_state.prior):
+          #      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+           #     st.write(f"Looped through Q{idx}")
+           # st.rerun()
                         
         st.markdown(f"st.Prior: {st.session_state.prior}")
         st.write(
