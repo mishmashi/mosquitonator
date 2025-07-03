@@ -191,6 +191,7 @@ elif st.session_state.phase == "species":
         # ---- Main Loop ----
         while st.session_state.index < len(questions):
             prior_var = st.session_state.prior
+            st.warning(f"prior: {prior_var}")
             if len(st.session_state.candidates) <= 1 or len(prior_var) >0:
                 st.session_state.index += 1 #skip question if candidate has been picked, or all have been eliminated
             # Get all values for this question
@@ -272,8 +273,9 @@ elif st.session_state.phase == "species":
                 st.warning("Less likely species:")
                 for name in st.session_state.others:
                         st.write(f"- **Anopheles {name}**")
-        
-        if st.button("🔄 Restart from Genus",key="restart_all"):
+
+        bn1, bn2 = st.columns(2)
+        if bn1.button("🔄 Restart from Genus",key="restart_all"):
             st.session_state.index = 0
             st.session_state.candidates = []
             st.session_state.others = []
@@ -282,7 +284,7 @@ elif st.session_state.phase == "species":
             st.session_state.phase = "start"
             st.rerun()
 
-        if st.button("Back to Species",key="restart_sp"):
+        if bn2.button("Back to Species",key="restart_sp"):
             st.session_state.index = 0
             st.session_state.phase = "species"
             st.session_state.candidates = database
