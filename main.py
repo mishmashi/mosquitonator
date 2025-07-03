@@ -177,7 +177,7 @@ elif st.session_state.phase == "species":
             prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
             st.session_state.prior = prior_var
             
-            if len(st.session_state.prior)>0:
+            if st.button("Submit", key="submit_bn") and len(st.session_state.prior)>0:
                 st.markdown(f"st.Prior: {st.session_state.prior}, prior: {prior_var}")
                 for idx, el in enumerate(st.session_state.prior):
                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
