@@ -176,7 +176,7 @@ elif st.session_state.phase == "species":
             st.session_state.prior = st.text_input("Enter prior in format '0,1,0,None,...'")
             prior_var = st.session_state.prior
             prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
-            if prior_var != st.session_state.prior:
+            if prior_var and st.session_state.candidates == database:
                 st.session_state.prior = prior_var
                 for idx, el in enumerate(prior_var):
                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
