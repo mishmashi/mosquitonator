@@ -174,8 +174,10 @@ elif st.session_state.phase == "species":
         if st.session_state.index == 0:
             if st.button("Start with prior",key="prior"):
                 prior = st.text_input("Enter prior in format '0,1,0,None,None,...'")
-                st.session_state.prior = [p for p in prior.split(",")]
+                prior = [p for p in prior.split(",")]
+                
                 if st.button("Submit"):
+                    st.session_state.prior = prior
                     #st.markdown(f"Type: {type(prior)}")
                     for idx, el in enumerate(st.session_state.prior):
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
