@@ -287,6 +287,7 @@ elif st.session_state.phase == "species":
             st.session_state.answers = {}
             st.session_state.species_initialized = False
             st.session_state.phase = "start"
+            st.session_state.prior = []
             st.rerun()
 
         if bn2.button("Back to Species",key="restart_sp"):
@@ -296,6 +297,7 @@ elif st.session_state.phase == "species":
             st.session_state.others = []
             st.session_state.answers = {}
             st.session_state.species_initialized = False
+            st.session_state.prior = []
             st.rerun()
         st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
         #if len(st.session_state.others) >0:
