@@ -174,7 +174,7 @@ elif st.session_state.phase == "species":
         if st.session_state.index == 0:
             st.write("(Optional) Start with prior: ")
             prior_var = st.text_input("Enter prior in format '0,1,0,None,...'")
-            prior_var = [int(p) for p in prior_var.split(",") if type(p) == int else '']
+            prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
                 
             if st.button("Submit"):
                 st.session_state.prior = prior_var
