@@ -191,7 +191,7 @@ elif st.session_state.phase == "species":
                         
         st.markdown(f"st.Prior: {st.session_state.prior}")
         st.write(
-            st.session_state.candidates["name"]
+            st.session_state.candidates[:]["name"]
         )
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
         
