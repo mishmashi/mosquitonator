@@ -175,11 +175,10 @@ elif st.session_state.phase == "species":
             st.write("(Optional) Start with prior: ")
             prior_var = st.text_input("Enter prior in format '0,1,0,None,...'")
             prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
-                
-            if st.button("Submit"):
-                st.session_state.prior = prior_var
-                st.warning(f"st.Prior: {st.session_state.prior}, prior: {prior_var}")
-                st.markdown(f"prior: {st.session_state.prior}")
+            st.session_state.prior = prior_var
+            
+            if len(st.session_state.prior)>0:
+                st.markdown(f"st.Prior: {st.session_state.prior}, prior: {prior_var}")
                 for idx, el in enumerate(st.session_state.prior):
                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                     st.write(f"Looped through Q{idx}")
@@ -191,8 +190,6 @@ elif st.session_state.phase == "species":
         
         # ---- Main Loop ----
         while st.session_state.index < len(questions):
-            prior_var = st.session_state.prior
-            st.warning(f"prior: {prior_var}")
             if len(st.session_state.candidates) <= 1 or len(prior_var) >0:
                 st.session_state.index += 1 #skip question if candidate has been picked, or all have been eliminated
             # Get all values for this question
