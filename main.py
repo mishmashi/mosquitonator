@@ -174,7 +174,7 @@ elif st.session_state.phase == "species":
         if st.session_state.index == 0:
             st.text_input("Enter prior in format '0,1,0,None,...'", key= "prior_var")
 
-            def set_prior:
+            def set_prior():
                 prior_var = [int(p) if p.isdigit() else None for p in prior_var.split(",")]
                 st.session_state.prior = prior_var
                 for idx, el in enumerate(prior_var):
