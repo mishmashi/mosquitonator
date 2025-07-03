@@ -22,7 +22,7 @@ def filter_candidates(index, ans, candidates):
 
 if st.session_state.phase == "start":
     st.header("Mosquito Identification")
-    choice = st.radio("Is the specimen an *Anopheles*?", ["Yes", "I don't know"])
+    choice = st.radio("Is the specimen an *Anopheles*?", ["Yes", "Unsure"])
     if st.button("Continue"):
         if choice == "Yes":
             st.session_state.phase = "species"
@@ -134,7 +134,6 @@ elif st.session_state.phase == "species":
         def load_data():
                 import pandas as pd
                 df = pd.read_csv("Mosquito traits by genus.csv", header=2)
-        #        st.write("Available columns:", df.columns.tolist())
                 questions = [col for col in df.columns if col not in ("Species", "Image")]
 
                 database = []
@@ -180,7 +179,7 @@ elif st.session_state.phase == "species":
                 st.session_state.prior = prior_list
                 st.session_state.candidates = database # Reset candidates before applying prior
                 for idx, el in enumerate(st.session_state.prior):
-                    if el is not None: # Only filter if the prior element is not None
+                    if el is not None: 
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                 st.warning(f"Applied prior: {st.session_state.prior}")
                 st.rerun()
@@ -188,14 +187,11 @@ elif st.session_state.phase == "species":
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
         # ---- Main Loop ----
-        # Apply prior filters immediately after loading data if prior exists
         if st.session_state.index == 0 and st.session_state.prior:
              st.session_state.candidates = database # Reset candidates before applying prior
              for idx, el in enumerate(st.session_state.prior):
-                 if el is not None: # Only filter if the prior element is not None
+                 if el is not None:
                      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-             st.warning(f"Initial candidates after applying prior: {len(st.session_state.candidates)}")
-
 
         while st.session_state.index < len(questions):
             # Skip uninformative questions
@@ -206,9 +202,9 @@ elif st.session_state.phase == "species":
             # Check if the current index has a corresponding value in the prior and skip if it does
             if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] is not None:
                  st.session_state.index += 1
-                 continue # Skip to the next iteration of the while loop
+                 continue
 
-            if st.session_state.index >= 10: # This condition seems arbitrary, let's adjust or remove
+            if st.session_state.index >= 10: 
                  if len(values) <= 1 or num_with_values <= 1:
                      st.session_state.index += 1
                  else:
@@ -243,7 +239,7 @@ elif st.session_state.phase == "species":
         else:
             if len(st.session_state.candidates) == 1:
                 st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
-                #st.image(st.session_state.candidates[0]['image'], caption="Mosquito morphology")
+                #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
             elif len(st.session_state.candidates) > 1:
                 st.warning("Possible species:")
                 for c in st.session_state.candidates:
@@ -258,7 +254,7 @@ elif st.session_state.phase == "species":
                         st.write(f"- **Anopheles {name}**")
 
         bn1, bn2 = st.columns(2)
-        if bn1.button("🔄 Restart from Genus",key="restart_all"):
+        if bn1.button("Restart from Genus",key="restart_all"):
             st.session_state.index = 0
             st.session_state.candidates = []
             st.session_state.others = []
