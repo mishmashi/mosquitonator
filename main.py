@@ -191,7 +191,7 @@ elif st.session_state.phase == "species":
                         
         st.markdown(f"st.Prior: {st.session_state.prior}")
         st.write(
-            st.session_state.candidates
+            st.session_state.candidates["name"]
         )
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
         
@@ -209,7 +209,8 @@ elif st.session_state.phase == "species":
             num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
         
             # Skip if all answers are the same or only one candidate has data
-            if st.session_state.index >10:
+            #if st.session_state.index >10:
+            if st.session_state.index:
                     if len(values) <= 1 or num_with_values <= 1:
                         st.session_state.index += 1
                     else:
