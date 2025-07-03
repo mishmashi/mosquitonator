@@ -26,10 +26,10 @@ if st.session_state.phase == "start":
     if st.button("Continue"):
         if choice == "Yes":
             st.session_state.phase = "species"
-            rerun()
+            st.rerun()
         else:
             st.session_state.phase = "genus"
-            rerun()
+            st.rerun()
 elif st.session_state.phase == "genus":
     st.header("Determine the Genus")
     st.markdown("Answer the following morphological questions to identify the genus:")
