@@ -184,7 +184,10 @@ elif st.session_state.phase == "species":
                     st.write(f"Looped through Q{idx}")
                 st.rerun()
                         
-
+        st.markdown(f"st.Prior: {st.session_state.prior}")
+        st.write(
+            st.session_state.candidates
+        )
         st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
         
         # ---- Main Loop ----
