@@ -180,7 +180,6 @@ elif st.session_state.phase == "species":
                 st.session_state.prior = prior_fn
                 for idx, el in enumerate(prior_fn):
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                st.rerun()
                 
             st.button('(Optional) Set prior', on_click=set_prior, args=['prior_var'], key='prior_st')
 
