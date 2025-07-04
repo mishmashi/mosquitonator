@@ -1,9 +1,9 @@
-
-import os
 import openai
+import streamlit as st
 
-# Set the OpenAI API key from the environment variable
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# Get your key from Streamlit secrets or environment
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = openai.OpenAI()
 
 instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
@@ -74,7 +74,7 @@ Use the following rules:
 user_input = "The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
 
 # Make the API call
-response = openai.ChatCompletion.create(
+response = client.chat.completions.create(
     model="gpt-4",
     messages=[
         {"role": "system", "content": instructions},
@@ -82,5 +82,4 @@ response = openai.ChatCompletion.create(
     ]
 )
 
-# Print the output
-print(response.choices[0].message["content"])
+st.write(response.choices[0].message.content)
