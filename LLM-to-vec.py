@@ -83,7 +83,6 @@ Return a vector with values in the same order as the feature list.
 user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
 
 if st.button("Submit"):
-        prior_list = [int(p) if p.isdigit() else None for p in prior_input.split(",")]
         st.session_state.u_inp = user_input
         response = client.chat.completions.create(
             model="gpt-4o-mini",
