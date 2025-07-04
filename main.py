@@ -179,7 +179,7 @@ elif st.session_state.phase == "species":
             if st.button("Submit Prior"):
                 st.session_state.u_inp = nl_input
                 prior = get_feature_vector(nl_input)
-                prior_list = [int(p) if p.isdigit() else None for p in nl_input.split(",")]
+                prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
                 st.session_state.prior = prior_list
                 st.session_state.candidates = database # Reset candidates before applying prior
                 for idx, el in enumerate(st.session_state.prior):
