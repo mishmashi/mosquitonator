@@ -222,7 +222,7 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
-            st.write(f"**Q{st.session_state.index + 1}: {q}**.}")
+            st.write(f"**Q{st.session_state.index + 1}: {q}**.")
 
             col1, col2, col3 = st.columns(3)
             if col1.button("Yes",key=f"y_sp_{st.session_state.index}"):
