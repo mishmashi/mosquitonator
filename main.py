@@ -174,12 +174,12 @@ elif st.session_state.phase == "species":
 
         # ---- Starting with Prior Text ----
         if st.session_state.index == 0:
-            nl_input = st.text_input("(Optional) Start with prior:'", key="prior_text_input", placeholder="Describe the mosquito in detail...")
+            nl_input = st.text_area("(Optional) Start with prior:'", key="prior_text_input", placeholder="Describe the mosquito in detail...")
             
             if st.button("Submit Prior"):
                 st.session_state.u_inp = nl_input
                 prior = get_feature_vector(nl_input)
-                prior_list = [int(p) if p.isdigit() else None for p in prior_input.split(",")]
+                prior_list = [int(p) if p.isdigit() else None for p in nl_input.split(",")]
                 st.session_state.prior = prior_list
                 st.session_state.candidates = database # Reset candidates before applying prior
                 for idx, el in enumerate(st.session_state.prior):
