@@ -92,8 +92,8 @@ if st.button("Submit"):
                  {"role": "user", "content": user_input}
             ]
          )
-         st.write(response.choices[0].message.content)
-         st.rerun()
+        st.write(response.choices[0].message.content)
+        st.rerun()
 # user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
 # API call
 #response = client.chat.completions.create(
