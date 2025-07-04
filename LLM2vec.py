@@ -8,9 +8,9 @@ client = OpenAI(
     api_key = st.secrets["OPENAI_API_KEY"]
 )
 
-if "u_inp" not in st.session_state:
-    st.session_state.u_inp = ""
-    st.session_state.result = ""
+#if "u_inp" not in st.session_state:
+#    st.session_state.u_inp = ""
+#    st.session_state.result = ""
 
 instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
@@ -80,29 +80,29 @@ Return a vector with values in the same order as the feature list.
 - feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
 - Remember not to add spaces to the final vector.
 """
-# User input
-user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
-
-if st.button("Submit"):
-        st.session_state.u_inp = user_input
-    
-        response = client.chat.completions.create(
+def get_feature_vector(user_input: str) -> str:
+    response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                  {"role": "system", "content": instructions},
                  {"role": "user", "content": user_input}
             ]
          )
-        st.session_state.result= response.choices[0].message.content
-        st.rerun()
-st.write(st.session_state.result)
-# user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
-# API call
-#response = client.chat.completions.create(
-#    model="gpt-4o-mini",
-#    messages=[
-#        {"role": "system", "content": instructions},
-#        {"role": "user", "content": user_input}
-#    ]
-#)
-#st.write(response.choices[0].message.content)
+    return response.choices[0].message.content
+# User input
+#user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
+
+#if st.button("Submit"):
+#        st.session_state.u_inp = user_input
+    
+#        response = client.chat.completions.create(
+#            model="gpt-4o-mini",
+#            messages=[
+#                 {"role": "system", "content": instructions},
+#                 {"role": "user", "content": user_input}
+#            ]
+#         )
+#        st.session_state.result= response.choices[0].message.content
+#        st.rerun()
+#st.write(st.session_state.result)
+
