@@ -76,7 +76,7 @@ Return a list with values in the same order as the feature list.
 - Remember not to add spaces to the final vector.
 """
 # User input
-user_input = "The mosquito has no hair on the abdomen. Legs are speckled, wings are pale with four main dark areas, and a pale interruption near the wing base. The proboscis is mostly bushy, and straight. Palpi are as long as proboscis. APex of palpi is pale, and there are two other pale bands. There's a white band on the second dark area of vein 1."
+user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
 
 # API call
 response = client.chat.completions.create(
