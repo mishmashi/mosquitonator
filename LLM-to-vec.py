@@ -2,26 +2,18 @@ import openai
 import streamlit as st
 
 # Get your key from Streamlit secrets or environment
-openai.api_key = st.secrets["OPENAI_API_KEY"]
-client = openai.OpenAI()
+#openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(
+    api_key = st.secrets["OPENAI_API_KEY"]
+)
 
 instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
 Use the following rules:
 - Output `1` if the feature is explicitly confirmed or strongly implied.
 - Output `0` if the feature is explicitly ruled out.
-- Output `None` if the description doesn’t provide enough information to decide.
-
-### Additional context:
-- tarsus: leg
-- tarsomere: leg segment
-- spots may be called bands on ocassion
-- consider 0.5 as roughly around half
-- the term apical might be described as distal
-- the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3... vein 6
-- veins 5 and 6 might be described as "posterior veins"
-- the costa can be called the "top vein"
-- feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
+- Output `` if the description doesn’t provide enough information to decide.
+- Don't add square brackets or any spaces to the final vector. Only characters it can contain are ",", 1 and 0
 
 ### Feature List (in order):
 
@@ -66,20 +58,32 @@ Use the following rules:
 "The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
 
 ### Expected Output:
-[None, None, None, None, 1, None, None, 1, ..., None]
+[,,,,1,,,1,...,]
 
-(Return a list with values in the same order as the feature list.)
+
+Return a list with values in the same order as the feature list.
+
+### Additional context:
+- tarsus: leg
+- tarsomere: leg segment
+- spots may be called bands on ocassion
+- consider 0.5 as roughly around half
+- the term apical might be described as distal
+- the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3... vein 6
+- veins 5 and 6 might be described as "posterior veins"
+- the costa can be called the "top vein"
+- feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
+- Remember not to add spaces to the final vector.
 """
 # User input
-user_input = "The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
+user_input = "The mosquito has no hair on the abdomen. Legs are speckled, wings are pale with four main dark areas, and a pale interruption near the wing base. The proboscis is mostly bushy, and straight. Palpi are as long as proboscis. APex of palpi is pale, and there are two other pale bands. There's a white band on the second dark area of vein 1."
 
-# Make the API call
+# API call
 response = client.chat.completions.create(
-    model="gpt-4",
+    model="gpt-4o-mini",
     messages=[
         {"role": "system", "content": instructions},
         {"role": "user", "content": user_input}
     ]
 )
-
 st.write(response.choices[0].message.content)
