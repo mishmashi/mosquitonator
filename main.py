@@ -14,7 +14,7 @@ if "index" not in st.session_state:
 
 def filter_candidates(index, ans, candidates):
         if ans == 1:
-            return [c for c in candidates if c.get(index, -1) == 1]
+            return [c for c in candidates if c.get(index, -1) != 0]
         elif ans == 0:
             return [c for c in candidates if c.get(index, -1) != 1]
         else:
