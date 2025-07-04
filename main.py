@@ -181,7 +181,7 @@ elif st.session_state.phase == "species":
                 st.session_state.prior = prior_list
                 st.session_state.candidates = database # Reset candidates before applying prior
                 for idx, el in enumerate(st.session_state.prior):
-                    if el.isdigit(): 
+                    if el in [0,1]: 
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                 st.warning(f"Applied prior: {st.session_state.prior}")
                 st.rerun()
@@ -202,7 +202,7 @@ elif st.session_state.phase == "species":
 
             # Skip if all answers are the same or only one candidate has data
             # Check if the current index has a corresponding value in the prior and skip if it does
-            if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index].isdigit():
+            if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1]:
                  st.session_state.index += 1
                  continue
 
