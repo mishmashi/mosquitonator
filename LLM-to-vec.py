@@ -8,7 +8,7 @@ client = OpenAI(
     api_key = st.secrets["OPENAI_API_KEY"]
 )
 
-if "index" not in st.session_state:
+if "u_inp" not in st.session_state:
     st.session_state.u_inp = ""
     st.session_state.result = ""
 
