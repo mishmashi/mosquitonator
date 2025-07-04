@@ -10,6 +10,7 @@ client = OpenAI(
 
 if "index" not in st.session_state:
     st.session_state.u_inp = ""
+    st.session_state.result = ""
 
 instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
@@ -84,6 +85,7 @@ user_input = st.text_area("Describe the mosquito in detail:", placeholder="The w
 
 if st.button("Submit"):
         st.session_state.u_inp = user_input
+    
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -91,6 +93,7 @@ if st.button("Submit"):
                  {"role": "user", "content": user_input}
             ]
          )
+        st.session_state.result= response.choices[0].message.content
         st.write(response.choices[0].message.content)
         st.rerun()
 # user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
