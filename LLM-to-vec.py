@@ -4,12 +4,7 @@ import openai
 # Set the OpenAI API key from the environment variable
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-from openai import OpenAI
-client = OpenAI()
-
-response = client.responses.create(
-    model="gpt-4.1",
-    instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
+instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
 Use the following rules:
 - Output `1` if the feature is explicitly confirmed or strongly implied.
@@ -74,8 +69,17 @@ Use the following rules:
 
 (Return a list with values in the same order as the feature list.)
 """
+# User input
+user_input = "The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
 
-    input="Describe the mosquito specimen to generate a feature vector",
+# Make the API call
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": instructions},
+        {"role": "user", "content": user_input}
+    ]
 )
 
-print(response.output_text)
+# Print the output
+print(response.choices[0].message["content"])
