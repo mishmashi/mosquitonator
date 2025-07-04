@@ -59,10 +59,10 @@ Use the following rules:
 "The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
 
 ### Expected Output:
-[,,,,1,,,1,...,]
+,,,,1,,,1,...,
 
 
-Return a list with values in the same order as the feature list.
+Return a vector with values in the same order as the feature list.
 
 ### Additional context:
 - tarsus: leg
