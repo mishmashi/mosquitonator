@@ -195,7 +195,8 @@ elif st.session_state.phase == "species":
              for idx, el in enumerate(st.session_state.prior):
                  if el in [0,1]:
                      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-
+        st.warning(f"Prior: {st.session_state.prior}")
+        st.markdown(f"Remaining candidates: {len(st.session_state.candidates)}")
         while st.session_state.index < len(questions):
             # Skip uninformative questions
             values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
@@ -221,7 +222,7 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
-            st.write(f"**Q{st.session_state.index + 1}: {q}**")
+            st.write(f"**Q{st.session_state.index + 1}: {q}**. /n **Remaining candidates:** {len(st.session_state.candidates)}")
 
             col1, col2, col3 = st.columns(3)
             if col1.button("Yes",key=f"y_sp_{st.session_state.index}"):
