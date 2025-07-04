@@ -174,8 +174,7 @@ elif st.session_state.phase == "species":
 
         # ---- Starting with Prior vector ----
         if st.session_state.index == 0:
-            st.write("(Optional) Start with prior: ")
-            prior_input = st.text_input("Enter prior in format '0,1,0,None,...'", key="prior_text_input")
+            prior_input = st.text_input("(Optional) Start with prior:'", key="prior_text_input", placeholder="Enter prior in format '0,1,0,,...")
 
             if st.button("Submit Prior"):
                 prior_list = [int(p) if p.isdigit() else None for p in prior_input.split(",")]
