@@ -197,7 +197,8 @@ elif st.session_state.phase == "species":
                  if el in [0,1]:
                      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
         #st.warning(f"Prior: {st.session_state.prior}")
-        st.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
+        _, mid, _ = st.columns(3)
+        mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
         while st.session_state.index < len(questions):
             # Skip uninformative questions
             values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
