@@ -32,7 +32,7 @@ if st.session_state.phase == "start":
             st.rerun()
 elif st.session_state.phase == "genus":
     st.header("Determine the Genus")
-    st.markdown("Answer the following morphological questions to identify the genus:")
+    #st.markdown("Answer the following morphological questions to identify the genus:")
     # Feature list and questions
     questions = [
         "Is it a fly with needle-like mouthparts, scales on the body and wings?",
@@ -174,7 +174,7 @@ elif st.session_state.phase == "species":
 
         # ---- Starting with Prior Text ----
         if st.session_state.index == 0:
-            nl_input = st.text_area("(Optional) Start with prior:'", key="prior_text_input", placeholder="Describe the mosquito in detail...")
+            nl_input = st.text_area("(Optional) Start with prior:", key="prior_text_input", placeholder="Describe the mosquito in detail...")
             
             if st.button("Submit Prior"):
                 st.session_state.u_inp = nl_input
@@ -188,7 +188,7 @@ elif st.session_state.phase == "species":
                 #st.warning(f"Applied prior: {st.session_state.prior}")
                 st.rerun()
 
-        st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
+        #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
         # ---- Main Loop ----
         if st.session_state.index == 0 and st.session_state.prior:
@@ -197,7 +197,7 @@ elif st.session_state.phase == "species":
                  if el in [0,1]:
                      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
         #st.warning(f"Prior: {st.session_state.prior}")
-        st.markdown(f"# Remaining candidates: {len(st.session_state.candidates)}")
+        st.write(f"# **Remaining candidates:** {len(st.session_state.candidates)}")
         while st.session_state.index < len(questions):
             # Skip uninformative questions
             values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
@@ -223,7 +223,7 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
-            st.write(f"**Q{st.session_state.index + 1}: {q}**.")
+            st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
             col1, col2, col3 = st.columns(3)
             if col1.button("Yes",key=f"y_sp_{st.session_state.index}"):
