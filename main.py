@@ -260,7 +260,7 @@ elif st.session_state.phase == "species":
                         st.write(f"- **Anopheles {name}**")
 
         bn1, bn2 = st.columns(2)
-        if bn1.button("Restart from Genus",key="restart_all"):
+        if bn1.button("Restart from Genus",key="restart_all", use_container_width=True):
             st.session_state.index = 0
             st.session_state.candidates = []
             st.session_state.others = []
@@ -270,7 +270,7 @@ elif st.session_state.phase == "species":
             st.session_state.prior = []
             st.rerun()
 
-        if bn2.button("Back to Species",key="restart_sp"):
+        if bn2.button("Back to Species",key="restart_sp", use_container_width = True):
             st.session_state.index = 0
             st.session_state.phase = "species"
             st.session_state.candidates = database
