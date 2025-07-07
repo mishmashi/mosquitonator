@@ -92,15 +92,15 @@ elif st.session_state.phase == "genus":
         st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
         col1, col2, col3 = st.columns(3)
-        if col1.button("Yes",key="y_genus", use_container_width = True):
+        if col1.button("Yes",key="y_genus", use_container_width = True, type="primary"):
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
-        if col2.button("No",key="n_genus", use_container_width = True):
+        if col2.button("No",key="n_genus", use_container_width = True, type="primary"):
             st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
-        if col3.button("I don't know",key="idk_genus", use_container_width = True):
+        if col3.button("I don't know",key="idk_genus", use_container_width = True, type="primary"):
             st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
@@ -227,17 +227,17 @@ elif st.session_state.phase == "species":
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
             col1, col2, col3 = st.columns(3)
-            if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True):
+            if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True, type="primary"):
                 if st.session_state.index < len(others_by_group):
                      st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
-            if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
+            if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True, type="primary"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
-            if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
+            if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True, type="primary"):
                 st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
