@@ -92,15 +92,15 @@ elif st.session_state.phase == "genus":
         st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
         col1, col2, col3 = st.columns(3)
-        if col1.button("Yes",key="y_genus"):
+        if col1.button("Yes",key="y_genus", use_container_width = True):
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
-        if col2.button("No",key="n_genus"):
+        if col2.button("No",key="n_genus", use_container_width = True):
             st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
-        if col3.button("I don't know",key="idk_genus"):
+        if col3.button("I don't know",key="idk_genus", use_container_width = True):
             st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
@@ -117,7 +117,7 @@ elif st.session_state.phase == "genus":
         else:
             st.error("No matching genus found.")
 
-    if st.button("🔄 Restart", key="restart_genus"):
+    if st.button("🔄 Restart", key="restart_genus", use_container_width = True):
         st.session_state.index = 0
         st.session_state.candidates = database
         st.session_state.answers = {}
@@ -125,7 +125,7 @@ elif st.session_state.phase == "genus":
         st.rerun()
 
     if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
-        if st.button("Determine species",key="determine_sp"):
+        if st.button("Determine species",key="determine_sp", use_container_width = True):
             st.session_state.others = []
             st.session_state.index = 0
             st.session_state.phase = "species"
@@ -176,7 +176,7 @@ elif st.session_state.phase == "species":
         if st.session_state.index == 0:
             nl_input = st.text_area("(Optional) Start with prior:", key="prior_text_input", placeholder="Describe the mosquito in detail...")
             
-            if st.button("Submit Prior"):
+            if st.button("Submit Prior", use_container_width = True):
                 st.session_state.u_inp = nl_input
                 prior = get_feature_vector(nl_input)
                 prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
@@ -227,17 +227,17 @@ elif st.session_state.phase == "species":
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
             col1, col2, col3 = st.columns(3)
-            if col1.button("Yes",key=f"y_sp_{st.session_state.index}"):
+            if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True):
                 if st.session_state.index < len(others_by_group):
                      st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
-            if col2.button("No",key=f"n_sp_{st.session_state.index}"):
+            if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
-            if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}"):
+            if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
