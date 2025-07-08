@@ -2,8 +2,10 @@ import streamlit as st
 import pandas as pd
 from LLM2vec import get_feature_vector
 # Initialize session state
+
 if "index" not in st.session_state:
     database = []
+    candids = []
     st.session_state.index = 0
     st.session_state.candidates = database
     st.session_state.answers = {}
@@ -272,7 +274,7 @@ elif st.session_state.phase == "species":
                 st.session_state.index += 1
                 st.rerun()
             if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
-                st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates, st.session_state.out)
+                candids, out = filter_candidates(st.session_state.index, 0, st.session_state.candidates, st.session_state.out)
                 st.session_state.candidates = candids
                 if out:
                     st.session_state.out.append(out)
