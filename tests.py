@@ -223,7 +223,7 @@ elif st.session_state.phase == "species":
                     Anopheles {st.session_state.out}**"""
                     )
             st.write("""**Remaining: 
-                    Snopheles {st.session_state.candidates}"""
+                    Anopheles {st.session_state.candidates}**"""
                     )
         if mid.button(f"**Remaining candidates:** {len(st.session_state.candidates)}", key="see_out", type="tertiary"):
             see()
