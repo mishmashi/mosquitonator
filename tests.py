@@ -100,13 +100,15 @@ elif st.session_state.phase == "genus":
         if col1.button("Yes",key="y_genus", use_container_width = True):
             candids, out  = filter_candidates(st.session_state.index, 1, st.session_state.candidates, st.session_state.out)
             st.session_state.candidates = candids
-            st.sessionstate.out.append(out)
+            if out:
+                st.sessionstate.out.append(out)
             st.session_state.index += 1
             st.rerun()
         if col2.button("No",key="n_genus", use_container_width = True):
             candids, out = filter_candidates(st.session_state.index, 0, st.session_state.candidates, st.session_state.out)
             st.session_state.candidates = candids
-            st.sessionstate.out.append(out)
+            if out:
+                st.session_state.out.append(out)
             st.session_state.index += 1
             st.rerun()
         if col3.button("I don't know",key="idk_genus", use_container_width = True):
@@ -197,7 +199,8 @@ elif st.session_state.phase == "species":
                     if el in [0,1]: 
                         candids, out = filter_candidates(idx, el, st.session_state.candidates, st.session_state.out)
                         st.session_state.candidates = candids
-                        st.session_state.out.append(out)
+                        if out:
+                            st.session_state.out.append(out)
                 #st.warning(f"Applied prior: {st.session_state.prior}")
                 st.rerun()
 
@@ -212,7 +215,8 @@ elif st.session_state.phase == "species":
                  if el in [0,1]:
                      candids, out = filter_candidates(idx, el, st.session_state.candidates, st.session_state.out)
                      st.session_state.candidates = candids
-                     st.session_state.out.append(out)
+                     if out:
+                         st.session_state.out.append(out)
         #st.warning(f"Prior: {st.session_state.prior}")
         _, mid, _ = st.columns(3)
         #mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
@@ -263,13 +267,15 @@ elif st.session_state.phase == "species":
                      st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                 candids, out = filter_candidates(st.session_state.index, 1, st.session_state.candidates, st.session_state.out)
                 st.session_state.candidates = candids
-                st.session_state.out.append(out)
+                if out:
+                    st.session_state.out.append(out)
                 st.session_state.index += 1
                 st.rerun()
             if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates, st.session_state.out)
                 st.session_state.candidates = candids
-                st.session_state.out.append(out)
+                if out:
+                    st.session_state.out.append(out)
                 st.session_state.index += 1
                 st.rerun()
             if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
