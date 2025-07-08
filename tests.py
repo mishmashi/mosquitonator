@@ -223,9 +223,9 @@ elif st.session_state.phase == "species":
                 st.write(
                     f"**Ruled out: Anopheles {st.session_state.out}**"
                     )
-            st.write(
-                f"**Remaining: Anopheles {st.session_state.candidates[:]['name']}**"
-                    )
+            remaining = [c["name"] for c in st.session_state.candidates if "name" in c]
+            for i in remaining:
+                st.write(f"Anopheles {i}")
         if mid.button(f"**Remaining candidates:** {len(st.session_state.candidates)}", key="see_out", type="tertiary"):
             see()
         while st.session_state.index < len(questions):
