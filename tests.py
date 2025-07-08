@@ -220,9 +220,11 @@ elif st.session_state.phase == "species":
         @st.dialog("See breakdown")
         def see():
             if len(st.session_state.out) > 0:
+                st.markdown("Ruled out: ")
                 st.write(
-                    f"**Ruled out: Anopheles {st.session_state.out}**"
+                    f"Anopheles {st.session_state.out}"
                     )
+            st.markdown("Remaining: ")
             remaining = [c["name"] for c in st.session_state.candidates if "name" in c]
             for i in remaining:
                 st.write(f"Anopheles {i}")
