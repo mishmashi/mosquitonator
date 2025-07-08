@@ -215,10 +215,15 @@ elif st.session_state.phase == "species":
                      st.session_state.out.append(out)
         #st.warning(f"Prior: {st.session_state.prior}")
         _, mid, _ = st.columns(3)
-        mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
+        #mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
+
+        @st.dialog("See breakdown")
         def see():
             st.write("""**Ruled out: 
                     Anopheles {st.session_state.out}**"""
+                    )
+            st.write("""**Remaining: 
+                    Snopheles {st.session_state.candidates}"""
                     )
         if mid.button(f"**Remaining candidates:** {len(st.session_state.candidates)}", key="see_out", type="tertiary"):
             see()
