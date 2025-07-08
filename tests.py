@@ -217,8 +217,8 @@ elif st.session_state.phase == "species":
         _, mid, _ = st.columns(3)
         mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
         def see():
-            st.write(f"**Ruled out: 
-                    Anopheles {st.session_state.out}**"
+            st.write("""**Ruled out: 
+                    Anopheles {st.session_state.out}**"""
                     )
         if mid.button(f"**Remaining candidates:** {len(st.session_state.candidates)}", key="see_out", type="tertiary"):
             see()
