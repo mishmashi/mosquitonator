@@ -103,14 +103,14 @@ elif st.session_state.phase == "genus":
             candids, out  = filter_candidates(st.session_state.index, 1, st.session_state.candidates, st.session_state.out)
             st.session_state.candidates = candids
             if out:
-                st.session_state.out.append(out)
+                st.session_state.out.extend(out)
             st.session_state.index += 1
             st.rerun()
         if col2.button("No",key="n_genus", use_container_width = True):
             candids, out = filter_candidates(st.session_state.index, 0, st.session_state.candidates, st.session_state.out)
             st.session_state.candidates = candids
             if out:
-                st.session_state.out.append(out)
+                st.session_state.out.extend(out)
             st.session_state.index += 1
             st.rerun()
         if col3.button("I don't know",key="idk_genus", use_container_width = True):
