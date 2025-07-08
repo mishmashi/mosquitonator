@@ -219,8 +219,9 @@ elif st.session_state.phase == "species":
 
         @st.dialog("See breakdown")
         def see():
-            st.write(
-                f"**Ruled out: Anopheles {st.session_state.out}**"
+            if len(st.session_state.out > 0:
+                st.write(
+                    f"**Ruled out: Anopheles {st.session_state.out}**"
                     )
             st.write(
                 f"**Remaining: Anopheles {st.session_state.candidates}**"
