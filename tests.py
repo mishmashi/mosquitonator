@@ -219,11 +219,11 @@ elif st.session_state.phase == "species":
 
         @st.dialog("See breakdown")
         def see():
-            st.write("""**Ruled out: 
-                    Anopheles {st.session_state.out}**"""
+            st.write(
+                f"**Ruled out: Anopheles {st.session_state.out}**"
                     )
-            st.write("""**Remaining: 
-                    Anopheles {st.session_state.candidates}**"""
+            st.write(
+                f"**Remaining: Anopheles {st.session_state.candidates}**"
                     )
         if mid.button(f"**Remaining candidates:** {len(st.session_state.candidates)}", key="see_out", type="tertiary"):
             see()
