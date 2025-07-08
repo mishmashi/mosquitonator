@@ -219,7 +219,7 @@ elif st.session_state.phase == "species":
 
         @st.dialog("See breakdown")
         def see():
-            if len(st.session_state.out > 0:
+            if len(st.session_state.out) > 0:
                 st.write(
                     f"**Ruled out: Anopheles {st.session_state.out}**"
                     )
