@@ -16,10 +16,10 @@ if "index" not in st.session_state:
 def filter_candidates(index, ans, candidates, out):
         if ans == 1:
             filtered =  [c for c in candidates if c.get(index, -1) != 0]
-            eliminated = [e for e in candidates if e.get(index, -1) == 0]
+            eliminated = [e['name'] for e in candidates if e.get(index, -1) == 0]
         elif ans == 0:
             filtered = [c for c in candidates if c.get(index, -1) != 1]
-            eliminated = [e for e in candidates if e.get(index, -1) == 1]
+            eliminated = [e['name'] for e in candidates if e.get(index, -1) == 1]
         else:
             filtered = candidates
             eliminated = []
@@ -224,7 +224,7 @@ elif st.session_state.phase == "species":
                     f"**Ruled out: Anopheles {st.session_state.out}**"
                     )
             st.write(
-                f"**Remaining: Anopheles {st.session_state.candidates}**"
+                f"**Remaining: Anopheles {st.session_state.candidates[:]['name']}**"
                     )
         if mid.button(f"**Remaining candidates:** {len(st.session_state.candidates)}", key="see_out", type="tertiary"):
             see()
