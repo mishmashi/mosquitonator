@@ -204,12 +204,13 @@ elif st.session_state.phase == "species":
         #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
         # ---- Main Loop ----
-        if st.session_state.index == 0 and st.session_state.prior:
-             st.session_state.candidates = database # Reset candidates before applying prior
-             for idx, el in enumerate(st.session_state.prior):
-                 if el in [0,1]:
-                     st.session_state.c_prev = st.session_state.candidates
-                     st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+        if st.session_state.index == 0:
+            st.session_state.candidates = database # Reset candidates before applying prior
+            if st.session_state.prior:
+                for idx, el in enumerate(st.session_state.prior):
+                     if el in [0,1]:
+                         st.session_state.c_prev = st.session_state.candidates
+                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
         #st.warning(f"Prior: {st.session_state.prior}")
         _, mid, _ = st.columns(3)
         mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
@@ -262,12 +263,12 @@ elif st.session_state.phase == "species":
 
         else:
             if len(st.session_state.candidates) == 1:
-                st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**, o_prev: {st.session_state.o_prev}, c_prev: {st.session_state.c_prev}")
+                st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
                 #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
             elif len(st.session_state.candidates) > 1:
                 st.warning("Possible species:")
                 for c in st.session_state.candidates:
-                    st.write(f"- **Anopheles {c['name']}**, o_prev: {st.session_state.o_prev}, c_prev: {st.session_state.c_prev}")
+                    st.write(f"- **Anopheles {c['name']}**")
                    # st.image(c["image"], caption="Example of species")
 
             else:
