@@ -134,15 +134,14 @@ elif st.session_state.phase == "genus":
         st.session_state.phase = "start"
         st.session_state.last_phase = "genus"
         st.rerun()
-    if st.button("Back", key="prev_genus", use_container_width = True):
-        if st.session_state.index >= 1:
-            st.session_state.index -= 1
-        else:
-            st.session_state.index = 0
+    if st.button("Back", key="prev_genus", use_container_width = True) and st.session_state.index > 0:
+        st.session_state.index -= 1
         st.session_state.candidates = st.session_state.c_prev
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
         st.session_state.clicked_back = True
+        if st.session_state.index >= len(questions):
+            st.session_state.index = len(questions) - 1
         st.rerun()
 
     if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
@@ -306,24 +305,15 @@ elif st.session_state.phase == "species":
             st.rerun()
             
         if st.session_state.index > 0:
-            if bn1.button("Previous question",key="prev_spec", use_container_width=True):
-                if st.session_state.index >= 2:
-                    st.session_state.index -= 1
-                    st.session_state.candidates = st.session_state.c_prev
-                    st.session_state.others = st.session_state.o_prev
-                    st.session_state.clicked_back = True
-                    st.session_state.phase = "species"
-                    st.rerun()
-                    
-                else:
-                    st.session_state.index = 0
-                    st.session_state.candidates = database
-                    st.session_state.others = []
-                    st.session_state.phase = "species"
-                    st.session_state.prior = []
-                    st.session_state.clicked_back = True
-                    st.session_state.species_initialized = False
-                    st.rerun()
+            if bn1.button("Previous question",key="prev_spec", use_container_width=True) and st.session_state.index >0:
+                st.session_state.index -= 1
+                st.session_state.candidates = st.session_state.c_prev
+                st.session_state.others = st.session_state.o_prev
+                st.session_state.clicked_back = True
+                st.session_state.phase = "species"
+                if st.session_state.index >= len(questions):
+                    st.session_state.index = len(questions) - 1
+                st.rerun()
                 
 
         if bn3.button("Restart Species",key="restart_sp", use_container_width = True):
