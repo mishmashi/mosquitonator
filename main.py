@@ -13,6 +13,7 @@ if "index" not in st.session_state:
     st.session_state.prior = []
     st.session_state.u_inp = ""
     st.session_state.last_phase = "start"
+    st.session_state.clicked_back = False
 
 def filter_candidates(index, ans, candidates):
         if ans == 1:
@@ -83,13 +84,16 @@ elif st.session_state.phase == "genus":
         st.session_state.c_prev = database
 
     # Skip uninformative questions
-    while st.session_state.index < len(questions):
-        values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
-        if len(values) <= 1:
-            st.session_state.index += 1
-        else:
-            break
-
+    if not st.session_state.clicked_back:
+        while st.session_state.index < len(questions):
+            values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+            if len(values) <= 1:
+                st.session_state.index += 1
+            else:
+                break
+    else:
+        st.session_state.clicked_back = False  # reset flag
+        
     if st.session_state.index < len(questions):
         q = questions[st.session_state.index]
         st.write(f"**Q{st.session_state.index + 1}: {q}**")
@@ -138,6 +142,7 @@ elif st.session_state.phase == "genus":
         st.session_state.candidates = st.session_state.c_prev
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
+        st.session_state.clicked_back = True
         st.rerun()
 
     if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
@@ -222,29 +227,31 @@ elif st.session_state.phase == "species":
         #st.warning(f"Prior: {st.session_state.prior}")
         _, mid, _ = st.columns(3)
         mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
-        while st.session_state.index < len(questions):
-            # Skip uninformative questions
-            values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
-            num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
-
-            # Skip if all answers are the same or only one candidate has data
-            # Check if the current index has a corresponding value in the prior and skip if it does
-            if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1]:
-                if st.session_state.prior[st.session_state.index] in [0, 1]:
-                    st.session_state.index += 1
-                    continue
-
-            if st.session_state.index >= 10: 
-                 if len(values) <= 1 or num_with_values <= 1:
-                     st.session_state.index += 1
-                 else:
-                         break
-            else:
-                 if len(values) <= 1 or num_with_values <= 1:
-                     st.session_state.index += 1
-                 else:
-                    break
-
+        if not st.session_state.clicked_back:
+            while st.session_state.index < len(questions):
+                # Skip uninformative questions
+                values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+                num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
+    
+                # Skip if all answers are the same or only one candidate has data
+                # Check if the current index has a corresponding value in the prior and skip if it does
+                if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1]:
+                    if st.session_state.prior[st.session_state.index] in [0, 1]:
+                        st.session_state.index += 1
+                        continue
+    
+                if st.session_state.index >= 10: 
+                     if len(values) <= 1 or num_with_values <= 1:
+                         st.session_state.index += 1
+                     else:
+                             break
+                else:
+                     if len(values) <= 1 or num_with_values <= 1:
+                         st.session_state.index += 1
+                     else:
+                        break
+        else:
+            st.session_state.clicked_back = False
 
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
@@ -304,6 +311,7 @@ elif st.session_state.phase == "species":
                     st.session_state.index -= 1
                     st.session_state.candidates = st.session_state.c_prev
                     st.session_state.others = st.session_state.o_prev
+                    st.session_state.clicked_back = True
                     st.session_state.phase = "species"
                     st.rerun()
                     
@@ -313,6 +321,7 @@ elif st.session_state.phase == "species":
                     st.session_state.others = []
                     st.session_state.phase = "species"
                     st.session_state.prior = []
+                    st.session_state.clicked_back = True
                     st.session_state.species_initialized = False
                     st.rerun()
                 
