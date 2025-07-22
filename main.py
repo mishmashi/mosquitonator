@@ -267,16 +267,19 @@ elif st.session_state.phase == "species":
                      st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+                st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
                 st.rerun()
             if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+                st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
                 st.rerun()
             if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
+                st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
                 st.rerun()
 
