@@ -260,16 +260,18 @@ elif st.session_state.phase == "species":
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
             col1, col2, col3 = st.columns(3)
+
             imgstrunique = "images/"+str(st.session_state.index)+".png"
             if os.path.exists(imgstrunique):
-                col2.image(imgstrunique)
+                st.image(imgstrunique)
             else:
+                tr, fal = st.columns(2)
                 imgstry = "images/"+str(st.session_state.index)+"y.png"
                 imgstrn = "images/"+str(st.session_state.index)+"n.png"
                 if os.path.exists(imgstry):
-                    col1.image(imgstry)
+                    tr.image(imgstry)
                 if os.path.exists(imgstrn):
-                    col3.image(imgstrn)
+                    fal.image(imgstrn)
             if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True):
                 if st.session_state.index < len(others_by_group):
                      st.session_state.o_prev = st.session_state.others
