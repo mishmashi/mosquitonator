@@ -139,7 +139,7 @@ elif st.session_state.phase == "genus":
         st.session_state.last_phase = "genus"
         st.rerun()
     if st.button("Back", key="prev_genus", use_container_width = True) and st.session_state.index > 0:
-        st.session_state.index = st.session_state.answered_indices.pop()
+        st.session_state.index = st.session_state.answered.pop()
         st.session_state.candidates = st.session_state.c_prev
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
