@@ -6,11 +6,12 @@ if "index" not in st.session_state:
     database = []
     st.session_state.index = 0
     st.session_state.candidates = database
-    st.session_state.answers = {}
+    st.session_state.c_prev = database
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
     st.session_state.prior = []
     st.session_state.u_inp = ""
+    st.session_state.last_phase = "start"
 
 def filter_candidates(index, ans, candidates):
         if ans == 1:
@@ -78,6 +79,7 @@ elif st.session_state.phase == "genus":
 
     if st.session_state.index == 0:
         st.session_state.candidates = database
+        st.session_state.c_prev = database
 
     # Skip uninformative questions
     while st.session_state.index < len(questions):
@@ -93,14 +95,17 @@ elif st.session_state.phase == "genus":
 
         col1, col2, col3 = st.columns(3)
         if col1.button("Yes",key="y_genus", use_container_width = True):
+            st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
         if col2.button("No",key="n_genus", use_container_width = True):
+            st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
         if col3.button("I don't know",key="idk_genus", use_container_width = True):
+            st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
             st.session_state.index += 1
             st.rerun()
@@ -120,8 +125,16 @@ elif st.session_state.phase == "genus":
     if st.button("🔄 Restart", key="restart_genus", use_container_width = True):
         st.session_state.index = 0
         st.session_state.candidates = database
-        st.session_state.answers = {}
+        st.session_state.c_prev = database
         st.session_state.phase = "start"
+        st.session_state.last_phase = "genus"
+        st.rerun()
+    if st.button("Back", key="prev_genus", use_container_width = True):
+        st.session_state.index = 0
+        st.session_state.candidates = database
+        st.session_state.c_prev = database
+        st.session_state.phase = "start"
+        st.session_state.last_phase = "genus"
         st.rerun()
 
     if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
@@ -166,7 +179,7 @@ elif st.session_state.phase == "species":
         if st.session_state.species_initialized == False:
             st.session_state.index = 0
             st.session_state.candidates = database
-            st.session_state.answers = {}
+            
             st.session_state.others = []
             st.session_state.species_initialized = True
 
@@ -260,22 +273,29 @@ elif st.session_state.phase == "species":
                         st.write(f"- **Anopheles {name}**")
 
         bn1, bn2 = st.columns(2)
-        if bn1.button("Restart from Genus",key="restart_all", use_container_width=True):
+        if bn1.button("Back to genus",key="restart_all", use_container_width=True):
             st.session_state.index = 0
             st.session_state.candidates = []
+            st.session_state.o_prev = st.session_state.others
             st.session_state.others = []
-            st.session_state.answers = {}
             st.session_state.species_initialized = False
             st.session_state.phase = "start"
             st.session_state.prior = []
             st.rerun()
+            
+        if bn1.button("Previous question",key="prev_spec", use_container_width=True):
+            st.session_state.index = st.session_state.index -1
+            st.session_state.candidates = st.session_state.c_prev
+            st.session_state.others = st.session_state.o_prev
+            st.session_state.phase = "species"
+            st.session_state.previous_phase = "species"
+            st.rerun()
 
-        if bn2.button("Back to Species",key="restart_sp", use_container_width = True):
+        if bn2.button("Restart Species",key="restart_sp", use_container_width = True):
             st.session_state.index = 0
             st.session_state.phase = "species"
             st.session_state.candidates = database
             st.session_state.others = []
-            st.session_state.answers = {}
             st.session_state.species_initialized = False
             st.session_state.prior = []
             st.rerun()
