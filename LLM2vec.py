@@ -12,17 +12,22 @@ client = OpenAI(
 #    st.session_state.u_inp = ""
 #    st.session_state.result = ""
 
-instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
+instructions = instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
 Use the following rules:
-- Output `1` if the feature is explicitly confirmed or strongly implied.
-- Output `0` if the feature is explicitly ruled out.
-- Output `` if the description doesn’t provide enough information to decide.
+- Write `1` if the feature is explicitly confirmed or strongly implied.
+- Write `0` if the feature is explicitly ruled out, or strongly implied to be false.
+- Write `` if the description doesn’t provide enough information to decide.
+- Separate the corresponding value for each feature with a comma.
 - Don't add square brackets or any spaces to the final vector. Only characters it can contain are ",", 1 and 0
+- Remember not to add spaces to the final vector.
+- verify that the output consists of 0s, 1s and empty values, all separated by commas
+- if there are no usable features in the input, return the empty vector: ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+- don't add any other text or explanations
 
 ### Feature List (in order):
 
-1. Abdominal segments with laterally projecting tufts of scales on segments II–VII
+1. Abdominal segments with laterally projecting tufts of scales on segments II-VII
 2. Hindtarsus with at least last 2 hindtarsomeres entirely pale
 3. Hindtarsomere 5 mainly or entirely dark, hindtarsomere 4 white
 4. Legs speckled, sometimes sparsely
@@ -44,7 +49,7 @@ Use the following rules:
 20. Hind tarsomere 1 entirely dark basally or at most with a very narrow band of pale scales not as broad as the width of the tarsomere
 21. Apex of hindtibia with a pale streak 3–5 times as long as broad; apical pale band on hindtarsomere 2 0.13–0.4 length of tarsomere
 22. Maxillary palpus with 3 pale bands
-23. Maxillary palpus with apical 2 pale bands very broad, speckling on palpus segment 3; 2nd main dark area on wing vein 1 with 2 pale interruptions
+23. Maxillary palpus with apical 2 pale bands very broad, speckling on palpus segment 3, 2nd main dark area on wing vein 1 with 2 pale interruptions
 24. 3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot; scaling on abdomen very scanty, confined to tergum VIII or rarely VII
 25. All tarsi completely dark; wing without pale fringe spots posterior to vein 3
 26. 3rd main dark area of vein 1 with a pale interruption, sometimes fused with preceding pale area
@@ -62,23 +67,22 @@ Use the following rules:
 ### Example Input:
 "The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
 
-### Expected Output:
-,,,,1,,,1,...,
+### Expected Output for this example:
+,,,,1,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 
 Return a vector with values in the same order as the feature list.
 
 ### Additional context:
-- tarsus: leg
-- tarsomere: leg segment
+- tarsus: most distal portion of the leg
+- tarsomere: segment of the last portion of the leg
 - spots may be called bands on ocassion
 - consider 0.5 as roughly around half
-- the term apical might be described as distal
-- the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3... vein 6
+- the term "apical" might be described as "distal"
+- the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3, vein 4, vein 5 and vein 6
 - veins 5 and 6 might be described as "posterior veins"
 - the costa can be called the "top vein"
 - feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
-- Remember not to add spaces to the final vector.
 """
 def get_feature_vector(user_input: str) -> str:
     response = client.chat.completions.create(
