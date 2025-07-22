@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 from LLM2vec import get_feature_vector
 # Initialize session state
 if "index" not in st.session_state:
