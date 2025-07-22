@@ -267,7 +267,7 @@ elif st.session_state.phase == "species":
                 st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
                 #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
             elif len(st.session_state.candidates) > 1:
-                st.warning("Possible species:")
+                st.warning(f"index: {st.session_state.index}, Possible species:")
                 for c in st.session_state.candidates:
                     st.write(f"- **Anopheles {c['name']}**")
                    # st.image(c["image"], caption="Example of species")
