@@ -84,7 +84,7 @@ elif st.session_state.phase == "genus":
 
     # Skip uninformative questions
     while st.session_state.index < len(questions):
-        values = {c.get(st.session_state.index, -1) for c in st.session_state.c_prev}
+        values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
         if len(values) <= 1:
             st.session_state.index += 1
         else:
@@ -144,9 +144,11 @@ elif st.session_state.phase == "genus":
         if st.button("Determine species",key="determine_sp", use_container_width = True):
             st.session_state.others = []
             st.session_state.index = 0
+            st.session_state.candidates = database
+            st.session_state.c_prev = database
             st.session_state.phase = "species"
+            
 elif st.session_state.phase == "species":
-
         st.header("Species Identification")
         @st.cache_data #for optimization
         def load_data():
@@ -306,6 +308,7 @@ elif st.session_state.phase == "species":
                     st.session_state.candidates = database
                     st.session_state.others = []
                     st.session_state.phase = "species"
+                    st.session_state.species_initialized = False
                     st.rerun()
                 
 
