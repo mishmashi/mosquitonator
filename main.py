@@ -14,6 +14,7 @@ if "index" not in st.session_state:
     st.session_state.u_inp = ""
     st.session_state.last_phase = "start"
     st.session_state.clicked_back = False
+    st.session_state.answered = []
 
 def filter_candidates(index, ans, candidates):
         if ans == 1:
@@ -103,16 +104,19 @@ elif st.session_state.phase == "genus":
             st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
             st.session_state.index += 1
+            st.session_state.answered.append(st.session_state.index)
             st.rerun()
         if col2.button("No",key="n_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
             st.session_state.index += 1
+            st.session_state.answered.append(st.session_state.index)
             st.rerun()
         if col3.button("I don't know",key="idk_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
             st.session_state.index += 1
+            st.session_state.answered.append(st.session_state.index)
             st.rerun()
     else:
         if len(st.session_state.candidates) == 1:
@@ -305,14 +309,14 @@ elif st.session_state.phase == "species":
             st.rerun()
             
         if st.session_state.index > 0:
-            if bn1.button("Previous question",key="prev_spec", use_container_width=True) and st.session_state.index >0:
-                st.session_state.index -= 1
+            if bn1.button("Previous question",key="prev_spec", use_container_width=True)  and st.session_state.answered:
+                st.session_state.index = st.session_state.answered.pop()
                 st.session_state.candidates = st.session_state.c_prev
                 st.session_state.others = st.session_state.o_prev
                 st.session_state.clicked_back = True
                 st.session_state.phase = "species"
-                if st.session_state.index >= len(questions):
-                    st.session_state.index = len(questions) - 1
+                
+                    
                 st.rerun()
                 
 
