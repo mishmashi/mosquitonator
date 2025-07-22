@@ -84,7 +84,7 @@ elif st.session_state.phase == "genus":
 
     # Skip uninformative questions
     while st.session_state.index < len(questions):
-        values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+        values = {c.get(st.session_state.index, -1) for c in st.session_state.c_prev}
         if len(values) <= 1:
             st.session_state.index += 1
         else:
