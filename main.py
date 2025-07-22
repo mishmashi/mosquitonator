@@ -131,12 +131,10 @@ elif st.session_state.phase == "genus":
         st.session_state.last_phase = "genus"
         st.rerun()
     if st.button("Back", key="prev_genus", use_container_width = True):
-        if st.session_state.index == 1:
-            st.session_state.index = 0
-            st.warning(f"tangananica {st.session_state.index}")
-        else:
+        if st.session_state.index >= 1:
             st.session_state.index -= 1
-            st.warning(f"tanganana {st.session_state.index}")
+        else:
+            st.session_state.index = 0
         st.session_state.candidates = st.session_state.c_prev
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
