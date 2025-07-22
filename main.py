@@ -305,7 +305,7 @@ elif st.session_state.phase == "species":
                     st.rerun()
                     
                 else:
-                    st.session_state.index -= 1
+                    st.session_state.index = 0
                     st.session_state.candidates = database
                     st.session_state.others = []
                     st.session_state.phase = "species"
