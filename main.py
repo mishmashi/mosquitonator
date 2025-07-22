@@ -230,8 +230,9 @@ elif st.session_state.phase == "species":
             # Skip if all answers are the same or only one candidate has data
             # Check if the current index has a corresponding value in the prior and skip if it does
             if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1]:
-                 st.session_state.index += 1
-                 continue
+                if st.session_state.prior[st.session_state.index] in [0, 1]:
+                    st.session_state.index += 1
+                    continue
 
             if st.session_state.index >= 10: 
                  if len(values) <= 1 or num_with_values <= 1:
