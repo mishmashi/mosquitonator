@@ -188,6 +188,15 @@ elif st.session_state.phase == "species":
             st.session_state.species_initialized = True
 
         st.title("Anopheles Species Identifier")
+    
+        if st.session_state.index == 0:
+            st.session_state.candidates = database # Reset candidates before applying prior
+            st.session_state.others = []
+            if st.session_state.prior:
+                for idx, el in enumerate(st.session_state.prior):
+                     if el in [0,1]:
+                         st.session_state.c_prev = st.session_state.candidates
+                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
 
         # ---- Starting with Prior Text ----
         if st.session_state.index == 0:
@@ -209,14 +218,7 @@ elif st.session_state.phase == "species":
         #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
         # ---- Main Loop ----
-        if st.session_state.index == 0:
-            st.session_state.candidates = database # Reset candidates before applying prior
-            st.session_state.others = []
-            if st.session_state.prior:
-                for idx, el in enumerate(st.session_state.prior):
-                     if el in [0,1]:
-                         st.session_state.c_prev = st.session_state.candidates
-                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+        
         #st.warning(f"Prior: {st.session_state.prior}")
         _, mid, _ = st.columns(3)
         mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
@@ -309,6 +311,7 @@ elif st.session_state.phase == "species":
                     st.session_state.candidates = database
                     st.session_state.others = []
                     st.session_state.phase = "species"
+                    st.session_state.prior = []
                     st.session_state.species_initialized = False
                     st.rerun()
                 
