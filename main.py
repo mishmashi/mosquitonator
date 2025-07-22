@@ -103,20 +103,20 @@ elif st.session_state.phase == "genus":
         if col1.button("Yes",key="y_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
-            st.session_state.index += 1
             st.session_state.answered.append(st.session_state.index)
+            st.session_state.index += 1
             st.rerun()
         if col2.button("No",key="n_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
-            st.session_state.index += 1
             st.session_state.answered.append(st.session_state.index)
+            st.session_state.index += 1
             st.rerun()
         if col3.button("I don't know",key="idk_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
             st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
-            st.session_state.index += 1
             st.session_state.answered.append(st.session_state.index)
+            st.session_state.index += 1
             st.rerun()
     else:
         if len(st.session_state.candidates) == 1:
