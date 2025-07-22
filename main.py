@@ -259,6 +259,12 @@ elif st.session_state.phase == "species":
             st.write(f"**Q{st.session_state.index + 1}: {q}**")
 
             col1, col2, col3 = st.columns(3)
+            imgstry = "images/"+str(st.session_state.index)+"y.png"
+            imgstrn = "images/"+str(st.session_state.index)+"n.png"
+            if os.path.exists(imgstry):
+                col1.image(imgstry)
+            if os.path.exists(imgstrn):
+                col3.image(imgstrn)
             if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True):
                 if st.session_state.index < len(others_by_group):
                      st.session_state.o_prev = st.session_state.others
@@ -268,13 +274,13 @@ elif st.session_state.phase == "species":
                 st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
                 st.rerun()
-            if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
+            if col3.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
                 st.rerun()
-            if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
+            if col2.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
                 st.session_state.answered.append(st.session_state.index)
@@ -316,8 +322,6 @@ elif st.session_state.phase == "species":
                 st.session_state.others = st.session_state.o_prev
                 st.session_state.clicked_back = True
                 st.session_state.phase = "species"
-                
-                    
                 st.rerun()
                 
 
