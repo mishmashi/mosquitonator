@@ -131,9 +131,8 @@ elif st.session_state.phase == "genus":
         st.session_state.last_phase = "genus"
         st.rerun()
     if st.button("Back", key="prev_genus", use_container_width = True):
-        st.session_state.index = 0
-        st.session_state.candidates = database
-        st.session_state.c_prev = database
+        st.session_state.index -= 1
+        st.session_state.candidates = st.session_state.c_prev
         st.session_state.phase = "start"
         st.session_state.last_phase = "genus"
         st.rerun()
@@ -180,7 +179,6 @@ elif st.session_state.phase == "species":
         if st.session_state.species_initialized == False:
             st.session_state.index = 0
             st.session_state.candidates = database
-            
             st.session_state.others = []
             st.session_state.species_initialized = True
 
@@ -209,6 +207,7 @@ elif st.session_state.phase == "species":
              st.session_state.candidates = database # Reset candidates before applying prior
              for idx, el in enumerate(st.session_state.prior):
                  if el in [0,1]:
+                     st.session_state.c_prev = st.session_state.candidates
                      st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
         #st.warning(f"Prior: {st.session_state.prior}")
         _, mid, _ = st.columns(3)
@@ -243,15 +242,19 @@ elif st.session_state.phase == "species":
             col1, col2, col3 = st.columns(3)
             if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True):
                 if st.session_state.index < len(others_by_group):
+                     st.session_state.o_prev = st.session_state.others
                      st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
+                st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
             if col2.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
+                st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
             if col3.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
+                st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
                 st.session_state.index += 1
                 st.rerun()
@@ -283,14 +286,13 @@ elif st.session_state.phase == "species":
             st.session_state.phase = "start"
             st.session_state.prior = []
             st.rerun()
-        if st.session_state.index > 1:
+        if st.session_state.index > 0:
             
             if bn1.button("Previous question",key="prev_spec", use_container_width=True):
-                st.session_state.index = st.session_state.index -1
+                st.session_state.index -= 1
                 st.session_state.candidates = st.session_state.c_prev
                 st.session_state.others = st.session_state.o_prev
                 st.session_state.phase = "species"
-                st.session_state.previous_phase = "species"
                 st.rerun()
 
         if bn3.button("Restart Species",key="restart_sp", use_container_width = True):
