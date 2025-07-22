@@ -9,6 +9,7 @@ if "index" not in st.session_state:
     st.session_state.c_prev = database
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
+    st.session_state.o_prev = []
     st.session_state.prior = []
     st.session_state.u_inp = ""
     st.session_state.last_phase = "start"
@@ -272,8 +273,8 @@ elif st.session_state.phase == "species":
                 for name in st.session_state.others:
                         st.write(f"- **Anopheles {name}**")
 
-        bn1, bn2 = st.columns(2)
-        if bn1.button("Back to genus",key="restart_all", use_container_width=True):
+        bn1, bn2, bn3 = st.columns(3)
+        if bn2.button("Back to genus",key="restart_all", use_container_width=True):
             st.session_state.index = 0
             st.session_state.candidates = []
             st.session_state.o_prev = st.session_state.others
@@ -282,16 +283,17 @@ elif st.session_state.phase == "species":
             st.session_state.phase = "start"
             st.session_state.prior = []
             st.rerun()
+        if st.session_state.index > 1:
             
-        if bn1.button("Previous question",key="prev_spec", use_container_width=True):
-            st.session_state.index = st.session_state.index -1
-            st.session_state.candidates = st.session_state.c_prev
-            st.session_state.others = st.session_state.o_prev
-            st.session_state.phase = "species"
-            st.session_state.previous_phase = "species"
-            st.rerun()
+            if bn1.button("Previous question",key="prev_spec", use_container_width=True):
+                st.session_state.index = st.session_state.index -1
+                st.session_state.candidates = st.session_state.c_prev
+                st.session_state.others = st.session_state.o_prev
+                st.session_state.phase = "species"
+                st.session_state.previous_phase = "species"
+                st.rerun()
 
-        if bn2.button("Restart Species",key="restart_sp", use_container_width = True):
+        if bn3.button("Restart Species",key="restart_sp", use_container_width = True):
             st.session_state.index = 0
             st.session_state.phase = "species"
             st.session_state.candidates = database
