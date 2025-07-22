@@ -163,17 +163,17 @@ elif st.session_state.phase == "species":
 
         # ---- Load questions and database ----
         questions, database = load_data()
-        others_by_group = [["Brumpti", "Argenteolobatus", "Murphyi", "Cinctus", "Cristipalpis", "Okuensis", "Implexus", "Swahilicus", "Squamosus", "Cyddipis"],
-         ["Maculipalpis", "Maliensis", "Deemingi", "Pretoriensis", "Machardyi", "Natalensis", "Buxtoni", "Caliginosus", "Paludis", "Tenebrosus", "Crypticus", "Ziemanni", "Namibiensis", "Rufipes", "Hancocki", "Brohieri", "Theileri"],
-         ["Kingi", "Symesi", "Rufipes"],
-         ["Hervyi", "Salbaii", "Dancalicus", "Vernus", "Multicinctus", "Ardensis", "Vinckei", "Dureni", "Millecampsi"],
-         ["Concolor", "Ruarinus", "Rhodesiensis", "Caroni", "Dthali", "Rodhaini", "Lounibosi", "Smithii", "Hamoni", "Vanhoofi", "Azaniae"],
-         ["Obscurus", "Tenebrosus", "Tchekedii", "Smithii", "Daudi", "Wellcomei", "Erepens", "Keniensis", "Fuscivenosus", "Disctinctus", "Schwetzi", "Walravensi"],
-         ["Azaniae", "Obscurus", "Jebudensis", "Faini", "Turkhudi", "Wilsoni", "Rufipes", "Rageaui", "Smithii", "Fontinalis", "Lovettae", "Cinereus", "Multicolor", "Listeri", "Azevedoi", "Seretsei"],
-         ["Christyi", "Schwetzi", "Wilsoni", "Cinereus", "Vernus", "Garnhami", "Demeilloni", "Carteri"],
-         ["Wellcomei", "Seydeli", "Mortiauxi", "Berghei", "Brunnipes", "Walravensi", "Harperi", "Njombiensis", "Austensii", "Gibbinsi", "Hargreavesi", "Mousinhoi", "Marshallii", "Letabensis", "Kosiensis", "Hughi"],
-         ["Gabonensis", "Rufipes", "Domicolus", "Lloreti", "Barberellus", "Brucei", "Rivulorum", "Carteri", "Brucei", "Freetownensis", "Demeilloni", "Flavicosta", "Keniensis", "Moucheti", "Bervoetsi", "Garnhami"],
-         ["Ovengensis", "Longipalpis", "Fuscivenosus", "Culicifacies", "Aruni", "Demeilloni", "Parensis", "Sergentii", "Cameroni"]]
+        others_by_group = [["brumpti", "argenteolobatus", "murphyi", "cinctus", "cristipalpis", "okuensis", "implexus", "swahilicus", "squamosus", "cyddipis"],
+         ["maculipalpis", "maliensis", "deemingi", "pretoriensis", "machardyi", "natalensis", "buxtoni", "caliginosus", "paludis", "tenebrosus", "crypticus", "ziemanni", "namibiensis", "rufipes", "hancocki", "brohieri", "theileri"],
+         ["kingi", "symesi", "rufipes"],
+         ["hervyi", "salbaii", "dancalicus", "vernus", "multicinctus", "ardensis", "vinckei", "dureni", "millecampsi"],
+         ["concolor", "ruarinus", "rhodesiensis", "caroni", "dthali", "rodhaini", "lounibosi", "smithii", "hamoni", "vanhoofi", "azaniae"],
+         ["obscurus", "tenebrosus", "tchekedii", "smithii", "daudi", "wellcomei", "erepens", "keniensis", "fuscivenosus", "disctinctus", "schwetzi", "walravensi"],
+         ["azaniae", "obscurus", "jebudensis", "faini", "turkhudi", "wilsoni", "rufipes", "rageaui", "smithii", "fontinalis", "lovettae", "cinereus", "multicolor", "listeri", "azevedoi", "seretsei"],
+         ["christyi", "schwetzi", "wilsoni", "cinereus", "vernus", "garnhami", "demeilloni", "carteri"],
+         ["wellcomei", "seydeli", "mortiauxi", "berghei", "brunnipes", "walravensi", "harperi", "njombiensis", "austensii", "gibbinsi", "hargreavesi", "mousinhoi", "marshallii", "letabensis", "kosiensis", "hughi"],
+         ["gabonensis", "rufipes", "domicolus", "lloreti", "barberellus", "brucei", "rivulorum", "carteri", "brucei", "freetownensis", "demeilloni", "flavicosta", "keniensis", "moucheti", "bervoetsi", "garnhami"],
+         ["ovengensis", "longipalpis", "fuscivenosus", "culicifacies", "aruni", "demeilloni", "parensis", "sergentii", "cameroni"]]
 
         # ---- Session Initialization ----
         if st.session_state.species_initialized == False:
@@ -193,6 +193,7 @@ elif st.session_state.phase == "species":
                 prior = get_feature_vector(nl_input)
                 prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
                 st.session_state.prior = prior_list
+                st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = database # Reset candidates before applying prior
                 for idx, el in enumerate(st.session_state.prior):
                     if el in [0,1]: 
@@ -261,12 +262,12 @@ elif st.session_state.phase == "species":
 
         else:
             if len(st.session_state.candidates) == 1:
-                st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
+                st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**, o_prev: {st.session_state.o_prev}, c_prev: {st.session_state.c_prev}")
                 #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
             elif len(st.session_state.candidates) > 1:
                 st.warning("Possible species:")
                 for c in st.session_state.candidates:
-                    st.write(f"- **Anopheles {c['name']}**")
+                    st.write(f"- **Anopheles {c['name']}**, o_prev: {st.session_state.o_prev}, c_prev: {st.session_state.c_prev}")
                    # st.image(c["image"], caption="Example of species")
 
             else:
