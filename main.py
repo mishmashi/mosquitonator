@@ -131,7 +131,10 @@ elif st.session_state.phase == "genus":
         st.session_state.last_phase = "genus"
         st.rerun()
     if st.button("Back", key="prev_genus", use_container_width = True):
-        st.session_state.index -= 1
+        if st.session_state.index == 0:
+            st.session_state.index = 0
+        else:
+            st.session_state.index -= 1
         st.session_state.candidates = st.session_state.c_prev
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
@@ -292,7 +295,10 @@ elif st.session_state.phase == "species":
         if st.session_state.index > 0:
             
             if bn1.button("Previous question",key="prev_spec", use_container_width=True):
-                st.session_state.index -= 1
+                if st.session_state.index == 0:
+                    st.session_state.index = 0
+                else:
+                    st.session_state.index -= 1
                 st.session_state.candidates = st.session_state.c_prev
                 st.session_state.others = st.session_state.o_prev
                 st.session_state.phase = "species"
