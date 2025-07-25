@@ -29,11 +29,11 @@ st.header("Species Identification")
 def load_data():
     import pandas as pd
     df = pd.read_csv("Colombia.csv", header=2)
-    questions = [col for col in df.columns if col not in ("Species", "Image")]
+    questions = [col for col in df.columns if col not in ("Species")]
 
     database = []
     for _, row in df.iterrows():
-        entry = {"name": row["Species"], "image": row["Image"]}
+        entry = {"name": row["Species"]}
         for i, q in enumerate(questions):
             if pd.notna(row[q]) and row[q] != "":
                 entry[i] = int(row[q])
