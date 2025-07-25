@@ -146,8 +146,9 @@ else:
     elif sum(c != 'nan' for c in st.session_state.candidates) > 1:
         if st.session_state.candidates:
             st.warning(f"index: {st.session_state.index}, Possible species:")
-            for c in st.session_state.candidates != 'nan':
-                st.write(f"- **Anopheles {c['name']}**")
+            for c in st.session_state.candidates:
+                if c != 'nan':
+                    st.write(f"- **Anopheles {c['name']}**")
     else:
         st.error("No matching vectors.")
 
