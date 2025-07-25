@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import os
 from LLM2vecSA import get_feature_vector_SA
 
