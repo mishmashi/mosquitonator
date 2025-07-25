@@ -91,7 +91,7 @@ _, mid, _ = st.columns(3)
 mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
 
 if not st.session_state.clicked_back:
-    while st.session_state.index < len(questions):
+    if st.session_state.index < len(questions):
         values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
         num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
 
