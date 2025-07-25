@@ -28,7 +28,7 @@ st.header("Species Identification")
 @st.cache_data(ttl=600)  # for optimization
 def load_data():
     import pandas as pd
-    df = pd.read_csv("Mosquito traits by genus.csv", header=2)
+    df = pd.read_csv("Colombia.csv", header=2)
     questions = [col for col in df.columns if col not in ("Species", "Image")]
 
     database = []
