@@ -15,15 +15,17 @@ client = OpenAI(
 instructions = instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
 Use the following rules:
-- Write `1` if the feature is explicitly confirmed or strongly implied.
-- Write `0` if the feature is explicitly ruled out, or strongly implied to be false.
+- Write `1` if the element of the list is explicitly confirmed or strongly implied.
+- Write `0` if the element is explicitly ruled out, or strongly implied to be false. 
 - Write `` if the description doesn’t provide enough information to decide.
+- If an element contains multiple features, evaluate all of them as a whole. If a single feature is false, that means the whole element should be represented by a single 0. If all features are true, then include a 1. If you don't have enough information for all of them, write ``
 - Separate the corresponding value for each feature with a comma.
 - Don't add square brackets or any spaces to the final vector. Only characters it can contain are ",", 1 and 0
 - Remember not to add spaces to the final vector.
 - verify that the output consists of 0s, 1s and empty values, all separated by commas
-- if there are no usable features in the input, return the empty vector: ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+- if there are no usable features in the input, return the empty vector: ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 - don't add any other text or explanations
+- there should be 71 elements
 
 ### Feature List (in order):
 
@@ -65,24 +67,13 @@ Use the following rules:
 
 
 ### Example Input:
-"The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
+"The apex of the hindfemur has a patch of erect, dark scales. Wings have multiple, large pale spots."
 
 ### Expected Output for this example:
-,,,,1,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,1,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 
 Return a vector with values in the same order as the feature list.
-
-### Additional context:
-- tarsus: most distal portion of the leg
-- tarsomere: segment of the last portion of the leg
-- spots may be called bands on ocassion
-- consider 0.5 as roughly around half
-- the term "apical" might be described as "distal"
-- the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3, vein 4, vein 5 and vein 6
-- veins 5 and 6 might be described as "posterior veins"
-- the costa can be called the "top vein"
-- feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
 """
 def get_feature_vector_SA(user_input: str) -> str:
     response = client.chat.completions.create(
