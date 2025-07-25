@@ -144,7 +144,7 @@ else:
     if len(st.session_state.candidates) == 1:
         st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
     elif len(st.session_state.candidates) > 1:
-        if not np.isnan(st.session_state.candidates[0]):
+        if st.session_state.candidates[0] != 'na':
             st.warning(f"index: {st.session_state.index}, Possible species:")
             for c in st.session_state.candidates:
                 st.write(f"- **Anopheles {c['name']}**")
