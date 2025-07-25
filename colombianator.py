@@ -73,20 +73,19 @@ if st.session_state.index == 0:
                 st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
 
 # ---- Starting with Prior Text ----
-if st.session_state.index == 0 and not st.session_state.prior:
-    nl_input = st.text_area("(Optional) Start with prior:", key="prior_text_input", placeholder="Describe the mosquito in detail...")
+nl_input = st.text_area("(Optional) Start with prior:", key="prior_text_input", placeholder="Describe the mosquito in detail...")
 
-    if st.button("Submit Prior", use_container_width=True):
-        st.session_state.u_inp = nl_input
-        prior = get_feature_vector_SA(nl_input)
-        prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
-        st.session_state.prior = prior_list
-        st.session_state.c_prev = st.session_state.candidates
-        st.session_state.candidates = database  # Reset candidates before applying prior
-        for idx, el in enumerate(st.session_state.prior):
-            if el in [0, 1]:
-                st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-        st.rerun()
+if st.button("Submit Prior", use_container_width=True):
+    st.session_state.u_inp = nl_input
+    prior = get_feature_vector_SA(nl_input)
+    prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
+    st.session_state.prior = prior_list
+    st.session_state.c_prev = st.session_state.candidates
+    st.session_state.candidates = database  # Reset candidates before applying prior
+    for idx, el in enumerate(st.session_state.prior):
+        if el in [0, 1]:
+            st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+    st.rerun()
 
 _, mid, _ = st.columns(3)
 mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
