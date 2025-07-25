@@ -26,7 +26,7 @@ def filter_candidates(index, ans, candidates):
 
 st.header("Species Identification")
 
-@st.cache_data(ttl=600)  # for optimization
+@st.cache_data(ttl=6)  # for optimization
 def load_data():
     import pandas as pd
     df = pd.read_csv("Colombia.csv", header=2)
@@ -158,13 +158,6 @@ else:
             st.write(f"- **Anopheles {name}**")
 
     bn1, bn2, bn3 = st.columns(3)
-
-    if bn2.button("Back to genus", key="restart_all", use_container_width=True):
-        st.session_state.index = 0
-        st.session_state.candidates = []
-        st.session_state.species_initialized = False
-        st.session_state.prior = []
-        st.rerun()
 
     if st.session_state.index > 0:
         if bn1.button("Previous question", key="prev_spec", use_container_width=True) and st.session_state.answered:
