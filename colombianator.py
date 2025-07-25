@@ -73,7 +73,7 @@ if st.session_state.index == 0:
                 st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
 
 # ---- Starting with Prior Text ----
-if st.session_state.index == 0:
+if st.session_state.index == 0 and not st.session_state.prior:
     nl_input = st.text_area("(Optional) Start with prior:", key="prior_text_input", placeholder="Describe the mosquito in detail...")
 
     if st.button("Submit Prior", use_container_width=True):
