@@ -142,10 +142,11 @@ if st.session_state.index < len(questions):
 else:
     if len(st.session_state.candidates) == 1:
         st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
-    elif len(st.session_state.candidates != NaN) > 1:
+    elif len(st.session_state.candidates) > 1:
         st.warning(f"index: {st.session_state.index}, Possible species:")
         for c in st.session_state.candidates:
-            st.write(f"- **Anopheles {c['name']}**")
+            if not np.isnan(c): 
+                st.write(f"- **Anopheles {c['name']}**")
     else:
         st.error("No matching vectors.")
 
