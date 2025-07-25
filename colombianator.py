@@ -91,12 +91,22 @@ _, mid, _ = st.columns(3)
 mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
 
 if not st.session_state.clicked_back:
-    if st.session_state.index < len(questions):
+    while st.session_state.index < len(questions):
         values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
         num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
 
-        if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0, 1]:
+        # Skip if all remaining candidates have the same value, or only one has data
+        if len(values) <= 1 or num_with_values <= 1:
             st.session_state.index += 1
+            continue
+
+        # Skip if prior already answered this
+        if (st.session_state.prior and 
+            st.session_state.index < len(st.session_state.prior) and 
+            st.session_state.prior[st.session_state.index] in [0, 1]):
+            st.session_state.index += 1
+            continue
+        break
 else:
     st.session_state.clicked_back = False
 
