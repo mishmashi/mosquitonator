@@ -25,45 +25,81 @@ Use the following rules:
 - verify that the output consists of 0s, 1s and empty values, all separated by commas
 - if there are no usable features in the input, return the empty vector: ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 - don't add any other text or explanations
-- there should be 71 elements
+- there should be exactly 71 elements (counting empty elements. For example, ',,1,' would be 4 elements)
 
 ### Feature List (in order):
 
-1. Abdominal segments with laterally projecting tufts of scales on segments II-VII
-2. Hindtarsus with at least last 2 hindtarsomeres entirely pale
-3. Hindtarsomere 5 mainly or entirely dark, hindtarsomere 4 white
-4. Legs speckled, sometimes sparsely
-5. Wing entirely dark or with pale spots confined to costa and vein 1
-6. Wing with at least 1 pale spot on basal 0.5 of costa
-7. Maxillary palpus with apex dark
-8. Maxillary palpus with 4 pale bands
-9. Wing with pale interruption in 3rd main dark area (preapical dark spot) of vein 1, sometimes fused with preceding pale area
-10. Wing with 2 pale spots on upper branch of vein 5
-11. Wing almost entirely dark, costa without pale spots
-12. Hindtarsomeres 1 to 5 entirely dark
-13. Hindtarsomeres 1 and 2 with definite pale and dark rings in addition to apical pale bands
-14. Hindtarsomeres 3 and 4 all white or narrowly dark basally, 5 all dark or at least basal 0.5 dark
-15. Hindtarsomere 5 and about apical 0.5 of 4 pale
-16. Legs speckled
-17. Maxillary palpus very shaggy and unbanded or with 1–4 irregular narrow pale bands
-18. Maxillary palpus with 1–4 pale bands; apex of hindtibia broadly or narrowly pale
-19. Hindtarsomere 3 entirely pale
-20. Hind tarsomere 1 entirely dark basally or at most with a very narrow band of pale scales not as broad as the width of the tarsomere
-21. Apex of hindtibia with a pale streak 3–5 times as long as broad; apical pale band on hindtarsomere 2 0.13–0.4 length of tarsomere
-22. Maxillary palpus with 3 pale bands
-23. Maxillary palpus with apical 2 pale bands very broad, speckling on palpus segment 3, 2nd main dark area on wing vein 1 with 2 pale interruptions
-24. 3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot; scaling on abdomen very scanty, confined to tergum VIII or rarely VII
-25. All tarsi completely dark; wing without pale fringe spots posterior to vein 3
-26. 3rd main dark area of vein 1 with a pale interruption, sometimes fused with preceding pale area
-27. Maxillary palpus with only apex pale
-28. Base of costa with large (presector) pale spot, base of vein 1 pale
-29. Subapical pale spot on costa and wing vein 1 about as long as apical dark spot, fringe spots present opposite veins 3, lower branch of 4 and both branches of 5
-30. Hindtarsomeres 1 to 4 with pale bands overlapping the joints, at least hindtarsomere 5 pale basally
-31. Preaccessory dark spot on wing vein 1 about twice as long as pale spot on either side of it
-32. Basal area of wing vein 1 proximal to 1st main dark area, pale with a broad dark spot
-33. Subapical pale band on maxillary palpus longer than or equal to apical dark band AND 3rd main dark area of costa and vein 1 equal to or shorter than subapical pale spot
-34. Moderate-sized species, wing length more than 3.3 mm
-35. Tip of wing vein 6 dark with no fringe spot
+1. Integument of scutum with a median longitudinal silvery stripe, dark laterally; head mostly without scales, except for some erect scales on vertex; wing veins and legs covered with dark scales
+2. Setae and scales of the frontal tuft long, extending beyond antennal pedicels; lateral margin of the scutum with silvery stripe, as distinct and developed as the median stripe
+3. Integument of scutum with 4 distinct, longitudinal, silvery pruinose stripes intermixed with dark pruinose longitudinal stripes
+4. Mesepimeron with a vertical C-shaped scale-patch (Fig. 6b) that begins at upper mesepimeral setae and continues ventrally
+5. Proboscis, pedicel and palpomere 1 (MPlp1) white-scaled; hindtarsomeres 1 and 2 (Ta-III1,2) without apical, pale bands (in dorsal view)
+6. Mesepimeron with a small patch of scales inserted near the upper mesepimeral setae
+7. Abdominal terga II-VII (II-VII-Te) covered with numerous dark decumbent scales; abdominal sterna with, sparse white scales
+8. Hindtarsomere 5 (Ta-III5) entirely white-scaled; wing without pale apical fringe spot
+9. Scutum with pale scales on acrostichal area, scales extending from anterior promontory nearly to prescutellar setae; hindtarsomeres 2–4 (Ta-III2−4) each with narrow pale band on distal 0.15–0.5
+10. Hindtarsomeres 2–4 (Ta-III2−4) each with narrow apical pale stripe 0.3 or less length of tarsomeres; hindtarsomere 5 (Ta-III5) usually entirely dark-scaled, infrequently pale-scaled apically
+11. Scutum with anterior 0.3–0.4 of acrostichal and dorsocentral areas and middle of scutellum with a few white scales; vein M entirely or mostly white-scaled basal to level of bifurcation of vein CuA
+12. Palpomeres 3 and 4 (MPlp3,4) covered predominantly by decumbent scales, sometimes those at base of palpomere 3 (MPlp3) slightly erect
+13. Femora and tibiae unicolorous or variously marked, if speckled with pale and dark spots, dark spots are few and small; vein C with a single small to large pale spot (subcostal pale, SCP) in vicinity of junction with subcostal vein (Sc), or vein C entirely dark at junction with subcostal vein (Sc); sector pale spot (SP), if present, not interrupted by the accessory sector dark spot (ASD)	
+14. Hindfemur (Fe-III) with a distinct apical patch of erect dark scales
+15. Hindtarsomeres (Ta-III1−5) predominantly dark-scaled, without conspicuous pale stripes, at most with small basal spots or very narrow stripes of pale scales on some tarsomeres
+16. Wings almost totally dark-scaled; pale spots, when present, limited in number and small
+17. Wing fringe with distinct pale spots at apices of veins R2, R3 and R4+5; known distribution Central America
+18. Abdominal segments without erect or semi-erect posterolateral scale-tufts
+19. Tergum VIII (VIII-Te) densely covered with white or grayish scales, sometimes with dark scales basally and pale scales apically; scutum and scutellum with 3 distinct dark spots accentuated by silvery pruinosity, 2 spots situated laterally, posterior to wing, and 1 situated in prescutellar area, reaching anterior part of median lobe of scutellum
+20. Subcostal area (SCA) on vein C with 1 dark and 2 pale spots; subcostal area on veins R1 and R2+3 predominantly pale-scaled; preapical dark spot (PD) fused with the accessory preapical dark (APD); preapical pale spot (PP) present at apex of vein R1
+21. Hindtarsomeres 2–4 (Ta-III2−4) mostly dark-scaled, with only apical pale rings and some basal pale scales at articulations
+22. Hindtarsomere 1 (Ta-III1) with various pale spots
+23. Wing vein R4+5 with a mixture of pale and dark spots; subcostal dark spot (SD) large, extending anteriorly from union of subcosta (Sc) with costa (C); pre- and postsubcostal dark spots well defined
+24. Hindtarsomere 5 (Ta-III5) entirely pale
+25. Upper mesepimeral scales absent	
+26. Sternum I (I-S) with a small patch or line of scales
+27. Hindtarsomere 4 (Ta-III4) with 3 pale spots of variable size, sometimes entirely pale; postsubcostal dark spot (POSCD) on costa (C) small, poorly defined
+28. Wing with postsubcostal pale spot (POSCP) on costa (C) contiguous with corresponding pale spot on R1
+29. Wing with narrow scales basally, scale length ≥ 3 times width at widest point
+30. Wing with small preapical dark spot (PD), 0.06–0.12 length of wing; costa (C) with 2 primary dark spots (SD and PD), presector dark spot (PSD) reduced in size
+31. Hindtarsomere 3 (Ta-III3) with a basal dark ring; midtarsomere 5 (Ta-II5), completely dark; vein R1 with the dark spot in subcostal area (SCA) interrupted by a pale spot in line with subcostal dark spot (SCD) on costa (C); accessory sector dark spot (ASD) on costa (C) does not clearly extending to vein R1
+32. Wing vein CuA mostly dark-scaled
+33. Wing vein 1A with distal half dark-scaled
+34. Scales on middle portion of anterior cubital vein (CuA) dark, scales decumbent and smaller than on other veins; anterior wing veins with 4 primary dark spots, apical dark spot (AD) as distinct as preapical dark (PSD), sector dark (SD) and preapical dark (PD) spots
+35. Preapical dark spot (PD) on costa (C) shorter than sector dark spot (SD (DSD)
+36. Wing vein R4+5 with 2 well-defined dark spots, one basal and the other apical; vein 1A with 3 or 4 dark spots
+37. Postsubcostal pale spot (POSCP) on costa (C) not contiguous with corresponding spot on R1; costa (C) straight at union of subcostal vein (Sc)
+38. Hindtibia (Ti-III) with a large pale area on apical 0.25
+39. Vein 1A entirely dark-scaled
+40. Scutum covered with grayish or whitish pruinosity
+41. Wing vein 1A entirely dark-scaled, or at most with a small median pale spot
+42. Hindfemur (Fe-III) and hindtibia (Ti-III) uniformly dark, sometimes with small apical pale ring; costa (C) with 2 pale spots, one at the point of union with subcosta (SCP), the other on preapical area (PP); vein 1A with basal 0.5 dark-scaled, distal 0.5 pale-scaled, and with a small pale spot at apex 
+43. Wing vein R4+5 with 2 dark spots separated by an intermediate pale spot; vein 1A with 3 dark spots
+44. Wing vein 1A with about 5 pale spots interspersed with 6 dark spots, all small; hindfemur (Fe-III) and hindtibia (Ti-III) dark, speckled with pale spots of variable size; hindtarsomeres 4 and 5 (Ta-III4,5), entirely white
+45. Abdominal terga (Te), at least segments II-VII (II-VII-Te), covered with scales
+46. Hindtarsomere 5 (Ta-III5) with a basal dark spot
+47. Abdominal segment II without posterolateral scale-tufts; palpomere 4 (MPlp4) completely dark-scaled or with yellowish or golden-brown mediolateral scales, never white or cream-colored
+48. Anterior mesepimeron with a conspicuous white scale-patch; wing subcostal pale spot (SCP) reduced; prehumeral dark spot (PHD) extends to the humeral crossvein (h)
+49. Hindtarsomere 3 (Ta-III3) variable, sometimes with a basal dark band ≤ 0.4 length of tarsomere; prescutelar area covered with a distinct large dark spot
+50. Hindtarsomere 2 (Ta-III2) with a basal dark spot < 0.25 length of tarsomere
+51. Foretarsomere 4 (Ta-I4) entirely pale or, rarely with more than basal 0.30 dark; midtarsomere 4 (Ta-II4) with an apical pale stripe corresponding to 0.15–0.25 length of segment; foretarsomeres 3–5 (Ta-I3−5) mostly cream-colored, sometimes white, dark scales frequently present only on dorsobasal surface; foretarsomere 2 (Ta-I2) pale on apical 0.35–0.55; foretarsomere 3 (Ta-I3) pale on apical 0.70–0.86
+52. Costa (C) with subcostal pale spot (SCP) > 0.5 length of sector dark spot (SD)
+53. Wing with vein M stem predominantly dark-scaled from apex to basal third, vein M1 with predominantly dark scales
+54. Hindtarsomere 2 (Ta-III2) with dark spot extending beyond basal 0.5
+55. Humeral pale spot (HP) on costa (C) < 2.0 length of prehumeral dark spot (PHD)
+56. Pale wing scales very pale to pale cream-colored; costa (C) with humeral pale spot (HP) 1.3–2.0 length of prehumeral dark spot (PHD)
+57. Wing pale scales, at least on anterior veins, yellowish or grayish; foretarsomere (Ta-I5), pale-scaled apically, pale scales varying from yellowish to golden
+58. Foretarsomere 5 (Ta-I5) white on apical 0.5
+59. Hindtarsomeres 3 and 4 (Ta-III3,4) with a basal dark-scaled stripe
+60. Wing vein R4+5, predominantly dark-scaled
+61. Wing vein R4+5, with 3 dark spots (1 prebasal, 1 median and 1 preapical), clearly separated by 2 pale spots
+62. Wing vein CuA2 pale-scaled on basal 0.5, dark-scaled on apical 0.5
+63. Sternum I (I-S) without longitudinal lines of white scales, rarely with a few sparse scales
+64. Palpomere 5 (MPlp5) with a dark spot on basal 0.4; scutal scales large; abdominal segments without posterolateral scale-tufts
+65. Hindtarsomere 5 (Ta-III5) entirely pale-scaled
+66. Vein C with prehumeral dark spot (PHD) well developed, 3 to 4 times length of humeral pale (HP); anterior mesepimeron with distinct pale scale-patch; upper mesepimeron without pale scales; palpomere 4 (MPlp4) with 4 moderately large scale-patches	
+67. Wing with prehumeral dark (PHD) and humeral dark (HD) spots small or absent; hindtarsomere 1 (Ta-III1) with a distinct band of apical pale scales; abdominal tergal scales white
+68. Abdominal terga II-IV (II-IV-Te) with reddish scales medially, yellowish scales laterally; vein C with prehumeral dark spot (PHD) ≤ 0.5 length of humeral pale spot (HP); hindtarsomere 2 (Ta-III2) with a band of dark scales on basal 0.15; interocular space wide, ≥ 0.8 or more diameter of the pedicel
+69. Posterolateral scale-tufts well developed on abdominal tergum II (II-Te): costa (C) with a small sector pale spot (SP); hindtarsomere 2 (Ta-III2) with dark basal band 0.3–0.4 length of tarsomeres
+70. Hindtarsomere 2 (Ta-III2) with basal dark band ≤ 0.5 length of tarsomere, sometimes ≥ 0.63 length of tarsomere
+71. Hindtarsomere 1 (Ta-III1) with conspicuous apical band of white scales; abdominal terga with posterolateral scale-tufts on segments IV-VII (IV-VII-Te)
 
 
 ### Example Input:
