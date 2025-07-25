@@ -97,7 +97,6 @@ if not st.session_state.clicked_back:
 
         if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0, 1]:
             st.session_state.index += 1
-            continue
 else:
     st.session_state.clicked_back = False
 
