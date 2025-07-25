@@ -172,3 +172,5 @@ else:
         st.session_state.species_initialized = False
         st.session_state.prior = []
         st.rerun()
+
+st.markdown("Sallum, M.A.M., Obando, R.G., Carrejo, N. et al. Identification keys to the Anopheles mosquitoes of South America (Diptera: Culicidae). IV. Adult females. Parasites Vectors 13, 584 (2020). https://doi.org/10.1186/s13071-020-04301-0")
