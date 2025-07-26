@@ -141,8 +141,10 @@ if st.session_state.index < len(questions):
         st.rerun()
 
 else:
-    if len(st.session_state.candidates) == 1:
-        st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
+    if len(st.session_state.candidates) == 1 or sum(c != 'nan' for c in st.session_state.candidates) ==1:
+        for c in st.session_state.candidates:
+            if c != "nan":
+               st.success(f"The specimen is an **Anopheles {c['name']}**")
     elif sum(c != 'nan' for c in st.session_state.candidates) > 1:
         if st.session_state.candidates:
             st.warning(f"index: {st.session_state.index}, Possible species:")
