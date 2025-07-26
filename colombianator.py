@@ -26,7 +26,7 @@ def filter_candidates(index, ans, candidates):
 
 st.header("Species Identification")
 
-@st.cache_data(ttl=600)  # for optimization
+@st.cache_data(ttl=6)  # for optimization
 def load_data():
     import pandas as pd
     df = pd.read_csv("Colombia.csv", header=2)
