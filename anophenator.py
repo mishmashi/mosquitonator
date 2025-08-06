@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # ---- Load Data from CSV ----
-
+# consider changing way kt works, beyond dichotomous keys
 @st.cache_data #for optimization
 def load_data():
         df = pd.read_csv("Mosquito traits by genus.csv", header=2)
