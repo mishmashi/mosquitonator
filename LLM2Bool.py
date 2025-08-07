@@ -59,6 +59,10 @@ Expected output: `None`
 - vein 5 can be called "cubital"
 - vein 6 can be called "anal"
 - the feature "3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot)" can be described as a 'gambiae gap'
+
+### Final check
+before outputting `0`, double check if it should be `None` instead. A majority of the time, the output should be `None`
+
 """
 def get_feature_bool(user_input: str, question: str, model="gpt-4.1-nano") -> str:
     concatenated_input = "Feature: " + question + "; Description: " + user_input
