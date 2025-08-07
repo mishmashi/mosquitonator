@@ -216,7 +216,7 @@ elif st.session_state.phase == "species":
                 st.session_prior = []
                 prior_list = []
                 for q in questions:
-                    element = get_feature_bool(nl_input,q,"o3-mini")
+                    element = get_feature_bool(nl_input,q,"gpt-4.1-nano")
                     if element in ['0','1']:
                         element = int(element)
                     else:
