@@ -39,7 +39,7 @@ Use the following rules:
 - the costa can be called the "top vein"
 - the feature "3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot)" can be described as a 'gambiae gap'
 """
-def get_feature_bool(user_input: str, model="gpt-4.1-nano", question: str) -> str:
+def get_feature_bool(user_input: str, question: str, model="gpt-4.1-nano") -> str:
     concatenated_input = "Feature: " + question + "; Description: " + user_input
     response = client.chat.completions.create(
             model=model,
