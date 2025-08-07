@@ -23,9 +23,9 @@ def load_data():
 questions, database = load_data()
 others = []
 others_by_group = [["Brumpti", "Argenteolobatus", "Murphyi", "Cinctus", "Cristipalpis", "Okuensis", "Implexus", "Swahilicus", "Squamosus", "Cyddipis"],
- ["Maculipalpis", "Maliensis", "Deemingi", "Pretoriensis", "Machardyi", "Natalensis", "Buxtoni", "Caliginosus", "Paludis", "Tenebrosus", "Crypticus", "Ziemanni", "Namibiensis", "Rufipes", "Hancocki", "Brohieri", "Theileri"],
+ ["Maculipalpis", "Maliensis", "Deemingi", "Machardyi", "Buxtoni", "Caliginosus", "Paludis", "Tenebrosus", "Crypticus", "Ziemanni", "Namibiensis", "Rufipes", "Hancocki", "Brohieri", "Theileri"],
  ["Kingi", "Symesi", "Rufipes"],
- ["Hervyi", "Salbaii", "Dancalicus", "Vernus", "Multicinctus", "Ardensis", "Vinckei", "Dureni", "Millecampsi"],
+ ["Hervyi", "Salbaii", "Dancalicus", "Vernus", "Multicinctus", "Vinckei", "Dureni", "Millecampsi"],
  ["Concolor", "Ruarinus", "Rhodesiensis", "Caroni", "Dthali", "Rodhaini", "Lounibosi", "Smithii", "Hamoni", "Vanhoofi", "Azaniae"],
  ["Obscurus", "Tenebrosus", "Tchekedii", "Smithii", "Daudi", "Wellcomei", "Erepens", "Keniensis", "Fuscivenosus", "Disctinctus", "Schwetzi", "Walravensi"],
  ["Azaniae", "Obscurus", "Jebudensis", "Faini", "Turkhudi", "Wilsoni", "Rufipes", "Rageaui", "Smithii", "Fontinalis", "Lovettae", "Cinereus", "Multicolor", "Listeri", "Azevedoi", "Seretsei"],
