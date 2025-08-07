@@ -217,7 +217,7 @@ elif st.session_state.phase == "species":
                 prior_list = []
                 for q in questions:
                     element = get_feature_bool(nl_input,q)
-                    if element in [0,1]:
+                    if element in ['0','1']:
                         element = int(element)
                     else:
                         element = None
