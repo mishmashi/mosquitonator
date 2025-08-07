@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import os
-from LLM2vec import get_feature_vector
+#from LLM2vec import get_feature_vector
+from LLM2bool import get_feature_vector
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -176,9 +177,9 @@ elif st.session_state.phase == "species":
         # ---- Load questions and database ----
         questions, database = load_data()
         others_by_group = [["brumpti", "argenteolobatus", "murphyi", "cinctus", "cristipalpis", "okuensis", "implexus", "swahilicus", "squamosus", "cyddipis"],
-         ["maculipalpis", "maliensis", "deemingi", "pretoriensis", "machardyi", "natalensis", "buxtoni", "caliginosus", "paludis", "tenebrosus", "crypticus", "ziemanni", "namibiensis", "rufipes", "hancocki", "brohieri", "theileri"],
+         ["maculipalpis", "maliensis", "deemingi", "machardyi", "buxtoni", "caliginosus", "paludis", "tenebrosus", "crypticus", "ziemanni", "namibiensis", "rufipes", "hancocki", "brohieri", "theileri"],
          ["kingi", "symesi", "rufipes"],
-         ["hervyi", "salbaii", "dancalicus", "vernus", "multicinctus", "ardensis", "vinckei", "dureni", "millecampsi"],
+         ["hervyi", "salbaii", "dancalicus", "vernus", "multicinctus", "vinckei", "dureni", "millecampsi"],
          ["concolor", "ruarinus", "rhodesiensis", "caroni", "dthali", "rodhaini", "lounibosi", "smithii", "hamoni", "vanhoofi", "azaniae"],
          ["obscurus", "tenebrosus", "tchekedii", "smithii", "daudi", "wellcomei", "erepens", "keniensis", "fuscivenosus", "disctinctus", "schwetzi", "walravensi"],
          ["azaniae", "obscurus", "jebudensis", "faini", "turkhudi", "wilsoni", "rufipes", "rageaui", "smithii", "fontinalis", "lovettae", "cinereus", "multicolor", "listeri", "azevedoi", "seretsei"],
@@ -211,8 +212,11 @@ elif st.session_state.phase == "species":
             
             if st.button("Submit Prior", use_container_width = True):
                 st.session_state.u_inp = nl_input
-                prior = get_feature_vector(nl_input)
-                prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
+                ### BOOL VERSION ###
+                st.session_prior = []
+                prior_list = []
+                for q in questions:
+                    prior_list.extend(int(get_feature_vector(nl_input,model,q)))
                 st.session_state.prior = prior_list
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = database # Reset candidates before applying prior
@@ -221,6 +225,18 @@ elif st.session_state.phase == "species":
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
                 #st.warning(f"Applied prior: {st.session_state.prior}")
                 st.rerun()
+
+                ### VECTOR VERSION ###
+                #prior = get_feature_vector(nl_input)
+                #prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
+                #st.session_state.prior = prior_list
+                #st.session_state.c_prev = st.session_state.candidates
+                #st.session_state.candidates = database # Reset candidates before applying prior
+                #for idx, el in enumerate(st.session_state.prior):
+                #    if el in [0,1]: 
+                #        st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+                #st.warning(f"Applied prior: {st.session_state.prior}")
+                #st.rerun()
 
         #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
