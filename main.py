@@ -216,7 +216,7 @@ elif st.session_state.phase == "species":
                 st.session_prior = []
                 prior_list = []
                 for q in questions:
-                    prior_list.extend(int(get_feature_bool(nl_input,model,q)))
+                    prior_list.extend(int(get_feature_bool(nl_input,q)))
                 st.session_state.prior = prior_list
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = database # Reset candidates before applying prior
