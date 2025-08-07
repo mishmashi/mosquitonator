@@ -219,7 +219,7 @@ elif st.session_state.phase == "species":
                     element = get_feature_bool(nl_input,q)
                     if element in [0,1]:
                         element = int(element)
-                    else
+                    else:
                         element = None
                     prior_list.append(get_feature_bool(nl_input,q))
                 st.session_state.prior = prior_list
