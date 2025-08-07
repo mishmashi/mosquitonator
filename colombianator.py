@@ -47,7 +47,7 @@ questions, database = load_data()
 others = [
     "nimbus", "thomasi", "acanthotorynus", "kompi", "canorii", "lepidotus", "pholidotus", "boliviensis", "gonzalezrinconesi", "rollai", 
     "bambusicolus", "auyantepuiensis", "bellator", "laneanus", "cruzii", "homunculus", "squamifemur", "eiseni eiseni", "eiseni geometricus",
-    "peryassui", "vestitipennis", "mattogrossensis", "minor", "shannoni", "guarao", "punctimacula", "mediopunctatus", "costai", "forattinii", 
+    "peryassui", "vestitipennis", "mattogrossensis", "minor", "shannoni", "guarao", "mediopunctatus", "costai", "forattinii", 
     "fluminensis", "malefactor", "neomaculipalpus", "anchietai", "maculipes", "pseudomaculipes", "bustamentei", "apicimacula", "medialis", "rachoui",
     "evandroi", "tibiamaculatus", "gilesi", "pseudotibiamaculatus", "vargasi", "oiketorakras", "gomezdelatorrei", "annulipalpis", "halophylus", "triannulatus", "triannulatus C", 
     "rondoni", "ininii", "oswaldoi", "konderi", "rangeli", "aquasalis", "galvaoi", "dunhami", "trinkae", "goeldii", "evansae", "strodei", "nigritarsis", "lutzii",
