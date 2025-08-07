@@ -223,9 +223,8 @@ elif st.session_state.phase == "species":
                 for idx, el in enumerate(st.session_state.prior):
                     if el in [0,1]: 
                         st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                #st.warning(f"Applied prior: {st.session_state.prior}")
                 st.rerun()
-
+        st.warning(f"Applied prior: {st.session_state.prior}")
                 ### VECTOR VERSION ###
                 #prior = get_feature_vector(nl_input)
                 #prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
