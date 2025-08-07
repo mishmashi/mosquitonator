@@ -37,9 +37,9 @@ Use the following rules:
 - the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3, vein 4, vein 5 and vein 6
 - veins 5 and 6 might be described as "posterior veins"
 - the costa can be called the "top vein"
-- feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
+- the feature "3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot)" can be described as a 'gambiae gap'
 """
-def get_feature_vector(user_input: str, model, question: str) -> str:
+def get_feature_bool(user_input: str, model, question: str) -> str:
     concatenated_input = "Feature: " + question + "; Description: " + user_input
     response = client.chat.completions.create(
             model=model,
