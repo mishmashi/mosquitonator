@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 #from LLM2vec import get_feature_vector
-from LLM2bool import get_feature_vector
+from LLM2Bool import get_feature_bool
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -216,7 +216,7 @@ elif st.session_state.phase == "species":
                 st.session_prior = []
                 prior_list = []
                 for q in questions:
-                    prior_list.extend(int(get_feature_vector(nl_input,model,q)))
+                    prior_list.extend(int(get_feature_bool(nl_input,model,q)))
                 st.session_state.prior = prior_list
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = database # Reset candidates before applying prior
