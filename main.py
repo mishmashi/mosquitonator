@@ -221,7 +221,7 @@ elif st.session_state.phase == "species":
                         element = int(element)
                     else:
                         element = None
-                    prior_list.append(get_feature_bool(nl_input,q))
+                    prior_list.append(element)
                 st.session_state.prior = prior_list
                 st.session_state.c_prev = st.session_state.candidates
                 st.session_state.candidates = database # Reset candidates before applying prior
