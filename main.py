@@ -213,35 +213,36 @@ elif st.session_state.phase == "species":
             if st.button("Submit Prior", use_container_width = True):
                 st.session_state.u_inp = nl_input
                 ### BOOL VERSION ###
-                st.session_prior = []
-                prior_list = []
-                for q in questions:
-                    element = get_feature_bool(nl_input,q,"gpt-4.1-nano")
-                    if element in ['0','1']:
-                        element = int(element)
-                    else:
-                        element = None
-                    prior_list.append(element)
-                st.session_state.prior = prior_list
-                st.session_state.c_prev = st.session_state.candidates
-                st.session_state.candidates = database # Reset candidates before applying prior
-                for idx, el in enumerate(st.session_state.prior):
-                    if el in [0,1]: 
-                        st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                st.rerun()
-        st.warning(f"Applied prior: {st.session_state.prior}")
-                ### VECTOR VERSION ###
-                #prior = get_feature_vector(nl_input)
-                #prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
+                #st.session_prior = []
+                #prior_list = []
+                #for q in questions:
+                #    element = get_feature_bool(nl_input,q,"gpt-4.1-nano")
+                #    if element in ['0','1']:
+                #        element = int(element)
+                #    else:
+                #        element = None
+                #    prior_list.append(element)
                 #st.session_state.prior = prior_list
                 #st.session_state.c_prev = st.session_state.candidates
                 #st.session_state.candidates = database # Reset candidates before applying prior
                 #for idx, el in enumerate(st.session_state.prior):
                 #    if el in [0,1]: 
                 #        st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
-                #st.warning(f"Applied prior: {st.session_state.prior}")
                 #st.rerun()
-
+        
+                ### VECTOR VERSION ###
+                prior = get_feature_vector(nl_input)
+                prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
+                st.session_state.prior = prior_list
+                st.session_state.c_prev = st.session_state.candidates
+                st.session_state.candidates = database # Reset candidates before applying prior
+                for idx, el in enumerate(st.session_state.prior):
+                    if el in [0,1]: 
+                        st.session_state.candidates = filter_candidates(idx, el, st.session_state.candidates)
+                st.warning(f"Applied prior: {st.session_state.prior}")
+                st.rerun()
+        if st.session_state.prior:        
+            st.warning(f"Applied prior: {st.session_state.prior}")
         #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
         # ---- Main Loop ----
