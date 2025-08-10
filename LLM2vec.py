@@ -15,15 +15,17 @@ client = OpenAI(
 instructions = instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating whether each feature is present in the description.
 
 Use the following rules:
-- Write `1` if the feature is explicitly confirmed or strongly implied.
-- Write `0` if the feature is explicitly ruled out, or strongly implied to be false.
-- Write `` if the description doesn’t provide enough information to decide.
+- Write `1` if the feature is confirmed or strongly implied.
+- Write `0` if the feature is explicitly ruled out.
+- Write `None` if the description doesn’t provide enough information to decide.
 - Separate the corresponding value for each feature with a comma.
-- Don't add square brackets or any spaces to the final vector. Only characters it can contain are ",", 1 and 0
+- Don't add square brackets or any spaces to the final vector. Only characters it can contain are `None`, 1 and 0
 - Remember not to add spaces to the final vector.
 - verify that the output consists of 0s, 1s and empty values, all separated by commas
 - if there are no usable features in the input, return the empty vector: ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 - don't add any other text or explanations
+- before outputting a `0`, double check whether it should instead be `None`.
+- Most of the elements should be `None`
 
 ### Feature List (in order):
 
@@ -71,7 +73,7 @@ Use the following rules:
 ,,,,1,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 
-Return a vector with values in the same order as the feature list.
+Return a vector with values in the same order as the feature list. 
 
 ### Additional context:
 - tarsus: most distal portion of the leg
