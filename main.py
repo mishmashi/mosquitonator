@@ -162,11 +162,11 @@ elif st.session_state.phase == "species":
         def load_data():
                 import pandas as pd
                 df = pd.read_csv("Mosquito traits by genus.csv", header=3)
-                questions = [col for col in df.columns if col not in ("Species", "Image")]
+                questions = [col for col in df.columns if col not in ("Species", "Region", "Image")]
 
                 database = []
                 for _, row in df.iterrows():
-                    entry = {"name": row["Species"], "image": row["Image"]}
+                    entry = {"name": row["Species"], "image": row["Image"], "region": row["Region"]}
                     for i, q in enumerate(questions):
                         if pd.notna(row[q]) and row[q] != "":
                             entry[i] = int(row[q])
@@ -322,7 +322,9 @@ elif st.session_state.phase == "species":
             elif len(st.session_state.candidates) > 1:
                 st.warning(f"index: {st.session_state.index}, Possible species:")
                 for c in st.session_state.candidates:
-                    st.write(f"- **Anopheles {c['name']}**")
+                    if c['region']:
+                        st.write(f"- **Anopheles {c['name']}**, region: {c['region']")
+                    else: st.write(f"- **Anopheles {c['name']}**")
                    # st.image(c["image"], caption="Example of species")
 
             else:
