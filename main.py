@@ -336,11 +336,13 @@ elif st.session_state.phase == "species":
 
             else:
               st.error("No matching relevant species.")
+            st.write(st.session_state.candidates!r)
             if st.session_state.others:
                 st.warning("Less likely species:")
                 for name in st.session_state.others:
                         if name not in st.session_state.candidates:
-                            st.write(f"- **Anopheles {name}**")
+                            st.write(f"- **Anopheles {name!r}**")
+                            
 
         bn1, bn2, bn3 = st.columns(3)
         if bn2.button("Back to genus",key="restart_all", use_container_width=True):
