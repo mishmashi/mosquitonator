@@ -328,8 +328,7 @@ elif st.session_state.phase == "species":
             elif len(st.session_state.candidates) > 1:
                 st.warning(f"index: {st.session_state.index}, Possible species:")
                 for c in st.session_state.candidates:
-                    if c['region'] and c['region'] != "":
-                        st.write(c['region'])
+                    if pd.notna(c['region']):
                         st.write(f"- **Anopheles {c['name']}**, region: {c['region']}")
                     else: st.write(f"- **Anopheles {c['name']}**")
                    # st.image(c["image"], caption="Example of species")
