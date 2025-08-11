@@ -326,7 +326,7 @@ elif st.session_state.phase == "species":
                 st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
                 #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
             elif len(st.session_state.candidates) > 1:
-                st.warning(f"index: {st.session_state.index}, Possible species:")
+                st.warning(f"Possible species:")
                 for c in st.session_state.candidates:
                     if pd.notna(c['region']):
                         st.write(f"- **Anopheles {c['name']}**, region: {c['region']}")
