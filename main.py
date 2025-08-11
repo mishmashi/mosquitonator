@@ -336,7 +336,6 @@ elif st.session_state.phase == "species":
 
             else:
               st.error("No matching relevant species.")
-            st.write(st.session_state.candidates!r)
             if st.session_state.others:
                 st.warning("Less likely species:")
                 for name in st.session_state.others:
