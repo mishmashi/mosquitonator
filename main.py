@@ -298,12 +298,18 @@ elif st.session_state.phase == "species":
                      st.session_state.o_prev = st.session_state.others
                      st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                 st.session_state.c_prev = st.session_state.candidates
+                
+                if st.session_state.index == 3:
+                    st.session_state.candidates = filter_candidates(18, 1, st.session_state.candidates)
+                
                 st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
                 st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
                 st.rerun()
             if col3.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
                 st.session_state.c_prev = st.session_state.candidates
+                if st.session_state.index == 3:
+                    st.session_state.candidates = filter_candidates(18, 0, st.session_state.candidates)
                 st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
                 st.session_state.answered.append(st.session_state.index)
                 st.session_state.index += 1
@@ -322,7 +328,7 @@ elif st.session_state.phase == "species":
             elif len(st.session_state.candidates) > 1:
                 st.warning(f"index: {st.session_state.index}, Possible species:")
                 for c in st.session_state.candidates:
-                    if c['region']:
+                    if c['region'] and c['region'] != "":
                         st.write(c['region'])
                         st.write(f"- **Anopheles {c['name']}**, region: {c['region']}")
                     else: st.write(f"- **Anopheles {c['name']}**")
