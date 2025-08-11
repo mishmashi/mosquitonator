@@ -340,8 +340,8 @@ elif st.session_state.phase == "species":
             if st.session_state.others:
                 st.warning("Less likely species:")
                 for name in st.session_state.others:
-                        if name not in st.session_state.candidates:
-                            st.write(f"- **Anopheles {name!r}**")
+                        if name not in [c["name"] for c in st.session_state.candidates]:
+                            st.write(f"- **Anopheles {name}**")
                             
 
         bn1, bn2, bn3 = st.columns(3)
