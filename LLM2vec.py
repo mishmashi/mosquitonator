@@ -160,11 +160,10 @@ Use the following rules:
 129. Tip of wing vein 6 dark with no fringe spot
 
 ### Example Input:
-"The mosquito has a dark wing with pale spots only on the leading edge, and the maxillary palpus shows 4 pale bands."
+'The mosquito has tufts on abdominal segments 4-7. Its wing is completely dark, and the costa has no spots.'
 
 ### Expected Output for this example:
-,,,,1,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,
-
+1,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 Return a vector with values in the same order as the feature list. 
 
@@ -173,11 +172,13 @@ Return a vector with values in the same order as the feature list.
 - tarsomere: segment of the last portion of the leg
 - spots may be called bands on ocassion
 - consider 0.5 as roughly around half
+- consider "white" and "pale" as synonyms
+- consider "dark" and "black" as synonyms
 - the term "apical" might be described as "distal"
 - the wing contains veins that, from the top down are named: costa, sub-costa, vein 1, vein 2, vein 3, vein 4, vein 5 and vein 6
 - veins 5 and 6 might be described as "posterior veins"
 - the costa can be called the "top vein"
-- feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
+- the feature "3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot" can be described as a "gambiae gap"
 """
 def get_feature_vector(user_input: str, model = "gpt-4.1-nano") -> str:
     response = client.chat.completions.create(
