@@ -16,7 +16,7 @@ instructions = instructions = """You are given a list of morphological features 
 
 Use the following rules:
 - Write `1` if the feature is confirmed or strongly implied.
-- Write `0` if the feature is explicitly ruled out.
+- Write `0` if the feature is ruled out.
 - Write `None` if the description doesn’t provide enough information to decide.
 - Separate the corresponding value for each feature with a comma.
 - Don't add square brackets or any spaces to the final vector. Only characters it can contain are `None`, 1 and 0
@@ -24,7 +24,7 @@ Use the following rules:
 - verify that the output consists of 0s, 1s and empty values, all separated by commas
 - if there are no usable features in the input, return the empty vector: ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 - don't add any other text or explanations
-- before outputting a `0`, double check whether it should instead be `None`.
+- before outputting anything, double check whether it should instead be `None`.
 - Most of the elements should be `None`
 
 ### Feature List (in order):
