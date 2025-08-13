@@ -396,7 +396,7 @@ elif st.session_state.phase == "species":
                             
 
         bn1, bn2, bn3 = st.columns(3)
-        if bn2.button("Back to genus",key="restart_all", use_container_width=True):
+        if bn2.button("Try a different genus",key="restart_all", use_container_width=True):
             st.session_state.index = 0
             st.session_state.candidates = []
             st.session_state.o_prev = st.session_state.others
@@ -416,7 +416,7 @@ elif st.session_state.phase == "species":
                 st.rerun()
                 
 
-        if bn3.button("Restart Species",key="restart_sp", use_container_width = True):
+        if bn3.button("Restart",key="restart_sp", use_container_width = True):
             st.session_state.index = 0
             st.session_state.phase = "species"
             st.session_state.candidates = database
