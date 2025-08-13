@@ -86,9 +86,9 @@ Return a vector with values in the same order as the feature list.
 - the costa can be called the "top vein"
 - feature 24 (3rd main dark area of wing vein 1 with a pale interruption, sometimes fused with preceding pale spot) can be described as a "gambiae gap"
 """
-def get_feature_vector(user_input: str) -> str:
+def get_feature_vector(user_input: str, model = "gpt-4.1-nano") -> str:
     response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model,
             messages=[
                  {"role": "system", "content": instructions},
                  {"role": "user", "content": user_input}
