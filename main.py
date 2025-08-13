@@ -310,7 +310,7 @@ elif st.session_state.phase == "species":
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
-                if col3.button(q_b,key=f"qb_sp_{st.session_state.index}", use_container_width = True):
+                if col3.button(f"{q_b}",key=f"qb_sp_{st.session_state.index}", use_container_width = True):
                     st.session_state.c_prev = st.session_state.candidates
                     if st.session_state.index == 3:
                         st.session_state.candidates = filter_candidates(18, 0, st.session_state.candidates)
