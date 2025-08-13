@@ -240,7 +240,7 @@ elif st.session_state.phase == "species":
                 #st.rerun()
         
                 ### VECTOR VERSION ###
-                prior = get_feature_vector(nl_input)
+                prior = get_feature_vector(nl_input,"gpt-4.1-nano")
                 prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
                 st.session_state.prior = prior_list
                 st.session_state.c_prev = st.session_state.candidates
@@ -289,6 +289,7 @@ elif st.session_state.phase == "species":
             q = questions[st.session_state.index]
             q_b = questions_b[0][st.session_state.index]
             if q_b != "" and q_b != None:
+                st.write(f"**Q{st.session_state.index}:**")
                 col1, col2, col3 = st.columns(3)
                 imgstrunique = "images/"+str(st.session_state.index)+".png"
                 if os.path.exists(imgstrunique):
