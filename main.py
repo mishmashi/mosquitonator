@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import csv
 from io import StringIO
-#from LLM2vec import get_feature_vector
+from LLM2vec import get_feature_vector
 from LLM2Bool import get_feature_bool
 # Initialize session state
 if "index" not in st.session_state:
