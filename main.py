@@ -283,7 +283,7 @@ elif st.session_state.phase == "species":
 
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
-            q_b = questions_b[st.session_state.index]
+            q_b = questions_b[0][st.session_state.index]
             if q_b != "" and q_b != None:
                 col1, col2, col3 = st.columns(3)
                 imgstrunique = "images/"+str(st.session_state.index)+".png"
