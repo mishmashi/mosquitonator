@@ -144,7 +144,7 @@ elif st.session_state.phase == "genus":
             st.warning("Possible genera:")
             for c in st.session_state.candidates:
                 st.write("- " + c["name"])
-                st.image(c["image"], caption="Mosquito morphology")
+                st.image(c["image"], caption="Example specimen")
 
         else:
             st.error("No matching genus found.")
@@ -310,17 +310,21 @@ elif st.session_state.phase == "species":
                 imgb = "images/B.png"
                 imgc = "images/C.png"
                 imgd = "images/D.png"
-
+                st.session_state.elim_prev = st.session_state.eliminated
     
                 if col1.button("Scutal scales as in A", key="a", use_container_width=True):
                     st.session_state.c_prev = st.session_state.candidates
                     st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
                 if col2.button("Scutal scales as in B", key="b", use_container_width=True):
                     st.session_state.c_prev = st.session_state.candidates
                     st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
@@ -330,12 +334,16 @@ elif st.session_state.phase == "species":
                 if col1.button("Scutal scales as in C", key="c", use_container_width=True):
                     st.session_state.c_prev = st.session_state.candidates
                     st.session_state.candidates = filter_candidates(st.session_state.index, 2, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
                 if col2.button("Scutal scales as in D", key="d", use_container_width=True):
                     st.session_state.c_prev = st.session_state.candidates
                     st.session_state.candidates = filter_candidates(st.session_state.index, 3, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
@@ -361,25 +369,34 @@ elif st.session_state.phase == "species":
                          st.session_state.o_prev = st.session_state.others
                          st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                     st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.elim_prev = st.session_state.eliminated
                     
                     if st.session_state.index == 3:
                         st.session_state.candidates = filter_candidates(18, 1, st.session_state.candidates)
                     
                     st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
                 if col3.button(f"{q_b}",key=f"qb_sp_{st.session_state.index}", use_container_width = True):
                     st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.elim_prev = st.session_state.eliminated
                     if st.session_state.index == 3:
                         st.session_state.candidates = filter_candidates(18, 0, st.session_state.candidates)
                     st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
                 if col2.button("I don't know",key=f"idk_hasqb_sp_{st.session_state.index}", use_container_width = True):
                     st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.elim_prev = st.session_state.eliminated
                     st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
+                    removed = [[]]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
@@ -405,25 +422,33 @@ elif st.session_state.phase == "species":
                          st.session_state.o_prev = st.session_state.others
                          st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                     st.session_state.c_prev = st.session_state.candidates
-                    
+                    st.session_state.elim_prev = st.session_state.eliminated
                     if st.session_state.index == 3:
                         st.session_state.candidates = filter_candidates(18, 1, st.session_state.candidates)
                     
                     st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
                 if col3.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
                     st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.elim_prev = st.session_state.eliminated
                     if st.session_state.index == 3:
                         st.session_state.candidates = filter_candidates(18, 0, st.session_state.candidates)
                     st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+                    removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
                 if col2.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
                     st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.elim_prev = st.session_state.eliminated
                     st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
+                    removed = [[]]
+                    st.session_state.eliminated.append(removed)
                     st.session_state.answered.append(st.session_state.index)
                     st.session_state.index += 1
                     st.rerun()
@@ -463,7 +488,8 @@ elif st.session_state.phase == "species":
         if st.session_state.index > 0:
             if bn1.button("Previous question",key="prev_spec", use_container_width=True)  and st.session_state.answered:
                 st.session_state.index = st.session_state.answered.pop()
-                st.session_state.candidates = st.session_state.c_prev
+                restore = st.session_state.eliminated.pop()
+                st.session_state.candidates.extend(restore)
                 st.session_state.others = st.session_state.o_prev
                 st.session_state.clicked_back = True
                 st.session_state.phase = "species"
@@ -473,6 +499,8 @@ elif st.session_state.phase == "species":
         if bn3.button("Restart",key="restart_sp", use_container_width = True):
             st.session_state.index = 0
             st.session_state.phase = "species"
+            st.session_state.eliminated = []
+            st.session_state.elim_prev = []
             st.session_state.candidates = database
             st.session_state.others = []
             st.session_state.species_initialized = False
