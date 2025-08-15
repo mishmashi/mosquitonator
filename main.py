@@ -22,13 +22,13 @@ if "index" not in st.session_state:
 
 def filter_candidates(index, ans, candidates):
         if ans == 1:
-            return [c for c in candidates if c.get(index, -1) != 0]
+            return [c for c in candidates if c.get(index, -1) != 0 and c.get(index, -1) != 2 and c.get(index, -1) != 3]
         elif ans == 0:
-            return [c for c in candidates if c.get(index, -1) != 1]
+            return [c for c in candidates if c.get(index, -1) != 1 and c.get(index, -1) != 2 and c.get(index, -1) != 3]
         elif ans == 2:
-            return [c for c in candidates if c.get(index, -1) != 2]
+            return [c for c in candidates if c.get(index, -1) != 0 and c.get(index, -1) != 1 and c.get(index, -1) != 3]
         elif ans == 3:
-            return [c for c in candidates if c.get(index, -1) != 3]
+            return [c for c in candidates if c.get(index, -1) != 0 and c.get(index, -1) != 1 and c.get(index, -1) != 2]
         else:
             return candidates
 
