@@ -331,7 +331,7 @@ elif st.session_state.phase == "species":
                 col1.image(imgc)
                 col2.image(imgd)
             
-            if q_b != "" and q_b != None:
+            if q_b != "" and q_b != None and st.session_state.index != 98:
                 st.write(f"**Q{st.session_state.index}:**")
                 col1, col2, col3 = st.columns(3)
                 imgstrunique = "images/"+str(st.session_state.index)+".png"
@@ -373,7 +373,7 @@ elif st.session_state.phase == "species":
                     st.session_state.index += 1
                     st.rerun()
 
-            else:
+            elif st.session_state.index != 98:
                 st.write(f"**Q{st.session_state.index + 1}: {q}**")
     
                 col1, col2, col3 = st.columns(3)
