@@ -159,7 +159,7 @@ elif st.session_state.phase == "genus":
     if st.button("Back", key="prev_genus", use_container_width = True) and st.session_state.index > 0:
         st.session_state.index = st.session_state.answered.pop()
         restore = st.session_state.eliminated.pop()
-        st.session_state.candidates.extend(restore)
+        st.session_state.candidates.extend(e for e in restore if isinstance(e, dict))
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
         st.session_state.clicked_back = True
@@ -489,7 +489,7 @@ elif st.session_state.phase == "species":
             if bn1.button("Previous question",key="prev_spec", use_container_width=True)  and st.session_state.answered:
                 st.session_state.index = st.session_state.answered.pop()
                 restore = st.session_state.eliminated.pop()
-                st.session_state.candidates.extend(restore)
+                st.session_state.candidates.extend(e for e in restore if isinstance(e, dict))
                 st.session_state.others = st.session_state.o_prev
                 st.session_state.clicked_back = True
                 st.session_state.phase = "species"
