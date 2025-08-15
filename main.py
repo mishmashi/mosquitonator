@@ -207,10 +207,10 @@ elif st.session_state.phase == "species":
          #["wellcomei", "seydeli", "mortiauxi", "berghei", "brunnipes", "walravensi", "harperi", "njombiensis", "austensii", "gibbinsi", "hargreavesi", "mousinhoi", "marshallii", "letabensis", "kosiensis", "hughi"],
          #["gabonensis", "rufipes", "domicolus", "lloreti", "barberellus", "brucei", "rivulorum", "carteri", "brucei", "freetownensis", "demeilloni", "flavicosta", "keniensis", "moucheti", "bervoetsi", "garnhami"],
          #["ovengensis", "longipalpis", "fuscivenosus", "culicifacies", "aruni", "demeilloni", "parensis", "sergentii", "cameroni"]]
-        others_by_group = [[],[], [],[],[],[],[],[],[],[],
+        others_by_group = [[],[], [],[],[],[],[],[],[],[],[]]
                         #["wellcomei", "seydeli", "mortiauxi", "berghei", "brunnipes", "walravensi", "harperi", "njombiensis", "austensii", "gibbinsi", "hargreavesi", "mousinhoi", "marshallii", "letabensis", "kosiensis", "hughi"],
                         #["gabonensis", "rufipes", "domicolus", "lloreti", "barberellus", "brucei", "rivulorum", "carteri", "brucei", "freetownensis", "demeilloni", "flavicosta", "keniensis", "moucheti", "bervoetsi", "garnhami"],
-                        ["ovengensis", "longipalpis", "fuscivenosus", "culicifacies", "aruni", "demeilloni", "parensis", "sergentii", "cameroni"]]
+                        #["ovengensis", "longipalpis", "fuscivenosus", "culicifacies", "aruni", "demeilloni", "parensis", "sergentii", "cameroni"]]
 
         # ---- Session Initialization ----
         if st.session_state.species_initialized == False:
