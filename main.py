@@ -160,7 +160,7 @@ elif st.session_state.phase == "genus":
             
 elif st.session_state.phase == "species":
         st.header("Species Identification")
-        @st.cache_data(ttl=600) #for optimization
+        @st.cache_data(ttl=6) #for optimization
         def load_data():
                 import pandas as pd
                 df = pd.read_csv("Mosquito traits by genus.csv", header=3)
