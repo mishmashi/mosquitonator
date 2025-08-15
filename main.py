@@ -10,6 +10,8 @@ if "index" not in st.session_state:
     database = []
     st.session_state.index = 0
     st.session_state.candidates = database
+    st.session_state.eliminated = []
+    st.session_state.elim_prev = []
     st.session_state.c_prev = database
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
@@ -110,19 +112,27 @@ elif st.session_state.phase == "genus":
         col1, col2, col3 = st.columns(3)
         if col1.button("Yes",key="y_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
+            st.session_state.elim_prev = st.session_state.eliminated
             st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+            removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+            st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
             st.session_state.index += 1
             st.rerun()
         if col2.button("No",key="n_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
+            st.session_state.elim_prev = st.session_state.eliminated
             st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+            removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
+            st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
             st.session_state.index += 1
             st.rerun()
         if col3.button("I don't know",key="idk_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
+            st.session_state.elim_prev = st.session_state.eliminated
             st.session_state.candidates = filter_candidates(st.session_state.index, None, st.session_state.candidates)
+            st.session_state.eliminated.append([])
             st.session_state.answered.append(st.session_state.index)
             st.session_state.index += 1
             st.rerun()
@@ -148,7 +158,8 @@ elif st.session_state.phase == "genus":
         st.rerun()
     if st.button("Back", key="prev_genus", use_container_width = True) and st.session_state.index > 0:
         st.session_state.index = st.session_state.answered.pop()
-        st.session_state.candidates = st.session_state.c_prev
+        restore = st.session_state.eliminated.pop()
+        st.session_state.candidates.extend(restore)
         st.session_state.phase = "genus"
         st.session_state.last_phase = "genus"
         st.session_state.clicked_back = True
@@ -196,9 +207,9 @@ elif st.session_state.phase == "species":
          #["wellcomei", "seydeli", "mortiauxi", "berghei", "brunnipes", "walravensi", "harperi", "njombiensis", "austensii", "gibbinsi", "hargreavesi", "mousinhoi", "marshallii", "letabensis", "kosiensis", "hughi"],
          #["gabonensis", "rufipes", "domicolus", "lloreti", "barberellus", "brucei", "rivulorum", "carteri", "brucei", "freetownensis", "demeilloni", "flavicosta", "keniensis", "moucheti", "bervoetsi", "garnhami"],
          #["ovengensis", "longipalpis", "fuscivenosus", "culicifacies", "aruni", "demeilloni", "parensis", "sergentii", "cameroni"]]
-        others_by_group = [[],[], [],[],[],[],[],[],
-                        ["wellcomei", "seydeli", "mortiauxi", "berghei", "brunnipes", "walravensi", "harperi", "njombiensis", "austensii", "gibbinsi", "hargreavesi", "mousinhoi", "marshallii", "letabensis", "kosiensis", "hughi"],
-                        ["gabonensis", "rufipes", "domicolus", "lloreti", "barberellus", "brucei", "rivulorum", "carteri", "brucei", "freetownensis", "demeilloni", "flavicosta", "keniensis", "moucheti", "bervoetsi", "garnhami"],
+        others_by_group = [[],[], [],[],[],[],[],[],[],[],
+                        #["wellcomei", "seydeli", "mortiauxi", "berghei", "brunnipes", "walravensi", "harperi", "njombiensis", "austensii", "gibbinsi", "hargreavesi", "mousinhoi", "marshallii", "letabensis", "kosiensis", "hughi"],
+                        #["gabonensis", "rufipes", "domicolus", "lloreti", "barberellus", "brucei", "rivulorum", "carteri", "brucei", "freetownensis", "demeilloni", "flavicosta", "keniensis", "moucheti", "bervoetsi", "garnhami"],
                         ["ovengensis", "longipalpis", "fuscivenosus", "culicifacies", "aruni", "demeilloni", "parensis", "sergentii", "cameroni"]]
 
         # ---- Session Initialization ----
