@@ -25,6 +25,10 @@ def filter_candidates(index, ans, candidates):
             return [c for c in candidates if c.get(index, -1) != 0]
         elif ans == 0:
             return [c for c in candidates if c.get(index, -1) != 1]
+        elif ans == 2:
+            return [c for c in candidates if c.get(index, -1) != 2]
+        elif ans == 3:
+            return [c for c in candidates if c.get(index, -1) != 3]
         else:
             return candidates
 
@@ -288,6 +292,45 @@ elif st.session_state.phase == "species":
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
             q_b = questions_b[0][st.session_state.index]
+            if st.session_state.index == 98:
+                st.write(f"**Q98**:")
+                col1, col2 = st.columns(2)
+                imga = "images/A.png"
+                imgb = "images/B.png"
+                imgc = "images/C.png"
+                imgd = "images/D.png"
+
+    
+                if col1.button("Scutal scales as in A", key="a", use_container_width=True):
+                    st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.candidates = filter_candidates(st.session_state.index, 0, st.session_state.candidates)
+                    st.session_state.answered.append(st.session_state.index)
+                    st.session_state.index += 1
+                    st.rerun()
+                if col2.button("Scutal scales as in B", key="b", use_container_width=True):
+                    st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.candidates = filter_candidates(st.session_state.index, 1, st.session_state.candidates)
+                    st.session_state.answered.append(st.session_state.index)
+                    st.session_state.index += 1
+                    st.rerun()
+                col1.image(imga)
+                col2.image(imgb)
+                
+                if col1.button("Scutal scales as in C", key="c", use_container_width=True):
+                    st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.candidates = filter_candidates(st.session_state.index, 2, st.session_state.candidates)
+                    st.session_state.answered.append(st.session_state.index)
+                    st.session_state.index += 1
+                    st.rerun()
+                if col2.button("Scutal scales as in D", key="d", use_container_width=True):
+                    st.session_state.c_prev = st.session_state.candidates
+                    st.session_state.candidates = filter_candidates(st.session_state.index, 3, st.session_state.candidates)
+                    st.session_state.answered.append(st.session_state.index)
+                    st.session_state.index += 1
+                    st.rerun()
+                col1.image(imgc)
+                col2.image(imgd)
+            
             if q_b != "" and q_b != None:
                 st.write(f"**Q{st.session_state.index}:**")
                 col1, col2, col3 = st.columns(3)
