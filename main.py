@@ -255,7 +255,7 @@ elif st.session_state.phase == "species":
                 #st.rerun()
         
                 ### VECTOR VERSION ###
-                prior = get_feature_vector(nl_input,"gpt-4.1-nano")
+                prior = get_feature_vector(nl_input,"o4-mini")
                 prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
                 st.session_state.prior = prior_list
                 st.session_state.c_prev = st.session_state.candidates
