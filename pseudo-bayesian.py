@@ -39,7 +39,7 @@ def update_probabilities(ans, index, candidates, thresh):
   return candidates, just_el
       
 def filter_candidates(n, candidates, just_el):
-        candidates = [c for c, keep in zip(candidates, just_el) if keep = 0]
+        candidates = [c for c, keep in zip(candidates, just_el) if keep == 0]
         
  
 st.header("Species Identification")
