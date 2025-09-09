@@ -329,7 +329,7 @@ else:
                     st.write(f"- **Anopheles {name}**")
                     
 
-bn1, bn2 = st.columns(3)
+bn1, bn2 = st.columns(2)
     
 if st.session_state.index > 0:
     if bn1.button("Previous question",key="prev_spec", use_container_width=True)  and st.session_state.answered:
