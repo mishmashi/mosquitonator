@@ -21,7 +21,7 @@ if "index" not in st.session_state:
     st.session_state.answered = []
     st.session_state.threshold = 0.5
 
-def update_probabilities(ans, index, candidates, thresh):
+def update_probabilities(ans, index, candidates, thresh, factor=.25):
   just_el = []
   if ans is None:
     return candidates, just_el
@@ -30,7 +30,7 @@ def update_probabilities(ans, index, candidates, thresh):
     if pd.isna(c_ans) or ans == c_ans:
       just_el.append(0)
     elif ans != c_ans:
-      candidate["prob"] = candidate["prob"]*.25
+      candidate["prob"] = candidate["prob"]*factor
       if candidate["prob"] < thresh:
         candidate["considered"] = 0
         just_el.append(1) #add index of candidate that was eliminated to list, to be used by filter_candidates
@@ -84,7 +84,7 @@ if st.session_state.index == 0:
         for idx, el in enumerate(st.session_state.prior):
              if el in [0,1]:
                  st.session_state.c_prev = st.session_state.candidates
-                 candidates, just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold)
+                 candidates, just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, .6)
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
@@ -104,7 +104,7 @@ if st.session_state.index == 0:
         st.session_state.candidates = database # Reset candidates before applying prior
         for idx, el in enumerate(st.session_state.prior):
             if el in [0,1]: 
-                 candidates, just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold)
+                 candidates, just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.6)
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
@@ -314,10 +314,12 @@ else:
         #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
     elif len(st.session_state.candidates) > 1:
         st.warning(f"Possible species:")
+        st.session_state.candidates = sorted(st.session_state.candidates, key=lambda c: c['prob'], reverse=1)
+
         for c in st.session_state.candidates:
             if pd.notna(c['region']):
-                st.write(f"- **Anopheles {c['name']}**, region: {c['region']}")
-            else: st.write(f"- **Anopheles {c['name']}**")
+                st.write(f"- **Anopheles {c['name']}**, region: {c['region']}, probability: {c['prob']*100}%")
+            else: st.write(f"- **Anopheles {c['name']}**, probability: {c['prob']*100}%")
            # st.image(c["image"], caption="Example of species")
 
     else:
