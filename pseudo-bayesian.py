@@ -34,7 +34,7 @@ def update_probabilities(ans, index, candidates, thresh):
       if candidate["prob"] < thresh:
         candidate["considered"] = 0
         just_el.append(1) #add index of candidate that was eliminated to list, to be used by filter_candidates
-      else
+      else:
         just_el.append(0)
   return candidates, just_el
       
