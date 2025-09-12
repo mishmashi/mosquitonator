@@ -27,9 +27,10 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
   if ans is None:
     return candidates, just_el
   for i, candidate in enumerate(candidates):
-    c_ans = candidate.get(index, -1)
+    c_ans = candidate.get(index, np.nan)
     if pd.isna(c_ans) or ans == c_ans:
       just_el.append(0)
+      continue
     elif ans != c_ans:
       candidate["prob"] = candidate["prob"]*factor
       if candidate["prob"] < thresh:
