@@ -19,6 +19,7 @@ if "index" not in st.session_state:
     st.session_state.u_inp = ""
     st.session_state.clicked_back = False
     st.session_state.answered = []
+    st.session_state.just_el = []
     st.session_state.threshold = 0.4
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
@@ -40,7 +41,7 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
       
 def filter_candidates(candidates, just_el):
         candidates = [c for c, keep in zip(candidates, just_el) if keep == 0]
-        return candidates
+        return candidates 
         
  
 st.header("Species Identification")
@@ -81,11 +82,18 @@ if st.session_state.index == 0:
     st.session_state.candidates = database # Reset candidates before applying prior
     st.session_state.others = []
     if st.session_state.prior:
+        prior_size = len(st.session_state.prior)
         for idx, el in enumerate(st.session_state.prior):
              if el in [0,1]:
                  st.session_state.c_prev = st.session_state.candidates
-                 candidates, just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, .8)
-                 st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+                 if prior_size <= 2:
+                     factor = 0.4
+                 elif prior_size <= 5:
+                     factor  = 0.6
+                 else:
+                     factor = 0.8
+                 candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, factor)
+                 st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
 
@@ -104,8 +112,8 @@ if st.session_state.index == 0:
         st.session_state.candidates = database # Reset candidates before applying prior
         for idx, el in enumerate(st.session_state.prior):
             if el in [0,1]: 
-                 candidates, just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.6)
-                 st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+                 candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.6)
+                 st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
         st.warning(f"Applied prior: {st.session_state.prior}")
@@ -159,8 +167,8 @@ if st.session_state.index < len(questions):
 
         if col1.button("Scutal scales as in A", key="a", use_container_width=True):
              st.session_state.c_prev = st.session_state.candidates
-             candidates, just_el = update_probabilities(0, 98, st.session_state.candidates, st.session_state.threshold)
-             st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+             candidates, st.session_state.just_el = update_probabilities(0, 98, st.session_state.candidates, st.session_state.threshold)
+             st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
              removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
              st.session_state.eliminated.append(removed)
              st.session_state.answered.append(st.session_state.index)
@@ -168,8 +176,8 @@ if st.session_state.index < len(questions):
              st.rerun()
         if col2.button("Scutal scales as in B", key="b", use_container_width=True):
             st.session_state.c_prev = st.session_state.candidates
-            candidates, just_el = update_probabilities(1, 98, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+            candidates, st.session_state.just_el = update_probabilities(1, 98, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -180,8 +188,8 @@ if st.session_state.index < len(questions):
         
         if col1.button("Scutal scales as in C", key="c", use_container_width=True):
             st.session_state.c_prev = st.session_state.candidates
-            candidates, just_el = update_probabilities(2, 98, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+            candidates, st.session_state.just_el = update_probabilities(2, 98, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -189,8 +197,8 @@ if st.session_state.index < len(questions):
             st.rerun()
         if col2.button("Scutal scales as in D", key="d", use_container_width=True):
             st.session_state.c_prev = st.session_state.candidates
-            candidates, just_el = update_probabilities(3, 98, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+            candidates, st.session_state.just_el = update_probabilities(3, 98, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -221,11 +229,11 @@ if st.session_state.index < len(questions):
             #st.session_state.elim_prev = st.session_state.eliminated
             
             if st.session_state.index == 3:
-                 candidates, just_el = update_probabilities(1, 18, st.session_state.candidates, st.session_state.threshold)
-                 st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+                 candidates, st.session_state.just_el = update_probabilities(1, 18, st.session_state.candidates, st.session_state.threshold)
+                 st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             
-            candidates, just_el = update_probabilities(1, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+            candidates, st.session_state.just_el = update_probabilities(1, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -235,10 +243,10 @@ if st.session_state.index < len(questions):
             st.session_state.c_prev = st.session_state.candidates
             #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
-                 candidates, just_el = update_probabilities(0, 18, st.session_state.candidates, st.session_state.threshold)
-                 st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)          
-            candidates, just_el = update_probabilities(0, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+                 candidates, st.session_state.just_el = update_probabilities(0, 18, st.session_state.candidates, st.session_state.threshold)
+                 st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)          
+            candidates, st.session_state.just_el = update_probabilities(0, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -275,10 +283,10 @@ if st.session_state.index < len(questions):
             st.session_state.c_prev = st.session_state.candidates
             #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
-                 candidates, just_el = update_probabilities(1, 18, st.session_state.candidates, st.session_state.threshold)
-                 st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)          
-            candidates, just_el = update_probabilities(1, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+                 candidates, st.session_state.just_el = update_probabilities(1, 18, st.session_state.candidates, st.session_state.threshold)
+                 st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)          
+            candidates, st.session_state.just_el = update_probabilities(1, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -288,12 +296,12 @@ if st.session_state.index < len(questions):
             st.session_state.c_prev = st.session_state.candidates
             #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
-                candidates, just_el = update_probabilities(0, 18, st.session_state.candidates, st.session_state.threshold)
-                st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+                candidates, st.session_state.just_el = update_probabilities(0, 18, st.session_state.candidates, st.session_state.threshold)
+                st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
                 removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
                 st.session_state.eliminated.append(removed)
-            candidates, just_el = update_probabilities(0, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
-            st.session_state.candidates = filter_candidates(st.session_state.candidates, just_el)
+            candidates, st.session_state.just_el = update_probabilities(0, st.session_state.index, st.session_state.candidates, st.session_state.threshold)
+            st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -346,7 +354,6 @@ if st.session_state.index > 0:
 if bn2.button("Restart",key="restart_sp", use_container_width = True):
     st.session_state.index = 0
     st.session_state.eliminated = []
-    #st.session_state.elim_prev = []
     st.session_state.candidates = database
     st.session_state.others = []
     st.session_state.species_initialized = False
