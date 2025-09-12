@@ -20,7 +20,7 @@ if "index" not in st.session_state:
     st.session_state.clicked_back = False
     st.session_state.answered = []
     st.session_state.just_el = []
-    st.session_state.threshold = 0.4
+    st.session_state.threshold = 0
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
   just_el = []
@@ -321,15 +321,15 @@ else:
         st.success(f"The specimen is an **Anopheles {st.session_state.candidates[0]['name']}**")
         #st.image(st.session_state.candidates[0]['image'], caption="Example of species")
     elif len(st.session_state.candidates) > 1:
-        st.warning(f"Possible species:")
+        #st.warning(f"Possible species:")
         st.session_state.candidates = sorted(st.session_state.candidates, key=lambda c: c['prob'], reverse=1)
 
-        for c in st.session_state.candidates:
-            if pd.notna(c['region']):
-                st.write(f"- **Anopheles {c['name']}**, region: {c['region']}, probability: {c['prob']*100}%")
-            else: st.write(f"- **Anopheles {c['name']}**, probability: {c['prob']*100}%")
+        #for c in st.session_state.candidates:
+         #   if pd.notna(c['region']):
+          #      st.write(f"- **Anopheles {c['name']}**, region: {c['region']}, probability: {c['prob']*100}%")
+          #  else: st.write(f"- **Anopheles {c['name']}**, probability: {c['prob']*100}%")
            # st.image(c["image"], caption="Example of species")
-
+        st.success(f"The specimen most likely is an **Anopheles {st.session_state.candidates[0]['name']}**")
     else:
       st.error("No matching relevant species.")
     if st.session_state.others:
