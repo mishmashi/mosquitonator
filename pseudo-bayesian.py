@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import numpy as np
 import csv
 from io import StringIO
 from LLM2vec import get_feature_vector
