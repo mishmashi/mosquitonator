@@ -336,17 +336,17 @@ else:
 
         if st.session_state.candidates and st.session_state.candidates[0].get('prob') is not None:
             highest_prob = st.session_state.candidates[0]['prob']
+            n_printed = 0
             for candidate in st.session_state.candidates:
                 if candidate.get('prob') == highest_prob:
                     st.success(f"**Anopheles {candidate['name']}** (Probability: {candidate['prob']*100}%)")
+                    n_printed +=1
                 else:
                     # Stop when the probability is no longer the highest
                     break
         
-        
-        st.markdown("Other possible species: ")
-        
-        if len(probs) > 1:
+        if len(probs) > n_printed:
+            st.markdown("Other possible species: ")
             threshold_prob = probs[1] # Get the second highest probability
             if len(probs)>2:
                 threshold_prob = probs[2]
