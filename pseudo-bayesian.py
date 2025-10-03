@@ -354,12 +354,12 @@ else:
             start_index_other = n_printed
             if st.session_state.candidates and st.session_state.candidates[0].get('prob') is not None:
                  highest_prob = st.session_state.candidates[0]['prob']
-                 for i, candidate in enumerate(st.session_state.candidates):
+                 for candidate in st.session_state.candidates:
                      if candidate.get('prob') < highest_prob or candidate.get('prob') is None:
-                         start_index_other = i
+                         start_index_other += 1
                          break
-                     if i == len(st.session_state.candidates) - 1: 
-                         start_index_other = len(st.session_state.candidates)
+                     #if i == len(st.session_state.candidates) - 1: 
+                      #   start_index_other = len(st.session_state.candidates)
         
             for candidate in st.session_state.candidates[start_index_other:]: 
                 if candidate.get('prob') is not None and candidate['prob'] >= threshold_prob:
