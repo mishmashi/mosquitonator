@@ -90,9 +90,9 @@ if st.session_state.index == 0:
                  if prior_size <= 2:
                      factor = 0.4
                  elif prior_size <= 5:
-                     factor  = 0.6
+                     factor  = 0.5
                  else:
-                     factor = 0.8
+                     factor = 0.6
                  candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, factor)
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
@@ -331,7 +331,16 @@ else:
           #      st.write(f"- **Anopheles {c['name']}**, region: {c['region']}, probability: {c['prob']*100}%")
           #  else: st.write(f"- **Anopheles {c['name']}**, probability: {c['prob']*100}%")
            # st.image(c["image"], caption="Example of species")
-        st.success(f"The specimen most likely is an **Anopheles {st.session_state.candidates[0]['name']}**")
+        probs = np.unique(st.session_state.candidates['prob']
+        
+        
+        st.markdown("Most likely species: ")
+        for i in range(len(len(st.session_state.candidates['prob']>=probs[2]):
+            st.success(f"**Anopheles {st.session_state.candidates[0]['name']}**")
+        st.markdown("Other possible species: ")
+        for i in range(3):
+            for j in range(len(st.session_state.candidates['prob']>=probs[2])):
+                st.success(f"**Anopheles {st.session_state.candidates[j]['name']}**")
     else:
       st.error("No matching relevant species.")
     if st.session_state.others:
