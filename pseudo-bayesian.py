@@ -42,7 +42,7 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
           just_el.append(0)
       
   max_prob = max(c["prob"] for c in candidates)
-  if max_prob >0:
+  if max_prob >.9:
       for i, candidate in enumerate(candidates):
           candidate["prob"] = candidate["prob"]/max_prob
   return candidates, just_el
@@ -120,7 +120,7 @@ if st.session_state.index == 0:
         st.session_state.candidates = database # Reset candidates before applying prior
         for idx, el in enumerate(st.session_state.prior):
             if el in [0,1]: 
-                 candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.5)
+                 candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.4)
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
