@@ -114,7 +114,7 @@ if st.session_state.index == 0:
         st.session_state.candidates = database # Reset candidates before applying prior
         for idx, el in enumerate(st.session_state.prior):
             if el in [0,1]: 
-                 candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.6)
+                 candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, 0.4)
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
