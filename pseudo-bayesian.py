@@ -21,7 +21,7 @@ if "index" not in st.session_state:
     st.session_state.clicked_back = False
     st.session_state.answered = []
     st.session_state.just_el = []
-    st.session_state.threshold = 0.5
+    st.session_state.threshold = 0.2
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
   just_el = []
@@ -88,11 +88,11 @@ if st.session_state.index == 0:
              if el in [0,1]:
                  st.session_state.c_prev = st.session_state.candidates
                  if prior_size <= 2:
-                     factor = 0.4
+                     factor = 0.3
                  elif prior_size <= 5:
-                     factor  = 0.5
+                     factor  = 0.35
                  else:
-                     factor = 0.6
+                     factor = 0.4
                  candidates, st.session_state.just_el = update_probabilities(el, idx, st.session_state.candidates, st.session_state.threshold, factor)
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
