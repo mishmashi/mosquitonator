@@ -372,22 +372,22 @@ else:
                          break
                      #if i == len(st.session_state.candidates) - 1: 
                       #   start_index_other = len(st.session_state.candidates)
-        
+            
             for candidate in st.session_state.candidates[start_index_other:]: 
                 if candidate.get('prob') is not None and candidate['prob'] >= threshold_prob:
-                     st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']*100}%)")
+                     st.write(f"- **Anopheles {candidate['name']}** (Probability: {(candidate['prob']*100:.2f}%)")
                 else:
                     break
         elif len(st.session_state.candidates) > 1:
             for candidate in st.session_state.candidates[1:]:
-                 st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']*100}%)")
+                 st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']*100:.2f}%)")
     else:
       st.error("No matching relevant species.")
-    if st.session_state.others:
-        st.warning("Less likely species:")
-        for name in st.session_state.others:
-                if name not in [c["name"] for c in st.session_state.candidates]:
-                    st.write(f"- **Anopheles {name}**")
+    #if st.session_state.others:
+     #   st.warning("Less likely species:")
+      #  for name in st.session_state.others:
+       #         if name not in [c["name"] for c in st.session_state.candidates]:
+        #            st.write(f"- **Anopheles {name}**")
                     
 
 bn1, bn2 = st.columns(2)
