@@ -107,7 +107,7 @@ if st.session_state.index == 0:
 
         ### VECTOR VERSION ###
         prior = get_feature_vector(nl_input,"o4-mini")
-        prior = prior.replace("0","B").replace("1","A")
+        prior = prior.replace("B","0").replace("A","1")
         prior_list = [int(p) if p.isdigit() else None for p in prior.split(",")]
         st.session_state.prior = prior_list
         st.session_state.c_prev = st.session_state.candidates
