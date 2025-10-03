@@ -33,18 +33,13 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
     if pd.isna(c_ans) or ans == c_ans:
       just_el.append(0)
       if ans == c_ans and not pd.isna(c_ans):
-          if candidate["prob"] > .909:
+          if candidate["prob"] >= .909:
               candidate["prob"] = candidate["prob"]*1.01
               if candidate["prob"] > st.session_state.max_prob:
                   st.session_state.max_prob = candidate["prob"]
               continue
-          candidate["prob"] = candidate["prob"]*1.1
-      if st.session_state.max_prob != 0:
-          for i, candidate in enumerate(candidates):
-              candidate["prob"] = candidate["prob"]/st.session_state.max_prob
-          st.session_state.max_prob = 0
-              
-      continue
+          else:
+              candidate["prob"] = candidate["prob"]*1.1
     elif ans != c_ans:
       candidate["prob"] = candidate["prob"]*factor
       if candidate["prob"] < thresh:
@@ -52,6 +47,11 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
         just_el.append(1) #add index of candidate that was eliminated to list, to be used by filter_candidates
       else:
           just_el.append(0)
+  if st.session_state.max_prob != 0:
+      for i, candidate in enumerate(candidates):
+          candidate["prob"] = candidate["prob"]/st.session_state.max_prob
+      st.session_state.max_prob = 0
+      continue
   return candidates, just_el
       
 def filter_candidates(candidates, just_el):
