@@ -22,7 +22,6 @@ if "index" not in st.session_state:
     st.session_state.answered = []
     st.session_state.just_el = []
     st.session_state.threshold = 0.2
-    st.session_state.max_prob = 0
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
   just_el = []
@@ -35,9 +34,6 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
       if ans == c_ans and not pd.isna(c_ans):
           if candidate["prob"] >= .909:
               candidate["prob"] = candidate["prob"]*1.01
-              if candidate["prob"] > st.session_state.max_prob:
-                  st.session_state.max_prob = candidate["prob"]
-              continue
           else:
               candidate["prob"] = candidate["prob"]*1.1
     elif ans != c_ans:
@@ -47,11 +43,11 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
         just_el.append(1) #add index of candidate that was eliminated to list, to be used by filter_candidates
       else:
           just_el.append(0)
-      continue
-  if st.session_state.max_prob != 0:
+      
+  max_prob = max(c["prob"] for c in candidates)
+  if max_prob >0:
       for i, candidate in enumerate(candidates):
-          candidate["prob"] = candidate["prob"]/st.session_state.max_prob
-      st.session_state.max_prob = 0
+          candidate["prob"] = candidate["prob"]/max_prob
   return candidates, just_el
       
 def filter_candidates(candidates, just_el):
@@ -89,8 +85,7 @@ if st.session_state.species_initialized == False:
     st.session_state.candidates = database
     st.session_state.others = []
     st.session_state.species_initialized = True
-    st.session_state.max_prob = 0
-
+    
 st.title("Anopheles Species Identifier")
 
 if st.session_state.index == 0:
