@@ -41,10 +41,10 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
           candidate["prob"] = candidate["prob"]*1.1
           if candidate["prob"] > st.session_state.max_prob:
               st.session_state.max_prob = candidate["prob"]
-  if st.session_state.max_prob != 0:
-      for i, candidate in enumerate(candidates):
-          candidate["prob"] = candidate["prob"]/st.session_state.max_prob
-      st.session_state.max_prob = 0
+      if st.session_state.max_prob != 0:
+          for i, candidate in enumerate(candidates):
+              candidate["prob"] = candidate["prob"]/st.session_state.max_prob
+          st.session_state.max_prob = 0
               
       continue
     elif ans != c_ans:
