@@ -375,7 +375,7 @@ else:
             
             for candidate in st.session_state.candidates[start_index_other:]: 
                 if candidate.get('prob') is not None and candidate['prob'] >= threshold_prob:
-                     st.write(f"- **Anopheles {candidate['name']}** (Probability: {(candidate['prob']*100:.2f}%)")
+                     st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']*100:.2f}%)")
                 else:
                     break
         elif len(st.session_state.candidates) > 1:
