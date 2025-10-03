@@ -47,11 +47,11 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
         just_el.append(1) #add index of candidate that was eliminated to list, to be used by filter_candidates
       else:
           just_el.append(0)
+      continue
   if st.session_state.max_prob != 0:
       for i, candidate in enumerate(candidates):
           candidate["prob"] = candidate["prob"]/st.session_state.max_prob
       st.session_state.max_prob = 0
-      continue
   return candidates, just_el
       
 def filter_candidates(candidates, just_el):
