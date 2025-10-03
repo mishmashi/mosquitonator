@@ -345,13 +345,13 @@ else:
                     # Stop when the probability is no longer the highest
                     break
         
-        if len(probs) > n_printed:
+        if len(probs) > 1:
             st.markdown("Other possible species: ")
             threshold_prob = probs[1] # Get the second highest probability
             if len(probs)>2:
                 threshold_prob = probs[2]
             # Start from the first candidate whose probability is less than the highest_prob
-            start_index_other = 0
+            start_index_other = n_printed
             if st.session_state.candidates and st.session_state.candidates[0].get('prob') is not None:
                  highest_prob = st.session_state.candidates[0]['prob']
                  for i, candidate in enumerate(st.session_state.candidates):
