@@ -164,6 +164,7 @@ if st.session_state.index < len(questions):
             st.session_state.answered.append(st.session_state.index)
             st.session_state.index = len(questions)
             st.session_state.eliminated.append([])
+            st.rerun()
     q = questions[st.session_state.index]
     q_b = questions_b[0][st.session_state.index]
     if st.session_state.index == 98:
