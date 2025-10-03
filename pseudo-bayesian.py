@@ -91,6 +91,7 @@ if st.session_state.species_initialized == False:
     st.session_state.candidates = database
     st.session_state.others = []
     st.session_state.species_initialized = True
+    st.session_state.max_prob = 0
 
 st.title("Anopheles Species Identifier")
 
