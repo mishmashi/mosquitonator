@@ -31,11 +31,8 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
     c_ans = candidate.get(index, np.nan)
     if pd.isna(c_ans) or ans == c_ans:
       just_el.append(0)
-      if ans == c_ans and not pd.isna(c_ans):
-          if candidate["prob"] >= .909:
-              candidate["prob"] = candidate["prob"]*1.01
-          else:
-              candidate["prob"] = candidate["prob"]*1.1
+      if ans == c_ans and not pd.isna(c_ans):  
+        candidate["prob"] = candidate["prob"]*1.1
     elif ans != c_ans:
       candidate["prob"] = candidate["prob"]*factor
       if candidate["prob"] < thresh:
