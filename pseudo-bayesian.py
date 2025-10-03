@@ -22,6 +22,7 @@ if "index" not in st.session_state:
     st.session_state.answered = []
     st.session_state.just_el = []
     st.session_state.threshold = 0.2
+    st.session_state.max_prob = 0
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
   just_el = []
@@ -32,10 +33,19 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
     if pd.isna(c_ans) or ans == c_ans:
       just_el.append(0)
       if ans == c_ans and not pd.isna(c_ans):
-          if candidate["prob"] >= 1:
+          if candidate["prob"] > .909:
               candidate["prob"] = candidate["prob"]*1.01
+              if candidate["prob"] > st.session_state.max_prob:
+                  st.session_state.max_prob = candidate["prob"]
               continue
           candidate["prob"] = candidate["prob"]*1.1
+          if candidate["prob"] > st.session_state.max_prob:
+              st.session_state.max_prob = candidate["prob"]
+  if st.session_state.max_prob != 0:
+      for i, candidate in enumerate(candidates):
+          candidate["prob"] = candidate["prob"]/st.session_state.max_prob
+      st.session_state.max_prob = 0
+              
       continue
     elif ans != c_ans:
       candidate["prob"] = candidate["prob"]*factor
