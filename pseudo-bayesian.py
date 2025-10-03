@@ -32,7 +32,7 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
     if pd.isna(c_ans) or ans == c_ans:
       just_el.append(0)
       if ans == c_ans and not pd.isna(c_ans):
-          candidate["prob"] = candidate["prob"]*1.1
+          candidate["prob"] = min(candidate["prob"]*1.1, 1)
       continue
     elif ans != c_ans:
       candidate["prob"] = candidate["prob"]*factor
