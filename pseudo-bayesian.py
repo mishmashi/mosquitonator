@@ -331,16 +331,42 @@ else:
           #      st.write(f"- **Anopheles {c['name']}**, region: {c['region']}, probability: {c['prob']*100}%")
           #  else: st.write(f"- **Anopheles {c['name']}**, probability: {c['prob']*100}%")
            # st.image(c["image"], caption="Example of species")
-        probs = list(set([candidate.get('prob') for candidate in st.session_state.candidates if candidate.get('prob') is not None]))
-        
-        
+        probs = sorted(list(set([candidate.get('prob') for candidate in st.session_state.candidates if candidate.get('prob') is not None])), reverse=True)
         st.markdown("Most likely species: ")
-        for i in range(len(st.session_state.candidates['prob']>=probs[2])):
-            st.success(f"**Anopheles {st.session_state.candidates[0]['name']}**")
+
+        if st.session_state.candidates and st.session_state.candidates[0].get('prob') is not None:
+            highest_prob = st.session_state.candidates[0]['prob']
+            for candidate in st.session_state.candidates:
+                if candidate.get('prob') == highest_prob:
+                    st.success(f"**Anopheles {candidate['name']}** (Probability: {candidate['prob']:.4f})")
+                else:
+                    # Stop when the probability is no longer the highest
+                    break
+        
+        
         st.markdown("Other possible species: ")
-        for i in range(3):
-            for j in range(len(st.session_state.candidates['prob']>=probs[2])):
-                st.success(f"**Anopheles {st.session_state.candidates[j]['name']}**")
+        
+        if len(probs) > 1:
+            threshold_prob = probs[1] # Get the second highest probability
+            # Start from the first candidate whose probability is less than the highest_prob
+            start_index_other = 0
+            if st.session_state.candidates and st.session_state.candidates[0].get('prob') is not None:
+                 highest_prob = st.session_state.candidates[0]['prob']
+                 for i, candidate in enumerate(st.session_state.candidates):
+                     if candidate.get('prob') < highest_prob or candidate.get('prob') is None:
+                         start_index_other = i
+                         break
+                     if i == len(st.session_state.candidates) - 1: 
+                         start_index_other = len(st.session_state.candidates)
+        
+            for candidate in st.session_state.candidates[start_index_other:]: 
+                if candidate.get('prob') is not None and candidate['prob'] >= threshold_prob:
+                     st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']:.4f})")
+                else:
+                    break
+        elif len(st.session_state.candidates) > 1:
+            for candidate in st.session_state.candidates[1:]:
+                 st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']:.4f})")
     else:
       st.error("No matching relevant species.")
     if st.session_state.others:
