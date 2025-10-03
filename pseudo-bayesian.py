@@ -335,7 +335,7 @@ else:
         
         
         st.markdown("Most likely species: ")
-        for i in range(len(len(st.session_state.candidates['prob']>=probs[2]):
+        for i in range(len(st.session_state.candidates['prob']>=probs[2])):
             st.success(f"**Anopheles {st.session_state.candidates[0]['name']}**")
         st.markdown("Other possible species: ")
         for i in range(3):
