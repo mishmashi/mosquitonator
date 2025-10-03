@@ -331,7 +331,7 @@ else:
           #      st.write(f"- **Anopheles {c['name']}**, region: {c['region']}, probability: {c['prob']*100}%")
           #  else: st.write(f"- **Anopheles {c['name']}**, probability: {c['prob']*100}%")
            # st.image(c["image"], caption="Example of species")
-        probs = np.unique(st.session_state.candidates['prob']
+        probs = np.unique(st.session_state.candidates['prob'])
         
         
         st.markdown("Most likely species: ")
