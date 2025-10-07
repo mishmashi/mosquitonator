@@ -40,9 +40,6 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
         just_el.append(1) #add index of candidate that was eliminated to list, to be used by filter_candidates
       else:
           just_el.append(0)
-
-  name_list = [c['name'] for c in candidates]
-  st.warning(name_list)
       
   max_prob = max(c["prob"] for c in candidates)
   if max_prob >.9:
@@ -56,6 +53,8 @@ def filter_candidates(candidates, just_el):
         
  
 st.header("Species Identification")
+name_list = [c['name'] for c in st.session_state.candidates]
+  st.warning(name_list)
 @st.cache_data(ttl=6) #for optimization
 def load_data():
         df = pd.read_csv("Mosquito traits by genus.csv", header=3)
