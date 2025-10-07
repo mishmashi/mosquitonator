@@ -54,7 +54,7 @@ def filter_candidates(candidates, just_el):
  
 st.header("Species Identification")
 name_list = [c['name'] for c in st.session_state.candidates]
-st.warning(name_list)
+st.warning(len(name_list))
 @st.cache_data(ttl=6) #for optimization
 def load_data():
         df = pd.read_csv("Mosquito traits by genus.csv", header=3)
