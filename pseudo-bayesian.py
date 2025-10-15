@@ -124,10 +124,10 @@ if st.session_state.index == 0:
                  st.session_state.candidates = filter_candidates(st.session_state.candidates, st.session_state.just_el)
         removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
         st.session_state.eliminated.append(removed)
-        st.warning(f"Applied prior: {st.session_state.prior}")
+        #st.warning(f"Applied prior: {st.session_state.prior}")
         st.rerun()
 if st.session_state.prior:        
-    st.warning(f"Applied prior: {st.session_state.prior}")
+    #st.warning(f"Applied prior: {st.session_state.prior}")
 #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
 # ---- Main Loop ----
