@@ -128,6 +128,7 @@ if st.session_state.index == 0:
         st.rerun()
 if st.session_state.prior:        
     #st.warning(f"Applied prior: {st.session_state.prior}")
+    st.markdown("Applied prior.")
 #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
 # ---- Main Loop ----
