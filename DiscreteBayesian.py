@@ -429,7 +429,7 @@ else:
             reverse=True
         )
 
-        if probs and probs[0][0] is not None:
+        if probs and probs[0][0] is not None and probs[0][0] > 0:
             st.markdown("### Most likely species")
             highest_prob = probs[0][1]
             n_printed = 0
@@ -446,7 +446,7 @@ else:
             st.markdown("Other possible species: ")
             threshold_prob = probs[1][1] if probs[1][1] > .5 else .5 # Get the second highest probability
             
-            if len(probs)>2:
+            if len(probs)>2 and probs[2][1] >.4:
                 threshold_prob = probs[2][1]
               
             # Start from the first candidate whose probability is less than the highest_prob
@@ -499,6 +499,8 @@ if bn2.button("Restart",key="restart_sp", use_container_width = True):
     st.session_state.eliminated = []
     st.session_state.candidates = database
     st.session_state.others = []
+    st.session_state.answered = []
+    st.session_state.evidence = {}
     st.session_state.species_initialized = False
     st.session_state.prior = []
     st.rerun()
