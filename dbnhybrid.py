@@ -6,6 +6,14 @@ import csv
 from io import StringIO
 from LLM2vec import get_feature_vector
 from LLM2Bool import get_feature_bool
+
+from dbn_model import build_dbn
+
+@st.cache_resource
+def load_dbn():
+    model, inference, features = build_dbn("traits.csv")
+    return model, inference, features
+
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -379,8 +387,10 @@ if st.session_state.index < len(questions):
 
 else:
     st.subheader("Likely species")
-
+    
+    
     if st.session_state.evidence:
+        bn_model, bn_inference, bn_features = load_dbn()
         dbn_probs = infer_species_probs(
             bn_inference,
             st.session_state.evidence,
