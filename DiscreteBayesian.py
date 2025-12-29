@@ -79,16 +79,16 @@ def next_informative_question(
     inference,
     evidence,
     features,
-    feature_states = [0,1]
+    candidates
 ):
     for f in features:
         if f in evidence:
             continue
             
         observed_values = {
-            row[feature]
+            row[f]
             for row in candidates
-            if feature in row and not pd.isna(row[feature])
+            if f in row and not pd.isna(row[f])
         }
         
         if len(observed_values) <= 1:
@@ -243,11 +243,11 @@ if not st.session_state.clicked_back:
             bn_inference,
             st.session_state.evidence,
             bn_features,
-            feature_nstates
+            candidates = st.session_state.candidates
         )
 
         if next_feature is None:
-            st.session_state.index = len(questions)  # sentinel = done
+            st.session_state.index = len(questions) 
         else:
             st.session_state.index = feature_to_index[next_feature]
             
