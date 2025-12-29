@@ -429,7 +429,7 @@ else:
             reverse=True
         )
 
-        if probs and probs[0][0] is not None and probs[0][0] > 0:
+        if probs and probs[0][0] is not None and probs[0][1] > 0:
             st.markdown("### Most likely species")
             highest_prob = probs[0][1]
             n_printed = 0
