@@ -57,10 +57,10 @@ def expected_information_gain(
     base_entropy = entropy(base)
     expected_entropy = 0.0
     p_feature = feature_state_probs(inference, evidence, feature)
-    for state, p_state in enumerate(p_feature):
-        p_state = float(p_state)
-        if p_state == 0:
+    for state, p in enumerate(p_feature):
+        if p <= 0:
             continue
+
         e2 = dict(evidence)
         e2[feature] = state
         try:
@@ -83,6 +83,15 @@ def next_informative_question(
 ):
     for f in features:
         if f in evidence:
+            continue
+            
+        observed_values = {
+            row[feature]
+            for row in candidates
+            if feature in row and not pd.isna(row[feature])
+        }
+        
+        if len(observed_values) <= 1:
             continue
 
         gain = expected_information_gain(
@@ -117,7 +126,11 @@ index_to_feature = {i: f for f, i in feature_to_index.items()}
 def infer_species_probs(inference, evidence):
     q = inference.query(
         variables=["Species"],
-        evidence=evidence,
+        evidence = {
+            f: v
+            for f, v in evidence.items()
+            if not pd.isna(v)
+        },
         show_progress=False
     )
 
@@ -213,7 +226,15 @@ mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
 if not st.session_state.clicked_back:
     while st.session_state.index < len(questions):
         # Skip uninformative questions
-        values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+        values = {
+            c[index]
+            for c in st.session_state.candidates
+            if index in c and not pd.isna(c[index])
+        }
+        if len(values) <= 1:
+            continue
+
+
         num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
 
         # Skip if all answers are the same or only one candidate has data
@@ -354,6 +375,7 @@ if st.session_state.index < len(questions):
             st.session_state.c_prev = st.session_state.candidates
             removed = [[]]
             st.session_state.eliminated.append(removed)
+            st.session_state.evidence[bn_features[st.session_state.index]] = ''
             st.session_state.answered.append(st.session_state.index)
             st.session_state.index += 1
             st.rerun()
@@ -495,14 +517,16 @@ if st.session_state.index > 0:
         
 
 if bn2.button("Restart",key="restart_sp", use_container_width = True):
-    st.session_state.index = 0
-    st.session_state.eliminated = []
-    st.session_state.candidates = database
-    st.session_state.others = []
-    st.session_state.answered = []
-    st.session_state.evidence = {}
-    st.session_state.species_initialized = False
-    st.session_state.prior = []
+    for key in [
+        "answered",
+        "evidence",
+        "index",
+        "clicked_back",
+        "candidates",
+    ]:
+        if key in st.session_state:
+            del st.session_state[key]
+
     st.rerun()
 st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
 #if len(st.session_state.others) >0:
