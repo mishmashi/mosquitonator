@@ -64,7 +64,7 @@ def expected_information_gain(
 
     return base_entropy - expected_entropy
 
-MIN_GAIN = 0.001  # tune if needed
+MIN_GAIN = 0.0001  # tune if needed
 
 
 def next_informative_question(
