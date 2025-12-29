@@ -29,7 +29,7 @@ def build_dbn(csv_path=None):
     state_names = {
             f: [-1, 0, 1] for f in features
         }
-    state_names["Scutal scales as in (A, B, C or D):"] = [0,1,2,3]
+    state_names["Scutal scales as in (A, B, C or D):"] = [-1,0,1,2,3]
 
     state_names["Species"] = sorted(df["Species"].dropna().unique())
     model.fit(
