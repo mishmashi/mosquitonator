@@ -401,16 +401,16 @@ else:
         for c in st.session_state.candidates:
             if c["name"] in dbn_probs:
                 c["prob"] = float(dbn_probs[c["name"]])
-
-    st.session_state.candidates.sort(
-        key=lambda c: c["prob"], reverse=True
-    )
-
-    for c in st.session_state.candidates:
-        st.write(
-            f"- **Anopheles {c['name']}** "
-            f"(Match: {c['prob']*100:.2f}%)"
+    
+        st.session_state.candidates.sort(
+            key=lambda c: c["prob"], reverse=True
         )
+    
+        for c in st.session_state.candidates:
+            st.write(
+                f"- **Anopheles {c['name']}** "
+                f"(Match: {c['prob']*151*100:.2f}%)"
+            )
     else:
       st.error("No matching relevant species.")
 
