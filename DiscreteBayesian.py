@@ -103,6 +103,10 @@ def next_informative_question(
         
         if len(observed_values) <= 1:
             continue
+        p_feature = feature_state_probs(inference, evidence, f)
+        
+        if len(p_feature) <= 1:
+            continue
 
 
         gain = expected_information_gain(
@@ -111,10 +115,16 @@ def next_informative_question(
             f,
             feature_nstates
         )
-
+        
+        if gain <= min_gain:
+            continue
 
         if gain > MIN_GAIN:
             return f
+        if best_feature is None:
+            # DEBUG: why?
+            st.write("No informative features found; showing results.")
+
 
     return None
 
