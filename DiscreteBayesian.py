@@ -8,6 +8,23 @@ from LLM2vec import get_feature_vector
 from LLM2Bool import get_feature_bool
 from dbn_model import build_dbn
 
+# Initialize session state
+if "index" not in st.session_state:
+    database = []
+    st.session_state.index = 0
+    st.session_state.candidates = database
+    st.session_state.eliminated = []
+    st.session_state.c_prev = database
+    st.session_state.species_initialized = False
+    st.session_state.o_prev = []
+    st.session_state.prior = []
+    st.session_state.u_inp = ""
+    st.session_state.clicked_back = False
+    st.session_state.answered = []
+    st.session_state.just_el = []
+    st.session_state.threshold = 0.4
+    st.session_state.evidence = {}
+    
 def entropy(dist):
     p = np.array(list(dist.values()), dtype=float)
     p = p[p > 0]
@@ -97,23 +114,6 @@ def infer_species_probs(inference, evidence):
     states = q.state_names["Species"]
 
     return dict(zip(states, probs))
-
-# Initialize session state
-if "index" not in st.session_state:
-    database = []
-    st.session_state.index = 0
-    st.session_state.candidates = database
-    st.session_state.eliminated = []
-    st.session_state.c_prev = database
-    st.session_state.species_initialized = False
-    st.session_state.o_prev = []
-    st.session_state.prior = []
-    st.session_state.u_inp = ""
-    st.session_state.clicked_back = False
-    st.session_state.answered = []
-    st.session_state.just_el = []
-    st.session_state.threshold = 0.4
-    st.session_state.evidence = {}
  
 st.header("Species Identification")
 @st.cache_data(ttl=30) #for optimization
