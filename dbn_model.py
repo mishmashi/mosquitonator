@@ -32,8 +32,14 @@ def build_dbn(csv_path=None):
     state_names["Scutal scales as in (A, B, C or D):"] = [-1,0,1,2,3]
 
     state_names["Species"] = sorted(df["Species"].dropna().unique())
+
+    df_bn = df.copy()
+
+    for f in features:
+        df_bn = df_bn[df_bn[f] != -1]
+
     model.fit(
-        df,
+        df_bn,
         estimator=MaximumLikelihoodEstimator,
         state_names = state_names
     )
