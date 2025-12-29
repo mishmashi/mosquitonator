@@ -434,8 +434,8 @@ bn1, bn2 = st.columns(2)
     
 if st.session_state.index > 0:
     if bn1.button("Previous question",key="prev_spec", use_container_width=True)  and st.session_state.answered:
-        if st.session_state.answered_questions:
-            f, _ = st.session_state.answered_questions.pop()
+        if st.session_state.answered:
+            f, _ = st.session_state.answered.pop()
             st.session_state.evidence.pop(f, None)
             st.rerun()
         
