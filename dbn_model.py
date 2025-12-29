@@ -19,7 +19,7 @@ def build_dbn(csv_path=None):
         c for c in df.columns
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
-    for f in FEATURES:
+    for f in features:
         df[f] = df[f].fillna(-1).astype(int)
         
     edges = [("Species", f) for f in features]
