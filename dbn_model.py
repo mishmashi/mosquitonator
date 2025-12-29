@@ -24,8 +24,14 @@ def build_dbn(csv_path=None):
 
     model = DiscreteBayesianNetwork(edges)
 
-    df_train = df.dropna(subset=features + ["Species"])
-    model.fit(df_train, estimator=MaximumLikelihoodEstimator)
+    model.fit(
+        df,
+        estimator=MaximumLikelihoodEstimator,
+        state_names={
+            f: sorted(df[f].dropna().unique())
+            for f in features
+        }
+    )
 
 
     inference = VariableElimination(model)
