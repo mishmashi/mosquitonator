@@ -46,24 +46,39 @@ def feature_state_probs(inference, evidence, feature):
     )
     return q.values
 
-def expected_information_gain(inference, evidence, feature):
+def expected_information_gain(
+    inference,
+    evidence,
+    feature,
+    target="Species"
+):
+    base = posterior(inference, evidence, target)
+    base_entropy = entropy(base)
+
+    expected_entropy = 0.0
+
+    # P(feature | evidence)
     p_feature = feature_state_probs(inference, evidence, feature)
     cardinality = inference.model.get_cardinality(feature)
 
+    cardinality = min(cardinality, len(p_feature))
+
     for state in range(cardinality):
-        if state >= len(p_feature):
-            continue
         if p_feature[state] == 0:
             continue
 
         e2 = dict(evidence)
         e2[feature] = state
+
         try:
             post = posterior(inference, e2, target)
         except Exception:
             continue
-        expected_entropy += p_state * entropy(post)
+
+        expected_entropy += p_feature[state] * entropy(post)
+
     return base_entropy - expected_entropy
+
 
 
 
