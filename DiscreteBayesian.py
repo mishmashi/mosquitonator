@@ -84,7 +84,7 @@ bn_model, bn_inference, bn_features = load_dbn()
 feature_nstates = {
     f: 2 for f in bn_features
 }
-feature_nstates.iloc[98] = 4
+feature_nstates["Scutal scales as in (A, B, C or D):"] = 4
 
 def infer_species_probs(inference, evidence):
     q = inference.query(
