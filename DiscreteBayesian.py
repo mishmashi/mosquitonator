@@ -485,7 +485,7 @@ else:
                 else:
                   break
         
-        if len(probs) > 1:
+        if len(probs) > n_printed:
             st.markdown("Other possible species: ")
             threshold_prob = probs[1][1] if probs[1][1] > .5 else .5 # Get the second highest probability
             
