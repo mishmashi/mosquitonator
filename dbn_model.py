@@ -1,3 +1,4 @@
+!pip3 install pgmpy
 import pandas as pd
 from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.estimators import MaximumLikelihoodEstimator
