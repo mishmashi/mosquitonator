@@ -15,7 +15,7 @@ def build_dbn(csv_path=None):
     if not csv_path.exists():
         raise FileNotFoundError(f"DBN training file not found: {csv_path}")
 
-    df = pd.read_csv(csv_path, header=1)
+    df = pd.read_csv(csv_path, header=3)
     features = [
         c for c in df.columns
         if c not in ["Species", "Region", "Considered", "Probability", "Image"]
