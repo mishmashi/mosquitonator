@@ -47,7 +47,7 @@ if "index" not in st.session_state:
 st.header("Species Identification")
 @st.cache_data(ttl=6) #for optimization
 def load_data():
-        df = pd.read_csv("Mosquito traits by genus.csv", header=3)
+        df = pd.read_csv("traits.csv", header=3)
         questions = [col for col in df.columns if col not in ("Species", "Considered", "Probability", "Region", "Image")]
 
         database = []
