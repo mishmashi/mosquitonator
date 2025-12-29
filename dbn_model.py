@@ -1,4 +1,4 @@
-!pip3 install pgmpy
+#!pip3 install pgmpy
 import pandas as pd
 from pathlib import Path
 from pgmpy.models import DiscreteBayesianNetwork
