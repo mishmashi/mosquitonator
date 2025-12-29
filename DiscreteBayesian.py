@@ -8,9 +8,6 @@ from LLM2vec import get_feature_vector
 from LLM2Bool import get_feature_bool
 from dbn_model import build_dbn
 
-feature_to_index = {f: i for i, f in enumerate(bn_features)}
-index_to_feature = {i: f for f, i in feature_to_index.items()}
-
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -105,6 +102,9 @@ feature_nstates = {
     f: 2 for f in bn_features
 }
 feature_nstates["Scutal scales as in (A, B, C or D):"] = 4
+
+feature_to_index = {f: i for i, f in enumerate(bn_features)}
+index_to_feature = {i: f for f, i in feature_to_index.items()}
 
 def infer_species_probs(inference, evidence):
     q = inference.query(
