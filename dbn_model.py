@@ -23,7 +23,10 @@ def build_dbn(csv_path=None):
     edges = [("Species", f) for f in features]
 
     model = DiscreteBayesianNetwork(edges)
-    model.fit(df, estimator=MaximumLikelihoodEstimator)
+
+    df_train = df.dropna(subset=features + ["Species"])
+    model.fit(df_train, estimator=MaximumLikelihoodEstimator)
+
 
     inference = VariableElimination(model)
 
