@@ -64,7 +64,7 @@ def expected_information_gain(
     cardinality = min(cardinality, len(p_feature))
 
     for state in range(cardinality):
-        if p_feature[state] == 0:
+        if p_feature[state] == 0 or p_feature[state] == -1:
             continue
 
         e2 = dict(evidence)
