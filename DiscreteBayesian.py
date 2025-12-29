@@ -458,12 +458,24 @@ else:
                         start_index_other +=1
                         break
 
-            for candidate, p in probs[start_index_other:]: 
-                p = float(p)
-                if p is not None and p >= threshold_prob:
-                     st.write(f"- **Anopheles {candidate}** (Probability: {p*100:.1f}%)")
+            for item in probs[start_index_other:]:
+                candidate = item[0]
+                p = item[1]
+            
+                # unwrap tuple/list probabilities
+                if isinstance(p, (tuple, list)):
+                    p = p[0]
+            
+                try:
+                    p = float(p)
+                except (TypeError, ValueError):
+                    continue
+            
+                if p >= threshold_prob:
+                    st.write(f"- **Anopheles {candidate}** (Probability: {p:.2%})")
                 else:
                     break
+
         elif len(probs) > 1:
             for candidate, p in probs[1:]:
                  p = float(p)
