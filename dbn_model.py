@@ -33,6 +33,7 @@ def build_dbn(csv_path=None):
         }
     )
 
+    assert model.get_cpds("Species").is_valid_cpd()
 
     inference = VariableElimination(model)
 
