@@ -58,6 +58,7 @@ def expected_information_gain(
     expected_entropy = 0.0
     p_feature = feature_state_probs(inference, evidence, feature)
     for state, p_state in enumerate(p_feature):
+        p_state = float(p_state)
         if p_state == 0:
             continue
         e2 = dict(evidence)
@@ -434,6 +435,7 @@ else:
             n_printed = 0
             
             for species, p in probs:
+                p = float(p)
                 if p == highest_prob:
                   st.write(f"- **Anopheles {species}** (Match: {p*100:.2f}%)")
                   n_printed +=1
@@ -451,18 +453,20 @@ else:
             if probs and probs[0][0] is not None:
                  highest_prob = probs[0][1]
                  for species, p in probs:
+                      p = float(p)
                       if p < highest_prob or p is None:
                         start_index_other +=1
                         break
 
             for candidate, p in probs[start_index_other:]: 
-                
+                p = float(p)
                 if p is not None and p >= threshold_prob:
                      st.write(f"- **Anopheles {candidate}** (Probability: {p*100:.1f}%)")
                 else:
                     break
         elif len(probs) > 1:
             for candidate, p in probs[1:]:
+                 p = float(p)
                  st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']*100:.1f}%)")
     else:
       st.error("No matching relevant species.")
