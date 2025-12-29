@@ -46,19 +46,14 @@ def feature_state_probs(inference, evidence, feature):
     )
     return q.values
 
-def expected_information_gain(
-    inference,
-    evidence,
-    feature,
-    feature_nstates,
-    target="Species"
-):
-    base = posterior(inference, evidence, target)
-    base_entropy = entropy(base)
-    expected_entropy = 0.0
+def expected_information_gain(inference, evidence, feature):
     p_feature = feature_state_probs(inference, evidence, feature)
-    for state, p in enumerate(p_feature):
-        if p <= 0:
+    cardinality = inference.model.get_cardinality(feature)
+
+    for state in range(cardinality):
+        if state >= len(p_feature):
+            continue
+        if p_feature[state] == 0:
             continue
 
         e2 = dict(evidence)
@@ -86,13 +81,14 @@ def next_informative_question(
             continue
             
         observed_values = {
-            row[f]
-            for row in candidates
-            if f in row and not pd.isna(row[f])
+            row.get(feature)
+            for row in st.session_state.candidates
+            if not pd.isna(row.get(feature))
         }
         
         if len(observed_values) <= 1:
-            continue
+            continue  # uninformative
+
 
         gain = expected_information_gain(
             bn_inference,
