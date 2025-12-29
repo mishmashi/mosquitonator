@@ -81,13 +81,13 @@ def next_informative_question(
             continue
             
         observed_values = {
-            row.get(feature)
+            row.get(f)
             for row in st.session_state.candidates
-            if not pd.isna(row.get(feature))
+            if not pd.isna(row.get(f))
         }
         
         if len(observed_values) <= 1:
-            continue  # uninformative
+            continue
 
 
         gain = expected_information_gain(
