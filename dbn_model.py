@@ -19,7 +19,9 @@ def build_dbn(csv_path=None):
         c for c in df.columns
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
-
+    for c in features:
+        df[c] = df[c].astype("Int64") 
+        
     edges = [("Species", f) for f in features]
 
     model = DiscreteBayesianNetwork(edges)
