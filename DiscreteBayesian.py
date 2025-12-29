@@ -56,24 +56,19 @@ def expected_information_gain(
     base = posterior(inference, evidence, target)
     base_entropy = entropy(base)
     expected_entropy = 0.0
-
-    # P(feature | evidence)
     p_feature = feature_state_probs(inference, evidence, feature)
-
-    for state in range(feature_nstates[feature]):
-        if p_feature[state] == 0:
+    for state, p_state in enumerate(p_feature):
+        if p_state == 0:
             continue
-
         e2 = dict(evidence)
         e2[feature] = state
         try:
             post = posterior(inference, e2, target)
         except Exception:
             continue
-        expected_entropy += (
-            p_feature[state] * entropy(post)
-        )
+        expected_entropy += p_state * entropy(post)
     return base_entropy - expected_entropy
+
 
 
 MIN_GAIN = 0.0001  # tune if needed
