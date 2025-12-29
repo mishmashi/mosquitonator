@@ -98,7 +98,7 @@ def next_informative_question(
         observed_values = {
             row.get(f)
             for row in st.session_state.candidates
-            if not pd.isna(row.get(f))
+            if not pd.isna(row.get(f)) and row.get(f) != -1
         }
         
         if len(observed_values) <= 1:
