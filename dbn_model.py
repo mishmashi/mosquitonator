@@ -1,5 +1,5 @@
-import pandas as pd
 from pathlib import Path
+import pandas as pd
 from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.estimators import MaximumLikelihoodEstimator
 from pgmpy.inference import VariableElimination
@@ -12,16 +12,16 @@ def build_dbn(csv_path=None):
     else:
         csv_path = Path(csv_path)
 
-    if not csv_path.exists():
-        raise FileNotFoundError(f"DBN training file not found: {csv_path}")
+    df = pd.read_csv(csv_path, header=3)
+    df.columns = df.columns.astype(str).str.strip()
 
-    df = pd.read_csv(csv_path, header=2)
     features = [
         c for c in df.columns
-        if c not in ["Species", "Region", "Considered", "Probability", "Image"]
+        if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
 
     edges = [("Species", f) for f in features]
+
     model = DiscreteBayesianNetwork(edges)
     model.fit(df, estimator=MaximumLikelihoodEstimator)
 
