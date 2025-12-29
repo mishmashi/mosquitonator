@@ -1,13 +1,10 @@
-#!pip3 install pgmpy
 import pandas as pd
 from pathlib import Path
 from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.estimators import MaximumLikelihoodEstimator
 from pgmpy.inference import VariableElimination
 
-
 HERE = Path(__file__).resolve().parent
-
 
 def build_dbn(csv_path=None):
     if csv_path is None:
@@ -19,7 +16,6 @@ def build_dbn(csv_path=None):
         raise FileNotFoundError(f"DBN training file not found: {csv_path}")
 
     df = pd.read_csv(csv_path, header=1)
-
     features = [
         c for c in df.columns
         if c not in ["Species", "Region", "Considered", "Probability", "Image"]
