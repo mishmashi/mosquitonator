@@ -8,6 +8,9 @@ from LLM2vec import get_feature_vector
 from LLM2Bool import get_feature_bool
 from dbn_model import build_dbn
 
+feature_to_index = {f: i for i, f in enumerate(bn_features)}
+index_to_feature = {i: f for f, i in feature_to_index.items()}
+
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -207,7 +210,27 @@ if not st.session_state.clicked_back:
 
         # Skip if all answers are the same or only one candidate has data
         # Check if the current index has a corresponding value in the prior and skip if it does
-        st.session_state.index = next_informative_question(bn_inference,st.session_state.evidence,bn_features)
+        next_feature = next_informative_question(
+            bn_inference,
+            st.session_state.evidence,
+            bn_features,
+            feature_nstates
+        )
+
+        if next_feature is None:
+            st.session_state.index = len(questions)  # sentinel = done
+        else:
+            st.session_state.index = feature_to_index[next_feature]
+            
+        if next_feature is None:
+            break
+
+        next_index = feature_to_index[next_feature]
+            
+        if next_index < st.session_state.index:
+            next_index = st.session_state.index + 1
+
+        st.session_state.index = next_index
 
         if st.session_state.index and st.session_state.index >= 10: 
              if len(values) <= 1 or num_with_values <= 1:
