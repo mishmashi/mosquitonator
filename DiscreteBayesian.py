@@ -8,6 +8,67 @@ from LLM2vec import get_feature_vector
 from LLM2Bool import get_feature_bool
 from dbn_model import build_dbn
 
+def entropy(dist):
+    p = np.array(list(dist.values()), dtype=float)
+    p = p[p > 0]
+    return -np.sum(p * np.log2(p))
+
+def posterior(inference, evidence, target="Species"):
+    q = inference.query(
+        variables=[target],
+        evidence=evidence,
+        show_progress=False
+    )
+    return dict(zip(q.state_names[target], q.values))
+def expected_information_gain(
+    inference,
+    evidence,
+    feature,
+    feature_states,
+    target="Species"
+):
+    base = posterior(inference, evidence, target)
+    base_entropy = entropy(base)
+
+    expected_entropy = 0.0
+
+    for state in feature_states:
+        e2 = dict(evidence)
+        e2[feature] = state
+
+        try:
+            post = posterior(inference, e2, target)
+        except Exception:
+            continue
+
+        weight = sum(post.values())
+        expected_entropy += weight * entropy(post)
+
+    return base_entropy - expected_entropy
+MIN_GAIN = 0.01  # tune if needed
+def next_informative_question(
+    inference,
+    evidence,
+    features,
+    feature_states
+):
+    for f in features:
+        if f in evidence:
+            continue
+
+        gain = expected_information_gain(
+            inference,
+            evidence,
+            f,
+            feature_states[f]
+        )
+
+        if gain > MIN_GAIN:
+            return f
+
+    return None
+
+
 @st.cache_resource
 def load_dbn():
     model, inference, features = build_dbn("traits.csv")
@@ -283,7 +344,9 @@ if st.session_state.index < len(questions):
             #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
                  st.session_state.evidence[bn_features[18]] = 1       
+                 st.session_state.answered.append((bn_features[18], 1))
             st.session_state.evidence[bn_features[st.session_state.index]] = 1
+            st.session_state.answered.append((bn_features[st.session_state.index], 1))
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -294,9 +357,11 @@ if st.session_state.index < len(questions):
             #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
                 cst.session_state.evidence[bn_features[18]] = 0
+                st.session_state.answered.append((bn_features[18], 0))
                 removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
                 st.session_state.eliminated.append(removed)
             st.session_state.evidence[bn_features[st.session_state.index]] = 0
+            st.session_state.answered.append((bn_features[st.session_state.index], 0))
             removed = [e for e in st.session_state.c_prev if e not in st.session_state.candidates]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
@@ -369,11 +434,9 @@ bn1, bn2 = st.columns(2)
     
 if st.session_state.index > 0:
     if bn1.button("Previous question",key="prev_spec", use_container_width=True)  and st.session_state.answered:
-        st.session_state.index = st.session_state.answered.pop()
-        restore = st.session_state.eliminated.pop()
-        st.session_state.candidates.extend(e for e in restore if isinstance(e, dict))
-        st.session_state.others = st.session_state.o_prev
-        st.session_state.clicked_back = True
+        if st.session_state.answered_questions:
+        f, _ = st.session_state.answered_questions.pop()
+        st.session_state.evidence.pop(f, None)
         st.rerun()
         
 
