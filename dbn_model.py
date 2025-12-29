@@ -27,7 +27,7 @@ def build_dbn(csv_path=None):
     model = DiscreteBayesianNetwork(edges)
 
     state_names = {
-            f: [0, 1] for f in feature_cols
+            f: [0, 1] for f in features
         }
     
     state_names["Scutal scales as in (A, B, C or D):"] = [0,1,2,3]
