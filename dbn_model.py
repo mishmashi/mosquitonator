@@ -24,13 +24,17 @@ def build_dbn(csv_path=None):
 
     model = DiscreteBayesianNetwork(edges)
 
+    state_names = {
+            f: [0, 1] for f in feature_cols
+        }
+    
+    state_names["Scutal scales as in (A, B, C or D):"] = [0,1,2,3]
+
+    state_names["Species"] = sorted(df["Species"].dropna().unique())
     model.fit(
         df,
         estimator=MaximumLikelihoodEstimator,
-        state_names={
-            f: sorted(df[f].dropna().unique())
-            for f in features
-        }
+        state_names = state_names
     )
 
     assert model.get_cpds("Species").is_valid_cpd()
