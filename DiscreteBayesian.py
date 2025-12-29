@@ -446,7 +446,7 @@ else:
             st.markdown("Other possible species: ")
             threshold_prob = probs[1][1] # Get the second highest probability
             if len(probs)>2:
-                threshold_prob = probs[1][2]
+                threshold_prob = probs[2][1]
               
             # Start from the first candidate whose probability is less than the highest_prob
             start_index_other = n_printed
