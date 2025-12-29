@@ -45,7 +45,7 @@ if "index" not in st.session_state:
     st.session_state.evidence = {}
  
 st.header("Species Identification")
-@st.cache_data(ttl=6) #for optimization
+@st.cache_data(ttl=30) #for optimization
 def load_data():
         df = pd.read_csv("traits.csv", header=3)
         questions = [col for col in df.columns if col not in ("Species", "Considered", "Probability", "Region", "Image")]
