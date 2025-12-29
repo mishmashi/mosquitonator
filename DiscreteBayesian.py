@@ -209,7 +209,7 @@ if not st.session_state.clicked_back:
         # Check if the current index has a corresponding value in the prior and skip if it does
         st.session_state.index = next_informative_question(bn_inference,st.session_state.evidence,bn_features)
 
-        if st.session_state.index >= 10: 
+        if st.session_state.index and st.session_state.index >= 10: 
              if len(values) <= 1 or num_with_values <= 1:
                  st.session_state.index += 1
              else:
