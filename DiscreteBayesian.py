@@ -229,7 +229,7 @@ if not st.session_state.clicked_back:
         values = {
             c[index]
             for c in st.session_state.candidates
-            if index in c and not pd.isna(c[index])
+            if st.session_state.index in c and not pd.isna(c[st.session_state.index])
         }
         if len(values) <= 1:
             continue
