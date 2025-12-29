@@ -227,7 +227,7 @@ if not st.session_state.clicked_back:
     while st.session_state.index < len(questions):
         # Skip uninformative questions
         values = {
-            c[index]
+            c[st.session_state.index]
             for c in st.session_state.candidates
             if st.session_state.index in c and not pd.isna(c[st.session_state.index])
         }
