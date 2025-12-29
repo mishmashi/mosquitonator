@@ -1,4 +1,5 @@
 from pathlib import Path
+import numpy as np
 import pandas as pd
 from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.estimators import MaximumLikelihoodEstimator
@@ -20,7 +21,7 @@ def build_dbn(csv_path=None):
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
     for c in features:
-        if not isna(c):
+        if not np.isna(c):
             df[c] = df[c].astype("Int64") 
         
     edges = [("Species", f) for f in features]
