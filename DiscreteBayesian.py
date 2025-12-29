@@ -24,15 +24,16 @@ def expected_information_gain(
     inference,
     evidence,
     feature,
-    feature_states,
+    feature_nstates,
     target="Species"
 ):
     base = posterior(inference, evidence, target)
     base_entropy = entropy(base)
 
     expected_entropy = 0.0
+    nstates = feature_nstates[feature]
 
-    for state in feature_states:
+    for state in range(nstates):
         e2 = dict(evidence)
         e2[feature] = state
 
@@ -45,23 +46,31 @@ def expected_information_gain(
         expected_entropy += weight * entropy(post)
 
     return base_entropy - expected_entropy
-MIN_GAIN = 0.01  # tune if needed
+
+MIN_GAIN = 0.001  # tune if needed
+
+feature_nstates = {
+    f: 2 for f in bn_features
+}
+feature_nstates.iloc[98] = 4
+
 def next_informative_question(
     inference,
     evidence,
     features,
-    feature_states
+    feature_states = [0,1]
 ):
     for f in features:
         if f in evidence:
             continue
 
         gain = expected_information_gain(
-            inference,
+            bn_inference,
             evidence,
             f,
-            feature_states[f]
+            feature_nstates
         )
+
 
         if gain > MIN_GAIN:
             return f
@@ -197,10 +206,7 @@ if not st.session_state.clicked_back:
 
         # Skip if all answers are the same or only one candidate has data
         # Check if the current index has a corresponding value in the prior and skip if it does
-        if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1]:
-            if st.session_state.prior[st.session_state.index] in [0, 1]:
-                st.session_state.index += 1
-                continue
+        st.session_state.index = next_informative_question(bn_inference,st.session_state.evidence,bn_features)
 
         if st.session_state.index >= 10: 
              if len(values) <= 1 or num_with_values <= 1:
