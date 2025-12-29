@@ -2,15 +2,9 @@ import openai
 from openai import OpenAI
 import streamlit as st
 
-# Get your key from Streamlit secrets or environment
-#openai.api_key = st.secrets["OPENAI_API_KEY"]
 client = OpenAI(
     api_key = st.secrets["OPENAI_API_KEY"]
 )
-
-#if "u_inp" not in st.session_state:
-#    st.session_state.u_inp = ""
-#    st.session_state.result = ""
 
 instructions = instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating which features are present in the description.
 
@@ -210,6 +204,7 @@ Notice that feature 18 (A: Legs speckled, B: Legs not speckled) should also be '
 - intermediate" or "moderate" bands are anything in between narrow and broad.
 - If the user or the key specifies a different percentage, let that take precedence over the definitions for "narrow", "broad" and "intermediate".
 """
+
 def get_feature_vector(user_input: str, model = "gpt-4.1-nano") -> str:
     response = client.chat.completions.create(
             model=model,
@@ -219,20 +214,4 @@ def get_feature_vector(user_input: str, model = "gpt-4.1-nano") -> str:
             ]
          )
     return response.choices[0].message.content
-# User input
-#user_input = st.text_area("Describe the mosquito in detail:", placeholder="The wings are pale, the first main dark area of the costa has a pale interruption...")
-
-#if st.button("Submit"):
-#        st.session_state.u_inp = user_input
-    
-#        response = client.chat.completions.create(
-#            model="gpt-4o-mini",
-#            messages=[
-#                 {"role": "system", "content": instructions},
-#                 {"role": "user", "content": user_input}
-#            ]
-#         )
-#        st.session_state.result= response.choices[0].message.content
-#        st.rerun()
-#st.write(st.session_state.result)
 
