@@ -49,10 +49,6 @@ def expected_information_gain(
 
 MIN_GAIN = 0.001  # tune if needed
 
-feature_nstates = {
-    f: 2 for f in bn_features
-}
-feature_nstates.iloc[98] = 4
 
 def next_informative_question(
     inference,
@@ -84,6 +80,11 @@ def load_dbn():
     return model, inference, features
 
 bn_model, bn_inference, bn_features = load_dbn()
+
+feature_nstates = {
+    f: 2 for f in bn_features
+}
+feature_nstates.iloc[98] = 4
 
 def infer_species_probs(inference, evidence):
     q = inference.query(
