@@ -444,7 +444,8 @@ else:
         
         if len(probs) > 1:
             st.markdown("Other possible species: ")
-            threshold_prob = probs[1][1] # Get the second highest probability
+            threshold_prob = probs[1][1] if probs[1][1] > .5 else .5 # Get the second highest probability
+            
             if len(probs)>2:
                 threshold_prob = probs[2][1]
               
@@ -472,14 +473,14 @@ else:
                     continue
             
                 if p >= threshold_prob:
-                    st.write(f"- **Anopheles {candidate}** (Probability: {p:.2%})")
+                    st.write(f"- **Anopheles {candidate}** (Match: {p:.2%})")
                 else:
                     break
 
         elif len(probs) > 1:
             for candidate, p in probs[1:]:
                  p = float(p)
-                 st.write(f"- **Anopheles {candidate['name']}** (Probability: {candidate['prob']*100:.1f}%)")
+                 st.write(f"- **Anopheles {candidate['name']}** (Match: {candidate['prob']*100:.1f}%)")
     else:
       st.error("No matching relevant species.")
 
