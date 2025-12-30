@@ -17,9 +17,9 @@ def load_dbn():
 if "index" not in st.session_state:
     database = []
     st.session_state.index = 0
-    st.session_state.candidates = database
+    st.session_state.candidates = database.copy()
     st.session_state.eliminated = []
-    #st.session_state.elim_prev = []
+    st.session_state.ranking_candidates = database.copy()
     st.session_state.c_prev = database
     st.session_state.species_initialized = False
     st.session_state.o_prev = []
@@ -81,7 +81,16 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
 def filter_candidates(candidates, just_el):
         candidates = [c for c, keep in zip(candidates, just_el) if keep == 0]
         return candidates 
-        
+
+def sanitize_evidence(evidence, candidates):
+    clean = {}
+    for idx, val in evidence.items():
+        if val not in [0, 1, 2, 3]:
+            continue
+        # only keep if at least one candidate has data
+        if any(idx in c for c in candidates):
+            clean[idx] = val
+    return clean
  
 st.header("Species Identification")
 @st.cache_data(ttl=6) #for optimization
@@ -407,26 +416,37 @@ else:
     
     if st.session_state.evidence:
         bn_model, bn_inference, bn_features = load_dbn()
+        clean_evidence = sanitize_evidence_for_dbn(
+            st.session_state.evidence,
+            st.session_state.ranking_candidates
+        )
+        
         dbn_probs = infer_species_probs(
             bn_inference,
-            st.session_state.evidence,
+            clean_evidence,
             questions
         )
 
+
         # override heuristic probabilities
-        for c in st.session_state.candidates:
-            if c["name"] in dbn_probs:
-                c["prob"] = float(dbn_probs[c["name"]])
-    
-        st.session_state.candidates.sort(
-            key=lambda c: c["prob"], reverse=True
+        ranked = sorted(
+            ranking_candidates,
+            key=lambda c: dbn_probs.get(c["name"], 0),
+            reverse=True
         )
+        
+        for c in ranked[:10]:
+            st.write(f"**Anopheles {c["name"]}** Match: {dbn_probs[c["name"]]*100:.2f}%")
+
+        #st.session_state.candidates.sort(
+        #    key=lambda c: c["prob"], reverse=True
+        #)
     
-        for c in st.session_state.candidates:
-            st.write(
-                f"- **Anopheles {c['name']}** "
-                f"(Match: {c['prob']*151*100:.2f}%)"
-            )
+        #for c in st.session_state.candidates:
+        #    st.write(
+        #        f"- **Anopheles {c['name']}** "
+        #        f"(Match: {c['prob']*151*100:.2f}%)"
+         #   )
     else:
       st.error("No matching relevant species.")
 
