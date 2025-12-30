@@ -207,7 +207,7 @@ if not st.session_state.clicked_back:
         # Skip uninformative questions
         #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1}
         values = {
-            c[st.session_state.index]
+            c.get(st.session_state.index,-1)
             for c in st.session_state.candidates
             if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
         }
