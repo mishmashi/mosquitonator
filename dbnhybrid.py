@@ -178,6 +178,7 @@ if not st.session_state.clicked_back:
     while st.session_state.index < len(questions):
         # Skip uninformative questions
         values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
+        st.write(np.unique(values)
         num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
 
         # Skip if all answers are the same or only one candidate has data
