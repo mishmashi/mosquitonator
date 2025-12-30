@@ -95,17 +95,16 @@ def sanitize_evidence(evidence, candidates):
 st.header("Species Identification")
 @st.cache_data(ttl=6) #for optimization
 def load_data():
-        df = pd.read_csv("traits.csv", header=3)
+        df = pd.read_csv("linked_ds.csv", header=0)
         questions = [col for col in df.columns if col not in ("Species", "Considered", "Probability", "Region", "Image")]
 
         database = []
         for _, row in df.iterrows():
             entry = {"name": row["Species"], "prob": row["Probability"], "considered": row["Considered"], "image": row["Image"], "region": row["Region"]}
             for i, q in enumerate(questions):
-                if pd.notna(row[q]) and row[q] != "":
-                    val = row[q]
-                    if pd.notna(val) and str(val).isdigit():
-                        entry[i] = int(val)
+                val = row[q]
+                if pd.notna(val) and str(val).isdigit():
+                    entry[i] = int(val)
 
             database.append(entry)
 
