@@ -209,12 +209,12 @@ if not st.session_state.clicked_back:
         values = {
             c[st.session_state.index]
             for c in st.session_state.candidates
-            if st.session_state.index in c and c[st.session_state.index] != -1
+            if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
         }
         
         num_with_values = sum(
             1 for c in st.session_state.candidates
-            if st.session_state.index in c and c[st.session_state.index] != -1
+            if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
         )
 
 
