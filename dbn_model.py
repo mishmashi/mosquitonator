@@ -8,11 +8,11 @@ HERE = Path(__file__).resolve().parent
 
 def build_dbn(csv_path=None):
     if csv_path is None:
-        csv_path = HERE / "traits.csv"
+        csv_path = HERE / "linked_ds.csv"
     else:
         csv_path = Path(csv_path)
 
-    df = pd.read_csv(csv_path, header=3)
+    df = pd.read_csv(csv_path, header=0)
     df.columns = df.columns.astype(str).str.strip()
 
     features = [
