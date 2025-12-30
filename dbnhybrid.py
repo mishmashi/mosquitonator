@@ -192,7 +192,7 @@ if st.session_state.index == 0:
         st.warning(f"Applied prior: {st.session_state.prior}")
         st.rerun()
 if st.session_state.prior:        
-    st.warning(f"Applied prior: {st.session_state.prior}")
+    #st.warning(f"Applied prior: {st.session_state.prior}")
     st.markdown("Applied prior.")
 #st.markdown("Answer the following morphological questions to identify the species of Anopheles:")
 
@@ -206,8 +206,17 @@ if not st.session_state.clicked_back:
     while st.session_state.index < len(questions):
         # Skip uninformative questions
         #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1}
-        values = {c.get(st.session_state.index) for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1}
-        num_with_values = sum(1 for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1)
+        values = {
+            c[index]
+            for c in st.session_state.candidates
+            if st.session_state.index in c and c[st.session_state.index] != -1
+        }
+        
+        num_with_values = sum(
+            1 for c in st.session_state.candidates
+            if st.session_state.index in c and c[st.session_state.index] != -1
+        )
+
 
         # Skip if all answers are the same or only one candidate has data
         if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1,2,3]:
