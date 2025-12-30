@@ -432,7 +432,7 @@ else:
 
         # override heuristic probabilities
         ranked = sorted(
-            ranking_candidates,
+            st.session_state.ranking_candidates,
             key=lambda c: dbn_probs.get(c["name"], 0),
             reverse=True
         )
