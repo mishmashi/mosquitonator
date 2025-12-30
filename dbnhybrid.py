@@ -418,7 +418,7 @@ else:
     
     if st.session_state.evidence:
         bn_model, bn_inference, bn_features = load_dbn()
-        clean_evidence = sanitize_evidence_for_dbn(
+        clean_evidence = sanitize_evidence(
             st.session_state.evidence,
             st.session_state.ranking_candidates
         )
