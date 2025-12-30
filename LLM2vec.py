@@ -2,9 +2,20 @@ import openai
 from openai import OpenAI
 import streamlit as st
 
-client = OpenAI(
-    api_key = st.secrets["OPENAI_API_KEY"]
-)
+if "api_key" not in st.session_state:
+    st.session_state.api_key = None
+
+if st.session_state.api_key is None:
+    key = st.text_input(
+        "Please provide an OpenAI API key to run the demo",
+        type="password"
+    )
+    if key:
+        st.session_state.api_key = key
+    else:
+        st.stop()
+
+client = OpenAI(api_key=st.session_state.api_key)
 
 instructions = instructions = """You are given a list of morphological features of mosquitoes and a user’s description of an observed specimen. Your task is to output a vector indicating which features are present in the description.
 
