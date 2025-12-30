@@ -205,26 +205,20 @@ mid.write(f"**Remaining candidates:** {len(st.session_state.candidates)}")
 if not st.session_state.clicked_back:
     while st.session_state.index < len(questions):
         # Skip uninformative questions
-        values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1}
-        num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c and c.get(st.session_state.index, -1) != -1)
+        #values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1}
+        values = {c.get(st.session_state.index) for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1}
+        num_with_values = sum(1 for c in st.session_state.candidates if c.get(st.session_state.index, -1) != -1)
 
         # Skip if all answers are the same or only one candidate has data
-        # Check if the current index has a corresponding value in the prior and skip if it does
-        if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1]:
-            if st.session_state.prior[st.session_state.index] in [0, 1]:
+        if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1,2,3]:
+            if st.session_state.prior[st.session_state.index] in [0, 1,2,3]:
                 st.session_state.index += 1
                 continue
 
-        if st.session_state.index >= 10: 
-             if len(values) <= 1 or num_with_values <= 1:
-                 st.session_state.index += 1
-             else:
-                     break
+        if len(values) <= 1 or num_with_values <= 1:
+            st.session_state.index += 1
         else:
-             if len(values) <= 1 or num_with_values <= 1:
-                 st.session_state.index += 1
-             else:
-                break
+            break
 else:
     st.session_state.clicked_back = False
     
