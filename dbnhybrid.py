@@ -10,7 +10,7 @@ from dbn_model import build_dbn
 
 @st.cache_resource
 def load_dbn():
-    model, inference, features = build_dbn("traits.csv")
+    model, inference, features = build_dbn("linked_ds.csv")
     return model, inference, features
 
 # Initialize session state
