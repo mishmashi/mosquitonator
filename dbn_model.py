@@ -14,11 +14,12 @@ def build_dbn(csv_path=None):
 
     df = pd.read_csv(csv_path, header=0)
     df.columns = df.columns.astype(str).str.strip()
-
-    features = [
-        c for c in df.columns
-        if c not in {"Species", "Region", "Considered", "Probability", "Image"}
-    ]
+    
+    df.columns = (
+        list(df.columns[:5]) +
+        [str(i) for i, _ in enumerate(features)]
+    )
+    features = [c for c in df.columns if c not in {"Species", "Region", "Considered", "Probability", "Image"}]
     
     for f in features:
         if f == "98":
@@ -26,10 +27,6 @@ def build_dbn(csv_path=None):
         else:
             df = df[df[f].isin([0,1])]
         
-    df.columns = (
-        list(df.columns[:5]) +
-        [str(i) for i, _ in enumerate(features)]
-    )
 
     features = {str(i) for i, _ in enumerate(features)}
     
@@ -43,13 +40,15 @@ def build_dbn(csv_path=None):
     model.fit(
         df,
         estimator=MaximumLikelihoodEstimator,
-        state_names={
-            f: sorted(df[f].dropna().unique())
-            for f in features
-        }
+        state_names=state_names
     )
 
+    model.check_model()
 
+    print(model.get_cpds("Species"))
+    print(model.get_cpds("0").values.shape)   # (2, n_species)
+    print(model.get_cpds("98").values.shape)  # (4, n_species)
+    
     inference = VariableElimination(model)
 
     return model, inference, features
