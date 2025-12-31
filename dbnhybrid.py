@@ -82,16 +82,17 @@ def filter_candidates(candidates, just_el):
         candidates = [c for c, keep in zip(candidates, just_el) if keep == 0]
         return candidates 
 
-def sanitize_evidence(evidence, candidates):
+def sanitize_evidence(evidence):
     clean = {}
     for idx, val in evidence.items():
-        if int(val) not in [0, 1, 2, 3]:
-            st.warning(val)
+        try:
+            v = int(val)
+        except (TypeError, ValueError):
             continue
-        # only keep if at least one candidate has data
-        if any(idx in c for c in candidates):
-            clean[idx] = val
+        if v in [0,1,2,3]:
+            clean[idx] = v
     return clean
+
  
 st.header("Species Identification")
 @st.cache_data(ttl=6) #for optimization
