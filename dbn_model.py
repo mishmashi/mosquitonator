@@ -21,7 +21,10 @@ def build_dbn(csv_path=None):
     ]
     
     for f in features:
-        df[f] = df[f].fillna(-1).astype(int)
+        if f == "98":
+            df = df[df[f].isin([0,1,2,3])]
+        else:
+            df = df[df[f].isin([0,1])]
         
     df.columns = (
         list(df.columns[:5]) +
@@ -33,14 +36,12 @@ def build_dbn(csv_path=None):
     edges = [(f, "Species") for f in features]
     model = DiscreteBayesianNetwork(edges)
     
-    state_names = {
-        f: [0, 1] for f in features
-    }
+    state_names = {f: [0, 1] for f in features}
     state_names["98"] = [0,1,2,3]
     state_names["Species"] = sorted(df["Species"].unique())
     
     model.fit(
-        df.dropna(subset=features),
+        df,
         estimator=MaximumLikelihoodEstimator,
         state_names=state_names
     )
