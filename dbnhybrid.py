@@ -449,7 +449,7 @@ else:
         #    clean_evidence,
         #    questions
         #)
-        nb_probs = infer_species_probs_nb(
+        nb_probs = infer_species_probs(
             nb_model,
             clean_evidence
         )
