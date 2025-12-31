@@ -429,12 +429,15 @@ else:
             st.session_state.ranking_candidates
         )
         st.write(st.session_state.evidence)
+        st.write(clean_evidence)
         
         dbn_probs = infer_species_probs(
             bn_inference,
             clean_evidence,
             questions
         )
+
+        st.write(dbn_probs)
 
 
         # override heuristic probabilities
@@ -443,6 +446,7 @@ else:
             key=lambda c: dbn_probs.get(c["name"], 0),
             reverse=True
         )
+        st.write(st.session_state.ranking_candidates[0])
         
         for c in ranked[:10]:
             st.write(f"**Anopheles {c["name"]}** Match: {dbn_probs[c["name"]]*100:.2f}%")
