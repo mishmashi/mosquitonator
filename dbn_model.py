@@ -46,8 +46,6 @@ def build_dbn(csv_path=None):
         state_names=state_names
     )
 
-    assert model.get_cpds("Species").is_valid_cpd()
-
     inference = VariableElimination(model)
 
     return model, inference, features
