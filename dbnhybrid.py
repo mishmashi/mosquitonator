@@ -149,6 +149,7 @@ if st.session_state.species_initialized == False:
     st.session_state.species_initialized = True
     
 st.title("Anopheles Species Identifier")
+st.session_state.threshold = st.slider(0,1,.4)
 
 if st.session_state.index == 0:
     st.session_state.candidates = database # Reset candidates before applying prior
@@ -442,8 +443,6 @@ else:
         #bn_model, bn_inference, bn_features = load_dbn()
         nb_model = load_nb()
         clean_evidence = sanitize_evidence(st.session_state.evidence)
-        st.write(st.session_state.evidence)
-        st.write(clean_evidence)
         
         #dbn_probs = infer_species_probs(
         #    bn_inference,
