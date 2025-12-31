@@ -33,10 +33,14 @@ def build_dbn(csv_path=None):
     
     edges = [("Species", f) for f in features]
     model = DiscreteBayesianNetwork(edges)
+
+    df = df.dropna(subset=features)
+    
+    valid_species = sorted(df["Species"].value_counts()[lambda x: x > 0].index)
     
     state_names = {f: [0, 1] for f in features}
     state_names["98"] = [0,1,2,3]
-    state_names["Species"] = sorted(df["Species"].unique())
+    state_names["Species"] = valid_species
     
     model.fit(
         df,
