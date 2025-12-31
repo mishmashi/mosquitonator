@@ -20,10 +20,12 @@ def build_dbn(csv_path=None):
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
     
-    features = {str(i) for i, _ in enumerate(features)}
+    
             
     for f in features:
         df[f] = df[f].fillna(-1).astype(int)
+    
+    features = {str(i) for i, _ in enumerate(features)}
     
     edges = [(f, "Species") for f in features]
     model = DiscreteBayesianNetwork(edges)
@@ -31,7 +33,7 @@ def build_dbn(csv_path=None):
     state_names = {
             f: [-1, 0, 1] for f in features
         }
-    state_names["Scutal scales as in (A, B, C or D):"] = [-1,0,1,2,3]
+    state_names["98"] = [-1,0,1,2,3]
 
     state_names["Species"] = sorted(df["Species"].dropna().unique())
 
