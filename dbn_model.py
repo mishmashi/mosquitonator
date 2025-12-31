@@ -43,8 +43,12 @@ def build_dbn(csv_path=None):
     model.fit(
         df,
         estimator=MaximumLikelihoodEstimator,
-        state_names=state_names
+        state_names={
+            f: sorted(df[f].dropna().unique())
+            for f in features
+        }
     )
+
 
     inference = VariableElimination(model)
 
