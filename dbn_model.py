@@ -19,12 +19,16 @@ def build_dbn(csv_path=None):
         c for c in df.columns
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
+    
+    index_to_feature = {i: f for i, f in enumerate(features)}
+    for idx, val in evidence.items():
+        if idx in index_to_feature:
+            features[index_to_feature[idx]] = int(val)
+            
     for f in features:
         df[f] = df[f].fillna(-1).astype(int)
-        
+    
     edges = [(f, "Species") for f in features]
-
-
     model = DiscreteBayesianNetwork(edges)
 
     state_names = {
