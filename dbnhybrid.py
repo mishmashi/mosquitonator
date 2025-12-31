@@ -149,7 +149,7 @@ if st.session_state.species_initialized == False:
     st.session_state.species_initialized = True
     
 st.title("Anopheles Species Identifier")
-st.session_state.threshold = st.slider("Select a probability threshold",0.0,1.0,.4)
+st.session_state.threshold = st.slider("Select a probability threshold",0.0,0.9,.4)
 
 if st.session_state.index == 0:
     st.session_state.candidates = database # Reset candidates before applying prior
@@ -354,7 +354,6 @@ if st.session_state.index < len(questions):
             st.rerun()
         if col3.button(f"{q_b}",key=f"qb_sp_{st.session_state.index}", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
-            #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
                  candidates, st.session_state.just_el = update_probabilities(0, 18, st.session_state.candidates, st.session_state.threshold)
                  st.session_state.evidence[18] = 0
@@ -396,7 +395,6 @@ if st.session_state.index < len(questions):
                  st.session_state.o_prev = st.session_state.others
                  st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
             st.session_state.c_prev = st.session_state.candidates
-            #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
                  candidates, st.session_state.just_el = update_probabilities(1, 18, st.session_state.candidates, st.session_state.threshold)
                  st.session_state.evidence[18] = 1
@@ -411,7 +409,6 @@ if st.session_state.index < len(questions):
             st.rerun()
         if col3.button("No",key=f"n_sp_{st.session_state.index}", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
-            #st.session_state.elim_prev = st.session_state.eliminated
             if st.session_state.index == 3:
                 candidates, st.session_state.just_el = update_probabilities(0, 18, st.session_state.candidates, st.session_state.threshold)
                 st.session_state.evidence[18] = 0
@@ -428,7 +425,6 @@ if st.session_state.index < len(questions):
             st.rerun()
         if col2.button("I don't know",key=f"idk_sp_{st.session_state.index}", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
-            #st.session_state.elim_prev = st.session_state.eliminated
             removed = [[]]
             st.session_state.eliminated.append(removed)
             st.session_state.answered.append(st.session_state.index)
