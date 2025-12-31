@@ -24,7 +24,11 @@ def build_dbn(csv_path=None):
     for f in features:
         df[f] = df[f].fillna(-1).astype(int)
         
-    df.columns[5:] = [str(i) for i, f in enumerate(features)]
+    df.columns = (
+        list(df.columns[:5]) +
+        [str(i) for i, _ in enumerate(features)]
+    )
+
     features = {str(i) for i, _ in enumerate(features)}
     
     edges = [(f, "Species") for f in features]
