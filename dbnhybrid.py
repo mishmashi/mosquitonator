@@ -149,7 +149,6 @@ if st.session_state.species_initialized == False:
     st.session_state.species_initialized = True
     
 st.title("Anopheles Species Identifier")
-st.session_state.threshold = st.slider("Select a probability threshold",0.0,0.9,.4)
 
 if st.session_state.index == 0:
     st.session_state.candidates = database # Reset candidates before applying prior
@@ -432,6 +431,7 @@ if st.session_state.index < len(questions):
             st.rerun()
 
 else:
+    st.session_state.threshold = st.slider("Select a minimum match% to show species",0.0,0.9,.4)
     st.subheader("Likely species")
     
     
