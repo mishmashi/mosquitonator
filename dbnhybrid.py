@@ -85,7 +85,7 @@ def filter_candidates(candidates, just_el):
 def sanitize_evidence(evidence, candidates):
     clean = {}
     for idx, val in evidence.items():
-        if val not in [0, 1, 2, 3]:
+        if int(val) not in [0, 1, 2, 3]:
             st.warning(val)
             continue
         # only keep if at least one candidate has data
