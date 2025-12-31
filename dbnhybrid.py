@@ -463,7 +463,7 @@ else:
         )
         
         for c in ranked:
-            if nb_probs[c["name"]] > st.session_state.threshold
+            if nb_probs[c["name"]] > st.session_state.threshold:
                 st.write(f"**Anopheles {c["name"]}** Match: {nb_probs[c["name"]]*100:.2f}%")
 
         #st.session_state.candidates.sort(
