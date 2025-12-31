@@ -14,7 +14,6 @@ def build_dbn(csv_path=None):
 
     df = pd.read_csv(csv_path, header=0)
     df.columns = df.columns.astype(str).str.strip()
-    
 
     features = [
         c for c in df.columns
@@ -37,7 +36,7 @@ def build_dbn(csv_path=None):
     state_names = {
         f: [0, 1] for f in features
     }
-    state_names["Scutal scales as in (A, B, C or D):"] = [0,1,2,3]
+    state_names["98"] = [0,1,2,3]
     state_names["Species"] = sorted(df["Species"].unique())
     
     model.fit(
@@ -45,7 +44,6 @@ def build_dbn(csv_path=None):
         estimator=MaximumLikelihoodEstimator,
         state_names=state_names
     )
-
 
     assert model.get_cpds("Species").is_valid_cpd()
 
