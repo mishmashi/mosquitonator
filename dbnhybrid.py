@@ -104,8 +104,10 @@ def load_data():
             entry = {"name": row["Species"], "prob": row["Probability"], "considered": row["Considered"], "image": row["Image"], "region": row["Region"]}
             for i, q in enumerate(questions):
                 val = row[q]
-                if pd.notna(val) and str(val).isdigit():
-                    entry[i] = int(val)
+                if pd.notna(val):
+                    v = pd.to_numeric(val, errors="coerce")
+                    if not pd.isna(v):
+                        entry[i] = int(v)
 
             database.append(entry)
 
