@@ -212,7 +212,7 @@ if not st.session_state.clicked_back:
             for c in st.session_state.candidates
             if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
         }
-        
+        st.write(f"values: {values}")
         num_with_values = sum(
             1 for c in st.session_state.candidates
             if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
@@ -223,9 +223,11 @@ if not st.session_state.clicked_back:
         if st.session_state.prior and st.session_state.index < len(st.session_state.prior) and st.session_state.prior[st.session_state.index] in [0,1,2,3]:
             if st.session_state.prior[st.session_state.index] in [0, 1,2,3]:
                 st.session_state.index += 1
+                st.warning("prior long line")
                 continue
 
         if len(values) <= 1 or num_with_values <= 1:
+            st.warning("len values thing")
             st.session_state.index += 1
         else:
             break
