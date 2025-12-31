@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 from pgmpy.models import DiscreteBayesianNetwork
-from pgmpy.estimators import MaximumLikelihoodEstimator
+from pgmpy.estimators import MaximumLikelihoodEstimator, BayesianEstimator
 from pgmpy.inference import VariableElimination
 
 HERE = Path(__file__).resolve().parent
@@ -16,11 +16,8 @@ def build_dbn(csv_path=None):
     df.columns = df.columns.astype(str).str.strip()
     features = [c for c in df.columns if c not in {"Species", "Region", "Considered", "Probability", "Image"}]
     
-    df.columns = (
-        list(df.columns[:5]) +
-        [str(i) for i, _ in enumerate(features)]
-    )
-    features = [c for c in df.columns if c not in {"Species", "Region", "Considered", "Probability", "Image"}]
+    df.columns = list(df.columns[:5]) + [str(i) for i in range(len(features))]
+    features = [str(i) for i in range(len(features))]
     
     for f in features:
         if f == "98":
@@ -44,7 +41,9 @@ def build_dbn(csv_path=None):
     
     model.fit(
         df,
-        estimator=MaximumLikelihoodEstimator,
+        estimator=BayesianEstimator,
+        prior_type="BDeu",
+        equivalent_sample_size=1,
         state_names=state_names
     )
 
