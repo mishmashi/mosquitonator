@@ -227,7 +227,7 @@ if not st.session_state.clicked_back:
                 continue
 
         if len(values) <= 1 or num_with_values <= 1:
-            st.warning("len values thing")
+            st.warning({st.session_state.candidates})
             st.session_state.index += 1
         else:
             break
