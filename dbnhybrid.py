@@ -214,7 +214,6 @@ if not st.session_state.clicked_back:
             for c in st.session_state.candidates
             if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
         }
-        st.write(f"values: {values}")
         num_with_values = sum(
             1 for c in st.session_state.candidates
             if st.session_state.index in c and c.get(st.session_state.index,-1) != -1
@@ -429,6 +428,7 @@ else:
             st.session_state.evidence,
             st.session_state.ranking_candidates
         )
+        st.write(st.session_state.evidence)
         
         dbn_probs = infer_species_probs(
             bn_inference,
