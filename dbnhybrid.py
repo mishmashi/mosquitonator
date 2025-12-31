@@ -454,11 +454,6 @@ else:
             nb_model,
             clean_evidence
         )
-        st.write("ranking candidates:", [
-            c["name"] for c in st.session_state.ranking_candidates
-        ])
-        
-        st.write("nb_probs keys:", list(nb_probs.keys())[:20])
 
         # override heuristic probabilities
         ranked = sorted(
@@ -466,10 +461,10 @@ else:
             key=lambda c: nb_probs.get(c["name"], 0),
             reverse=True
         )
-        st.write(ranked)
         
-        for c in ranked[:10]:
-            st.write(f"**Anopheles {c["name"]}** Match: {nb_probs[c["name"]]*100:.2f}%")
+        for c in ranked:
+            if nb_probs[c["name"]] > st.session_state.threshold
+                st.write(f"**Anopheles {c["name"]}** Match: {nb_probs[c["name"]]*100:.2f}%")
 
         #st.session_state.candidates.sort(
         #    key=lambda c: c["prob"], reverse=True
