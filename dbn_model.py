@@ -22,7 +22,8 @@ def build_dbn(csv_path=None):
     for f in features:
         df[f] = df[f].fillna(-1).astype(int)
         
-    edges = [("Species", f) for f in features]
+    edges = [(f, "Species") for f in features]
+
 
     model = DiscreteBayesianNetwork(edges)
 
@@ -34,9 +35,6 @@ def build_dbn(csv_path=None):
     state_names["Species"] = sorted(df["Species"].dropna().unique())
 
     df_bn = df.copy()
-
-    for f in features:
-        df_bn = df_bn[df_bn[f] != -1]
 
     model.fit(
         df_bn,
