@@ -14,6 +14,7 @@ def build_dbn(csv_path=None):
 
     df = pd.read_csv(csv_path, header=0)
     df.columns = df.columns.astype(str).str.strip()
+    features = [c for c in df.columns if c not in {"Species", "Region", "Considered", "Probability", "Image"}]
     
     df.columns = (
         list(df.columns[:5]) +
