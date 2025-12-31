@@ -431,7 +431,6 @@ if st.session_state.index < len(questions):
             st.rerun()
 
 else:
-    st.session_state.threshold = st.slider("Select a minimum match% to show species",0.0,0.9,.4)
     st.subheader("Likely species")
     
     
@@ -449,7 +448,7 @@ else:
             nb_model,
             clean_evidence
         )
-        st.session_state.threshold = st.slider("Select a minimum match% to show species",0.0,0.9,max(nb_probs))
+        st.session_state.threshold = st.slider("Select a minimum match% to show species",0.0,0.9,max(nb_probs.values()))
         # override heuristic probabilities
         ranked = sorted(
             st.session_state.ranking_candidates,
