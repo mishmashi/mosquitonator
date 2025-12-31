@@ -20,10 +20,7 @@ def build_dbn(csv_path=None):
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
     
-    index_to_feature = {i: f for i, f in enumerate(features)}
-    for idx, val in evidence.items():
-        if idx in index_to_feature:
-            features[index_to_feature[idx]] = int(val)
+    features = {str(i) for i, _ in enumerate(features)}
             
     for f in features:
         df[f] = df[f].fillna(-1).astype(int)
