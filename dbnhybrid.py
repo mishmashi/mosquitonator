@@ -5,13 +5,17 @@ import numpy as np
 import csv
 from io import StringIO
 from LLM2vec import get_feature_vector
-
+from nb import build_masked_nb
 from dbn_model import build_dbn
 
 @st.cache_resource
 def load_dbn():
     model, inference, features = build_dbn("linked_ds.csv")
     return model, inference, features
+
+@st.cache_resource
+def load_nb():
+    return build_masked_nb()
 
 # Initialize session state
 if "index" not in st.session_state:
@@ -31,28 +35,38 @@ if "index" not in st.session_state:
     st.session_state.threshold = 0.4
     st.session_state.evidence = {}
 
-def infer_species_probs(inference, index_evidence, questions):
+def infer_species_probs(model, evidence):
     """
-    index_evidence: {question_index: state_int}
-    returns: {species_name: probability}
+    evidence: dict[int_feature_index -> value]
     """
-      
-    evidence = {
-        questions[i]: int(v)
-        for i, v in index_evidence.items()
+    features = model["features"]
+    species = model["species"]
+    prior = model["prior"]
+    likelihood = model["likelihood"]
+
+    log_probs = {}
+
+    for sp in species:
+        logp = np.log(prior.get(sp, 1e-12))
+
+        for idx, val in evidence.items():
+            f = features[int(idx)]
+
+            if f not in likelihood[sp]:
+                continue
+            p = likelihood[sp][f].get(val, 1e-6)
+            logp += np.log(p)
+
+        log_probs[sp] = logp
+
+    max_log = max(log_probs.values())
+    probs = {
+        sp: np.exp(lp - max_log)
+        for sp, lp in log_probs.items()
     }
 
-    q = inference.query(
-        variables=["Species"],
-        evidence=evidence,
-        show_progress=False
-    )
-
-    species = q.state_names["Species"]
-    probs = q.values
-
-    return dict(zip(species, probs))
-
+    Z = sum(probs.values())
+    return {sp: p / Z for sp, p in probs.items()}
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
   just_el = []
@@ -424,30 +438,35 @@ else:
     
     
     if st.session_state.evidence:
-        bn_model, bn_inference, bn_features = load_dbn()
+        #bn_model, bn_inference, bn_features = load_dbn()
+        nb_model = load_nb()
         clean_evidence = sanitize_evidence(st.session_state.evidence)
         st.write(st.session_state.evidence)
         st.write(clean_evidence)
         
-        dbn_probs = infer_species_probs(
-            bn_inference,
-            clean_evidence,
-            questions
+        #dbn_probs = infer_species_probs(
+        #    bn_inference,
+        #    clean_evidence,
+        #    questions
+        #)
+        nb_probs = infer_species_probs_nb(
+            nb_model,
+            clean_evidence
         )
 
-        st.write(dbn_probs)
+        st.write(nb_probs)
 
 
         # override heuristic probabilities
         ranked = sorted(
             st.session_state.ranking_candidates,
-            key=lambda c: dbn_probs.get(c["name"], 0),
+            key=lambda c: nb_probs.get(c["name"], 0),
             reverse=True
         )
         st.write(st.session_state.ranking_candidates[0])
         
         for c in ranked[:10]:
-            st.write(f"**Anopheles {c["name"]}** Match: {dbn_probs[c["name"]]*100:.2f}%")
+            st.write(f"**Anopheles {c["name"]}** Match: {nb_probs[c["name"]]*100:.2f}%")
 
         #st.session_state.candidates.sort(
         #    key=lambda c: c["prob"], reverse=True
