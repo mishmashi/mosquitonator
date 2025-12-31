@@ -14,17 +14,17 @@ def build_dbn(csv_path=None):
 
     df = pd.read_csv(csv_path, header=0)
     df.columns = df.columns.astype(str).str.strip()
+    
 
     features = [
         c for c in df.columns
         if c not in {"Species", "Region", "Considered", "Probability", "Image"}
     ]
     
-    
-            
     for f in features:
         df[f] = df[f].fillna(-1).astype(int)
-    
+        
+    df.columns[5:] = [str(i) for i, f in enumerate(features)]
     features = {str(i) for i, _ in enumerate(features)}
     
     edges = [(f, "Species") for f in features]
