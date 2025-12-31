@@ -144,6 +144,7 @@ others_by_group = [[],[], [],[],[],[],[],[],[],[],[]]
 if st.session_state.species_initialized == False:
     st.session_state.index = 0
     st.session_state.candidates = database
+    st.session_state.ranking_candidates = database
     st.session_state.others = []
     st.session_state.species_initialized = True
     
