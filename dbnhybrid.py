@@ -453,7 +453,12 @@ else:
             nb_model,
             clean_evidence
         )
-        st.write(nb_probs)
+        st.write("ranking candidates:", [
+            c["name"] for c in st.session_state.ranking_candidates
+        ])
+        
+        st.write("nb_probs keys:", list(nb_probs.keys())[:20])
+
         # override heuristic probabilities
         ranked = sorted(
             st.session_state.ranking_candidates,
