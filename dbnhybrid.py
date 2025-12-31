@@ -454,16 +454,13 @@ else:
             clean_evidence
         )
 
-        st.write(nb_probs)
-
-
         # override heuristic probabilities
         ranked = sorted(
             st.session_state.ranking_candidates,
             key=lambda c: nb_probs.get(c["name"], 0),
             reverse=True
         )
-        st.write(st.session_state.ranking_candidates[0])
+        st.write(ranked)
         
         for c in ranked[:10]:
             st.write(f"**Anopheles {c["name"]}** Match: {nb_probs[c["name"]]*100:.2f}%")
