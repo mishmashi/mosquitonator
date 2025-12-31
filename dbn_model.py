@@ -33,7 +33,7 @@ def build_dbn(csv_path=None):
 
     features = {str(i) for i, _ in enumerate(features)}
     
-    edges = [(f, "Species") for f in features]
+    edges = [("Species", f) for f in features]
     model = DiscreteBayesianNetwork(edges)
     
     state_names = {f: [0, 1] for f in features}
