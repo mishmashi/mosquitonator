@@ -21,7 +21,7 @@ if "index" not in st.session_state:
     st.session_state.clicked_back = False
     st.session_state.answered = []
     st.session_state.just_el = []
-    st.session_state.threshold = 0.4
+    st.session_state.threshold = 0.1
     st.session_state.evidence = {}
 
 def update_probabilities(ans, index, candidates, thresh, factor=.25):
