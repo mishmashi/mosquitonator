@@ -312,10 +312,11 @@ else:
         )
     
         for c in st.session_state.candidates:
-            st.write(
-                f"- **Anopheles {c['name']}** "
-                f"(Match: {c['prob']*100:.2f}%)"
-            )
+            if c['prob'] > st.session_state.threshold:
+                st.write(
+                    f"- **Anopheles {c['name']}** "
+                    f"(Match: {c['prob']*100:.2f}%)"
+                )
     else:
       st.error("No matching relevant species.")
 
@@ -339,7 +340,6 @@ if bn2.button("Restart",key="restart_sp", use_container_width = True):
     st.session_state.evidence = {}
     st.session_state.species_initialized = False
     st.session_state.threshold = 0.4
-    st.session_state.prior = []
     st.rerun()
 st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
 #if len(st.session_state.others) >0:
