@@ -3,8 +3,6 @@ import pandas as pd
 import os
 import csv
 from io import StringIO
-from LLM2vec import get_feature_vector
-from LLM2Bool import get_feature_bool
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -16,7 +14,6 @@ if "index" not in st.session_state:
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
     st.session_state.o_prev = []
-    st.session_state.prior = []
     st.session_state.u_inp = ""
     st.session_state.last_phase = "start"
     st.session_state.clicked_back = False
@@ -145,7 +142,6 @@ elif st.session_state.phase == "genus":
             for c in st.session_state.candidates:
                 st.write("- " + c["name"])
                 st.image(c["image"], caption="Example specimen")
-
         else:
             st.error("No matching genus found.")
 
@@ -410,7 +406,6 @@ elif st.session_state.phase == "species":
             st.session_state.others = []
             st.session_state.species_initialized = False
             st.session_state.phase = "start"
-            st.session_state.prior = []
             st.rerun()
             
         if st.session_state.index > 0:
@@ -432,7 +427,6 @@ elif st.session_state.phase == "species":
             st.session_state.candidates = database
             st.session_state.others = []
             st.session_state.species_initialized = False
-            st.session_state.prior = []
             st.rerun()
         st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
         #if len(st.session_state.others) >0:
