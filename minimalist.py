@@ -7,15 +7,6 @@ from io import StringIO
 from nb import build_masked_nb
 from dbn_model import build_dbn
 
-@st.cache_resource
-def load_dbn():
-    model, inference, features = build_dbn("traits.csv")
-    return model, inference, features
-
-@st.cache_resource
-def load_nb():
-    return build_masked_nb()
-
 # Initialize session state
 if "index" not in st.session_state:
     database = []
@@ -64,7 +55,7 @@ def filter_candidates(candidates, just_el):
 st.header("Species Identification")
 @st.cache_data(ttl=6) #for optimization
 def load_data():
-        df = pd.read_csv("traits.csv", header=0)
+        df = pd.read_csv("traits.csv", header=1)
         questions = [col for col in df.columns if col not in ("Species", "Considered", "Probability", "Region", "Image")]
 
         database = []
