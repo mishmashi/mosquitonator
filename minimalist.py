@@ -34,11 +34,11 @@ def update_probabilities(ans, index, candidates, thresh, factor=.25):
       just_el.append(0)
       if ans == c_ans and not pd.isna(c_ans) and c_ans != -1:  
         candidate["prob"] = candidate["prob"]*1.1
-    elif ans != c_ans and c_ans != -1:
+    elif ans != c_ans and c_ans != -1 and not pd.isna(c_ans):
       candidate["prob"] = candidate["prob"]*factor
       if candidate["prob"] < thresh:
         candidate["considered"] = 0
-        just_el.append(1) #add index of candidate that was eliated to list, to be used by filter_candidates
+        just_el.append(1) 
       else:
           just_el.append(0)
       
@@ -306,9 +306,7 @@ if st.session_state.index < len(questions):
 else:
     st.subheader("Likely species")
     
-    
     if st.session_state.evidence:
-
         st.session_state.candidates.sort(
             key=lambda c: c["prob"], reverse=True
         )
@@ -316,7 +314,7 @@ else:
         for c in st.session_state.candidates:
             st.write(
                 f"- **Anopheles {c['name']}** "
-                f"(Match: {c['prob']*151*100:.2f}%)"
+                f"(Match: {c['prob']*100:.2f}%)"
             )
     else:
       st.error("No matching relevant species.")
