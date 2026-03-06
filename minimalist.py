@@ -163,7 +163,6 @@ elif st.session_state.phase == "genus":
 
     if len(st.session_state.candidates) == 1 and st.session_state.candidates[0]["name"] == "an Anopheles":
         if st.button("Determine species",key="determine_sp", use_container_width = True):
-            st.session_state.others = []
             st.session_state.index = 0
             st.session_state.candidates = database
             st.session_state.c_prev = database
@@ -196,14 +195,12 @@ elif st.session_state.phase == "species":
         if st.session_state.species_initialized == False:
             st.session_state.index = 0
             st.session_state.candidates = database
-            st.session_state.others = []
             st.session_state.species_initialized = True
 
         st.title("Anopheles Species Identifier")
     
         if st.session_state.index == 0:
             st.session_state.candidates = database # Reset candidates before applying prior
-            st.session_state.others = []
             
         # ---- Main Loop ----
         _, mid, _ = st.columns(3)
@@ -292,9 +289,6 @@ elif st.session_state.phase == "species":
                     if os.path.exists(imgstrn):
                         fal.image(imgstrn)
                 if col1.button(q,key=f"q_sp_{st.session_state.index}", use_container_width = True):
-                    if st.session_state.index < len(others_by_group) and not st.session_state.others:
-                         st.session_state.o_prev = st.session_state.others
-                         st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                     st.session_state.c_prev = st.session_state.candidates
                     st.session_state.elim_prev = st.session_state.eliminated
                     
@@ -345,9 +339,6 @@ elif st.session_state.phase == "species":
                     if os.path.exists(imgstrn):
                         fal.image(imgstrn)
                 if col1.button("Yes",key=f"y_sp_{st.session_state.index}", use_container_width = True):
-                    if st.session_state.index < len(others_by_group) and not st.session_state.others:
-                         st.session_state.o_prev = st.session_state.others
-                         st.session_state.others = others_by_group[st.session_state.index] #get group of other, less relevant species
                     st.session_state.c_prev = st.session_state.candidates
                     st.session_state.elim_prev = st.session_state.eliminated
                     if st.session_state.index == 3:
@@ -392,18 +383,11 @@ elif st.session_state.phase == "species":
 
             else:
               st.error("No matching relevant species.")
-            if st.session_state.others:
-                st.warning("Less likely species:")
-                for name in st.session_state.others:
-                        if name not in [c["name"] for c in st.session_state.candidates]:
-                            st.write(f"- **Anopheles {name}**")
                             
         bn1, bn2, bn3 = st.columns(3)
         if bn2.button("Try a different genus",key="restart_all", use_container_width=True):
             st.session_state.index = 0
             st.session_state.candidates = []
-            st.session_state.o_prev = st.session_state.others
-            st.session_state.others = []
             st.session_state.species_initialized = False
             st.session_state.phase = "start"
             st.rerun()
@@ -413,7 +397,6 @@ elif st.session_state.phase == "species":
                 st.session_state.index = st.session_state.answered.pop()
                 restore = st.session_state.eliminated.pop()
                 st.session_state.candidates.extend(e for e in restore if isinstance(e, dict))
-                st.session_state.others = st.session_state.o_prev
                 st.session_state.clicked_back = True
                 st.session_state.phase = "species"
                 st.rerun()
@@ -425,11 +408,10 @@ elif st.session_state.phase == "species":
             st.session_state.eliminated = []
             st.session_state.elim_prev = []
             st.session_state.candidates = database
-            st.session_state.others = []
             st.session_state.species_initialized = False
             st.rerun()
         st.markdown("Coetzee, M. Key to the females of Afrotropical Anopheles mosquitoes (Diptera: Culicidae). Malar J 19, 70 (2020). https://doi.org/10.1186/s12936-020-3144-9")
         #if len(st.session_state.others) >0:
         #  if st.button("See rare species"):
-        #    for name in others:
+        #    for name in :
         #          st.write("- " + name)
