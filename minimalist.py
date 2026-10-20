@@ -19,6 +19,10 @@ if "index" not in st.session_state:
     st.session_state.clicked_back = False
     st.session_state.answered = []
 
+    #Bonus variables for when there's uncertainty
+    st.session_state.described = {} # characteristics described by the user, to confirm selections
+    st.session_state.unknown = [] # features skipped.
+
 def filter_candidates(index, ans, candidates):
         if ans == 1:
             return [c for c in candidates if c.get(index, -1) != 0 and c.get(index, -1) != 2 and c.get(index, -1) != 3]
