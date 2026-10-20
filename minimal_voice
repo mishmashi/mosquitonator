@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd
 import os
 import csv
-pip install SpeechRecognition pyaudio
+from vosk import Model, KaldiRecognizer
+import wave
+import json
 from io import StringIO
 # Initialize session state
 if "index" not in st.session_state:
@@ -15,7 +17,7 @@ if "index" not in st.session_state:
     st.session_state.phase = "start"
     st.session_state.species_initialized = False
     st.session_state.o_prev = []
-    st.session_state.u_inp = ""
+    #st.session_state.u_inp = ""
     st.session_state.last_phase = "start"
     st.session_state.clicked_back = False
     st.session_state.answered = []
@@ -102,11 +104,11 @@ elif st.session_state.phase == "genus":
                 break
     else:
         st.session_state.clicked_back = False  # reset flag
-        
+
+    # Main loop - genus:
     if st.session_state.index < len(questions):
         q = questions[st.session_state.index]
         st.write(f"**Q{st.session_state.index + 1}: {q}**")
-
         col1, col2, col3 = st.columns(3)
         if col1.button("Yes",key="y_genus", use_container_width = True):
             st.session_state.c_prev = st.session_state.candidates
@@ -168,7 +170,7 @@ elif st.session_state.phase == "genus":
             st.session_state.candidates = database
             st.session_state.c_prev = database
             st.session_state.phase = "species"
-            
+
 elif st.session_state.phase == "species":
         st.header("Species Identification")
         @st.cache_data(ttl=6) #for optimization
@@ -225,6 +227,7 @@ elif st.session_state.phase == "species":
         else:
             st.session_state.clicked_back = False
 
+        #Main loop - Anopheles species
         if st.session_state.index < len(questions):
             q = questions[st.session_state.index]
             q_b = questions_b[0][st.session_state.index]
@@ -381,7 +384,6 @@ elif st.session_state.phase == "species":
                     if pd.notna(c['region']):
                         st.write(f"- **Anopheles {c['name']}**, region: {c['region']}")
                     else: st.write(f"- **Anopheles {c['name']}**")
-
             else:
               st.error("No matching relevant species.")
                             
