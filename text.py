@@ -69,7 +69,7 @@ def jev_answer(description, u_inp, A_raw, B_raw):
     answer_score = result.choices["answer"].confidence
     return intent_choice, intent_score, answer_choice, answer_score
 
-def clarify(description, u_inp, model: str= "gpt-4o-mini", openai_key):
+def clarify(description, u_inp, model: str= "gpt-4o-mini", openai_key: str=""):
     prompt_instructions = f"""You are assisting a user doing morphological mosquito identification.
     The user asked for clarification, saying this:
     \"\"\"
