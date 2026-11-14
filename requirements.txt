@@ -3,3 +3,4 @@ pgmpy
 PyAudio
 vosk
 pyttsx3
+typesafe_sdk
