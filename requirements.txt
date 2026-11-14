@@ -2,3 +2,4 @@ openai
 pgmpy
 PyAudio
 vosk
+pyttsx3
