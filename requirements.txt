@@ -1,4 +1,4 @@
 openai
 pgmpy
-portaudio
+PyAudio
 vosk
