@@ -386,16 +386,10 @@ elif st.session_state.phase == "species":
             values = {c.get(st.session_state.index, -1) for c in st.session_state.candidates}
             num_with_values = sum(1 for c in st.session_state.candidates if st.session_state.index in c)
 
-            if st.session_state.index >= 10:
-                if len(values) <= 1 or num_with_values <= 1:
-                    st.session_state.index += 1
-                else:
-                    break
+            if len(values) <= 1 or num_with_values <= 1:
+               st.session_state.index += 1
             else:
-                if len(values) <= 1 or num_with_values <= 1:
-                    st.session_state.index += 1
-                else:
-                    break
+               break
     else:
         st.session_state.clicked_back = False
 
