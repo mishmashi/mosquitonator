@@ -479,7 +479,7 @@ elif st.session_state.phase == "species":
                     st.session_state.u_inp = ""
                     st.rerun()
                 elif intent == "clarify":
-                    response = clarify(st.session_state.descriptions.iloc[st.session_state.index], st.session_state.u_inp, model="gpt-4o-mini")
+                    response = clarify(st.session_state.descriptions.iloc[st.session_state.index], st.session_state.u_inp, "gpt-4o-mini",openai_key)
                     st.write(response)
                     st.session_state.u_inp = ""
                 else:
@@ -562,7 +562,7 @@ elif st.session_state.phase == "species":
                     st.session_state.u_inp = ""
                     st.rerun()
                 elif intent == "clarify":
-                    response = clarify(st.session_state.descriptions.iloc[st.session_state.index], st.session_state.u_inp, model="gpt-4o-mini")
+                    response = clarify(st.session_state.descriptions.iloc[st.session_state.index], st.session_state.u_inp, "gpt-4o-mini", openai_key)
                     st.write(response)
                     st.session_state.u_inp = ""
                 else:
